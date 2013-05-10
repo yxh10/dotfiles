@@ -1,0 +1,32 @@
+{
+  "~f"="moveWordForward:";
+  "~b"="moveWordBackward:";
+  "~<"="moveToBeginningOfDocument:";
+  "~>"="moveToEndOfDocument:";
+  "~v"="pageUp:";
+  "~d"="deleteWordForward:";
+  "~^h"="deleteWordBackward:";
+  "~\010"="deleteWordBackward:"; /* Alt-backspace */
+  "~\177"="deleteWordBackward:"; /* Alt-delete */
+
+  "~c"=(capitalizeWord:,moveForward:);
+  "~u"=(uppercaseWord:,moveForward:);
+  "~l"=(lowercaseWord:,moveForward:);
+
+  "^@" = "setMark:";
+  "^ " = "setMark:";
+  "^w" = "deleteToMark:";
+
+  "^x" = {
+        "u"     = "undo:";                          /* C-x u        Undo */
+        "^c"    = "performClose:";                  /* C-x k        Close */
+        "^f"    = "openDocument:";                  /* C-x C-f      Open (find file) */
+        "^x"    = "swapWithMark:";                  /* C-x C-x      Swap with mark */
+        "^m"    = "selectToMark:";                  /* C-x C-m      Select to mark*/
+        "^s"    = "saveDocument:";                  /* C-x C-s      Save */
+        "^w"    = "saveDocumentAs:";                /* C-x C-w      Save as */
+    };
+
+  "^_"="undo:";
+  "~_"="redo:";
+}

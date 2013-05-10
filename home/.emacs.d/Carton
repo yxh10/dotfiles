@@ -1,0 +1,52 @@
+;; -*- mode: emacs-lisp -*-
+(source "melpa" "http://melpa.milkbox.net/packages/")
+
+;; themes
+(depends-on "solarized-theme")
+(depends-on "color-theme-sanityinc-tomorrow")
+(depends-on "base16-theme")
+(depends-on "naquadah-theme")
+
+;; just for init.el
+(depends-on "keydef")
+
+;; eshell
+(depends-on "multi-eshell")
+(depends-on "pcmpl-git")
+
+;; general plugins
+;; (depends-on "simpleclip")
+(depends-on "highlight-symbol")
+(depends-on "sr-speedbar")
+(depends-on "ido-ubiquitous")
+(depends-on "ido-vertical-mode")
+(depends-on "smex")
+(depends-on "undo-tree")
+;; (depends-on "autopair")
+(depends-on "multiple-cursors")
+(depends-on "buffer-move")
+(depends-on "windsize")
+(depends-on "find-file-in-repository")
+(depends-on "exec-path-from-shell")
+(depends-on "auto-dim-other-buffers")
+
+;; lisp in general
+(depends-on "paredit")
+(depends-on "rainbow-delimiters")
+
+;; clojure
+(depends-on "align-cljlet")
+(depends-on "clojure-mode")
+(depends-on "clojure-test-mode")
+(depends-on "nrepl")
+
+;; other languages
+(depends-on "markdown-mode")
+(depends-on "js3-mode")
+(depends-on "yaml-mode")
+(depends-on "scss-mode")
+(depends-on "tagedit")
+
+;; git
+(depends-on "git-commit-mode")
+(depends-on "magit")
