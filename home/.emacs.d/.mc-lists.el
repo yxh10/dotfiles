@@ -9,17 +9,20 @@
         coffee-dedent-line-backspace
         comment-dwim
         dabbrev-expand
+        end-of-buffer
         forward-sexp
         indent-for-tab-command
         indent-new-comment-line
         kill-region
         kill-sexp
+        lisp-eval-last-sexp
         mark-sexp
         markdown-cycle
         markdown-exdent-or-delete
         paredit-backward
         paredit-backward-barf-sexp
         paredit-backward-kill-word
+        paredit-backward-slurp-sexp
         paredit-backward-up
         paredit-comment-dwim
         paredit-doublequote
@@ -31,6 +34,7 @@
         paredit-forward-up
         paredit-kill
         paredit-meta-doublequote
+        paredit-newline
         paredit-open-curly
         paredit-open-round
         paredit-open-square

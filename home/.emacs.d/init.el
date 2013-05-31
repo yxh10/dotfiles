@@ -384,7 +384,6 @@
   (after-all 'defun)
   (around 'defun)
   (it 'defun)
-  (-> 'defun)
   (list 'defun)
   (cond 'defun)
   (:use nil)
@@ -444,3 +443,12 @@
 (put 'erase-buffer 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(partial\\)[[:space:]]"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "Ƥ")
+                               nil))))))
