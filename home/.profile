@@ -38,8 +38,5 @@ eval "$(rbenv init -)"
 # golang
 export PATH="/usr/local/opt/go/bin/:$PATH"
 
-# gitx
-alias gitx='open -a ~/Applications/GitX.app/'
-
 # bash completion
 source /usr/local/etc/bash_completion
