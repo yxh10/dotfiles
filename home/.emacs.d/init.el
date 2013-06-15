@@ -18,46 +18,6 @@
 (windsize-default-keybindings)
 
 
-(keydef "C-c d" dash-at-point)
-
-
-(defun sd/disable-electric-indent ()
-  (set (make-local-variable 'electric-indent-functions)
-       (list (lambda (arg) 'no-indent))))
-
-;; fix electric indent in certain modes
-(setq coffee-tab-width 2)
-(add-hook 'coffee-mode-hook 'sd/disable-electric-indent)
-(add-hook 'org-mode-hook 'sd/disable-electric-indent)
-(add-hook 'markdown-mode-hook 'sd/disable-electric-indent)
-
-
-;; js
-(setq js3-indent-level 2)
-(setq js3-auto-indent-p nil)
-
-
-;; (require 'lein)
-;; (setq lein-version "2.1.0")
-
-
-;; search for word at point
-;; (keydef "s-h" highlight-symbol-at-point)
-;; (keydef "M-p" highlight-symbol-prev)
-;; (keydef "M-n" highlight-symbol-next)
-
-
-;; ;; search for word at point
-;; (defun current-word-search ()
-;;   "search forward for word under cursor"
-;;   (interactive)
-;;   (word-search-forward (current-word)))
-;; (defun current-word-reverse-search ()
-;;     "search backwards for word under cursor"
-;;     (interactive)
-;;     (word-search-backward (current-word)))
-;; (keydef "s-s" current-word-search)
-;; (keydef "s-r" current-word-reverse-search)
 
 
 ;; eshell
@@ -70,11 +30,6 @@
 (defun sd/eshell-search-history ()
   (interactive)
   (insert (ido-completing-read "History: " (delete-dups (ring-elements eshell-history-ring)))))
-
-
-;; fullscreen
-(setq ns-use-native-fullscreen nil)
-;; (keydef "s-F" toggle-frame-fullscreen)
 
 
 ;; remove Cmd-K binding
@@ -93,40 +48,15 @@
 
 
 
-;; separate OS X pasteboard from emacs kill-ring
-;; (simpleclip-mode 1)
-
-
-;; different keys
-;; (setq ns-command-modifier   'meta
-;;       ns-alternate-modifier 'super
-;;       ns-function-modifier  'hyper)
 (setq ns-right-command-modifier 'meta)
 
 
-;; make current window dedicated
-(defun toggle-current-window-dedication ()
-  (interactive)
-  (let* ((window    (selected-window))
-         (dedicated (window-dedicated-p window)))
-    (set-window-dedicated-p window (not dedicated))
-    (message "Window %sdedicated to %s"
-             (if dedicated "no longer " "")
-             (buffer-name))))
-(keydef "s-S" toggle-current-window-dedication)
-
-
-;; tagedit
-(eval-after-load "sgml-mode"
-  '(progn
-     (require 'tagedit)
-     (tagedit-add-paredit-like-keybindings)
-     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
-
-
-;; ;; easier
-;; (require 'browse-kill-ring)
-;; (browse-kill-ring-default-keybindings)
+;; ;; tagedit
+;; (eval-after-load "sgml-mode"
+;;   '(progn
+;;      (require 'tagedit)
+;;      (tagedit-add-paredit-like-keybindings)
+;;      (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
 
 
 ;; make buffer names betterly unique
@@ -153,7 +83,6 @@
 (set-display-table-slot standard-display-table 0 ?~)
 
 
-;; you might want to change some of these:
 (electric-indent-mode 1)                                 ;; makes Enter indent stuff intelligently
 (setq-default indent-tabs-mode nil)                      ;; use spaces everywhere, not tabs
 (setq-default truncate-lines t)                          ;; dont line-wrap
@@ -198,41 +127,11 @@
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 
-;; this makes Cmd-Forwardslash comment or uncomment a line without having to highlight it
-(defun sd/comment-or-uncomment-region-or-line ()
-  (interactive)
-  (if mark-active
-      (call-interactively (function comment-or-uncomment-region))
-    (save-excursion
-      (beginning-of-line)
-      (set-mark (point))
-      (end-of-line)
-      (call-interactively (function comment-or-uncomment-region)))))
-(keydef "s-/" sd/comment-or-uncomment-region-or-line)
-
-
 ;; paredit
-(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-
-
-;; auto-pair puncutation
-;; (require 'autopair)
-;; (defun sd/conditionally-enable-autopair-mode ()
-;;   (run-at-time "0.1 sec" nil (lambda ()
-;;                                (unless paredit-mode
-;;                                  (autopair-mode)))))
-;; (add-hook 'text-mode-hook 'sd/conditionally-enable-autopair-mode)
-
-
-;; kinda like nerdtree
-;; (require 'sr-speedbar)
-;; (keydef "s-D" sr-speedbar-toggle)
-;; (setq sr-speedbar-right-side nil)
-;; (setq speedbar-show-unknown-files t)
-;; (setq sr-speedbar-auto-refresh nil)
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           'enable-paredit-mode)
 
 
 ;; git integration. use Cmd-Shift-G to open it.
@@ -263,18 +162,10 @@
 (keydef "s-F" sd/git-grep)
 
 
-;; project management
-;; (require 'project-buffers)
-;; (keydef "C-x b" pb/switch-buffer-in-project)
-;; (keydef "C-x C-b" ido-switch-buffer)
-;; (keydef "C-x C-p" pb/switch-project)
+;; buffer management
 (keydef "s-[" previous-buffer)
 (keydef "s-]" next-buffer)
 (keydef "C-x C-b")
-;; (keydef "s-[" pb/previous-buffer-in-project)
-;; (keydef "s-]" pb/next-buffer-in-project)
-
-;; buffer management
 (keydef "s-{" (other-window -1))
 (keydef "s-}" other-window)
 (keydef "<C-s-up>"     buf-move-up)
@@ -352,6 +243,12 @@
 
 
 
+(put 'erase-buffer 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+
+
 ;; ;; M-{, M-} are a bit more awkward on my pinky
 ;; (keydef "C-s-[" backward-paragraph)
 ;; (keydef "C-s-]" forward-paragraph)
@@ -396,53 +293,6 @@
   (HEAD 2)
   (ANY 2)
   (context 1))
-
-;; clojure speclj stuff
-(require 'clojure-test-mode)
-
-(defcustom clojure-mode-test-dir-name "spec"
-  "Usually 'test' but for speclj it should be 'spec'"
-  :type 'string
-  :group 'clojure-mode)
-
-(defcustom clojure-mode-test-namespace-suffix "spec"
-  "Usually 'test' but for speclj it should be 'spec'"
-  :type 'string
-  :group 'clojure-mode)
-
-(defun clojure-in-tests-p ()
-  (or (string-match-p (concat clojure-mode-test-namespace-suffix "\.") (clojure-find-ns))
-      (string-match-p (concat "/" clojure-mode-test-dir-name) (buffer-file-name))))
-
-(defun clojure-test-for (namespace)
-  "Returns the path of the test file for the given namespace."
-  (let* ((namespace (clojure-underscores-for-hyphens namespace))
-         (segments (split-string namespace "\\.")))
-    (format "%s%s/%s_%s.clj"
-            (file-name-as-directory
-             (locate-dominating-file buffer-file-name "src/"))
-            clojure-mode-test-dir-name
-            (mapconcat 'identity segments "/")
-            clojure-mode-test-namespace-suffix)))
-
-
-
-
-
-;; etags
-;; (defun sd/jump-to-tag ()
-;;   (interactive)
-;;   (let* ((default-directory (locate-dominating-file default-directory ".git"))
-;;          (tags-file-name "TAGS")
-;;          (tags-table-list '("TAGS"))
-;;          (tags-revert-without-query t)
-;;          (shell-command "ctags -eR --langmap=Lisp:+.clj"))
-;;     (call-interactively 'find-tag)))
-;; (keydef "M-." sd/jump-to-tag)
-
-(put 'erase-buffer 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
 
 
 
