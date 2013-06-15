@@ -39,6 +39,7 @@
         paredit-open-round
         paredit-open-square
         paredit-raise-sexp
+        paredit-reindent-defun
         paredit-semicolon
         paredit-splice-sexp
         paredit-wrap-round
