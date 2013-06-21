@@ -9,6 +9,7 @@
         coffee-dedent-line-backspace
         comment-dwim
         dabbrev-expand
+        down-list
         end-of-buffer
         forward-sexp
         indent-for-tab-command
@@ -32,6 +33,7 @@
         paredit-forward-kill-word
         paredit-forward-slurp-sexp
         paredit-forward-up
+        paredit-join-sexps
         paredit-kill
         paredit-meta-doublequote
         paredit-newline

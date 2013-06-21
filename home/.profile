@@ -40,3 +40,5 @@ export PATH="/usr/local/opt/go/bin/:$PATH"
 
 # bash completion
 source /usr/local/etc/bash_completion
+
+alias pg="postgres -D /usr/local/var/postgres"
