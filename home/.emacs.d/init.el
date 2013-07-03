@@ -48,7 +48,8 @@
 
 
 
-(setq ns-right-command-modifier 'meta)
+(setq ns-right-command-modifier 'super)
+(setq ns-command-modifier 'control)
 
 
 ;; ;; tagedit
@@ -126,6 +127,10 @@
 ;; rainbow parens
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
+
+(autoload 'enable-paredit-mode "paredit"
+  "Turn on pseudo-structural editing of Lisp code."
+  t)
 
 ;; paredit
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
