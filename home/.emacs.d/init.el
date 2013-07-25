@@ -49,7 +49,7 @@
 
 
 (setq ns-right-command-modifier 'super)
-(setq ns-command-modifier 'control)
+;; (setq ns-command-modifier 'control)
 
 
 ;; ;; tagedit
