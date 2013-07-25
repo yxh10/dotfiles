@@ -298,12 +298,3 @@
   (HEAD 2)
   (ANY 2)
   (context 1))
-
-
-
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("(\\(partial\\)[[:space:]]"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "Ƥ")
-                               nil))))))
