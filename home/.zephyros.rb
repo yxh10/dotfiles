@@ -5,8 +5,6 @@ $window_grid_width = 4
 
 API.bind('D', mash) { API.open '/Applications/Dictionary.app' }
 
-$api.settings.setAlertAnimates_ false
-
 class Window
 
   def snap_to_grid
