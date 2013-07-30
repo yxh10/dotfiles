@@ -21,7 +21,7 @@ bind "J", mash_shift, -> api.focusedWindow().focusWindowDown()
 bind "M", mash, -> maximizeWin api.focusedWindow()
 
 bind 'S', mash, -> shell '/usr/bin/say', [api.selectedText()]
-bind 'E', mash, -> alert api.selectedText()
+bind 'E', mash, -> shell '/usr/bin/say', ['stuff']
 
 
 
@@ -31,10 +31,10 @@ maximizeWin = (win) -> win.setGrid {x: 0, y: 0, w: Window.gridWidth, h:2}
 bind "C", mash, ->
   win = api.focusedWindow()
   f = win.screen().frameWithoutDockOrMenu()
-  f.size.width /= 2
-  f.size.height /= 2
-  f.origin.x += f.size.width / 2
-  f.origin.y += f.size.height / 2
+  f.w /= 2
+  f.h /= 2
+  f.x += f.w / 2
+  f.y += f.h / 2
   win.setFrame f
 
 
