@@ -1,4 +1,35 @@
 mash = ["cmd", "alt", "ctrl"]
+mash_shift = ["cmd", "alt", "shift"]
+
+$window_grid_width = 4
+
+API.bind('D', mash) { API.open '/Applications/Dictionary.app' }
+
+$api.settings.setAlertAnimates_ false
+
+class Window
+
+  def snap_to_grid
+    self.set_grid get_grid, nil if normal_window?
+  end
+
+end
+
+def change_grid_width(n)
+  $window_grid_width = n
+  API.alert "grid is now #{n} tiles wide"
+  API.visible_windows.each(&:snap_to_grid)
+end
+
+API.bind('=', mash) { change_grid_width $window_grid_width + 1 }
+API.bind('-', mash) { change_grid_width $window_grid_width - 1 }
+
+API.bind('H', mash_shift) { API.focused_window.focus_window_left }
+API.bind('L', mash_shift) { API.focused_window.focus_window_right }
+API.bind('K', mash_shift) { API.focused_window.focus_window_up }
+API.bind('J', mash_shift) { API.focused_window.focus_window_down }
+
+API.bind('M', mash) { API.focused_window.maximize }
 
 API.bind 'H', mash do
   win = API.focused_window
@@ -50,27 +81,4 @@ API.bind 'U', mash do
   r.y = 0
   r.h = 2
   win.set_grid r, nil
-end
-
-
-API.bind "D", mash do
-
-  # win = API.focused_window
-  # f = win.top_left
-  # p f.x
-  # f.w += 7
-  # p f.w
-  # p f.h
-  # puts
-  # f.w += 10
-
-  # win.size = f
-
-  point = Rect.new
-  p point.w
-  point.w = 2.3
-  p point.w
-  p point.integral!.w
-  p point.w
-
 end
