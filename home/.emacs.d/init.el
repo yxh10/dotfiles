@@ -48,7 +48,8 @@
 
 
 
-(setq ns-right-command-modifier 'meta)
+(setq ns-right-command-modifier 'super)
+;; (setq ns-command-modifier 'control)
 
 
 ;; tagedit
@@ -126,6 +127,10 @@
 ;; rainbow parens
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
+
+(autoload 'enable-paredit-mode "paredit"
+  "Turn on pseudo-structural editing of Lisp code."
+  t)
 
 ;; paredit
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
@@ -293,12 +298,3 @@
   (HEAD 2)
   (ANY 2)
   (context 1))
-
-
-
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("(\\(partial\\)[[:space:]]"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "Ƥ")
-                               nil))))))

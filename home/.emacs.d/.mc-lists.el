@@ -20,11 +20,13 @@
         mark-sexp
         markdown-cycle
         markdown-exdent-or-delete
+        paredit-backslash
         paredit-backward
         paredit-backward-barf-sexp
         paredit-backward-kill-word
         paredit-backward-slurp-sexp
         paredit-backward-up
+        paredit-close-square
         paredit-comment-dwim
         paredit-doublequote
         paredit-forward
@@ -44,6 +46,7 @@
         paredit-reindent-defun
         paredit-semicolon
         paredit-splice-sexp
+        paredit-splice-sexp-killing-backward
         paredit-wrap-round
         rebase-mode-fixup
         sgml-close-tag
