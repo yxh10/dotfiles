@@ -8,6 +8,7 @@ API.bind('D', mash) { API.shell '/usr/bin/open', ['-a', 'Dictionary'] }
 API.bind('X', mash) do
   actions = {
     'Zephyros' => -> { API.open '/Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj' },
+    'Zephyros README' => -> { API.shell '/usr/bin/open', ['-a', 'emacs', '/Users/sdegutis/projects/Zephyros/README.md'] },
     'Open email' => -> { 2.times {|i| API.open "https://mail.google.com/mail/u/#{i}/#inbox" } },
     'Show clipboard' => -> { API.alert API.clipboard_contents, sec: 3 },
   }
