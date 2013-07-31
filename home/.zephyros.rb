@@ -26,6 +26,9 @@ def change_grid_width(n)
   API.visible_windows.each(&:snap_to_grid)
 end
 
+API.bind(';', mash) { API.focused_window.snap_to_grid }
+API.bind("'", mash) { API.visible_windows.map(&:snap_to_grid) }
+
 API.bind('=', mash) { change_grid_width $window_grid_width + 1 }
 API.bind('-', mash) { change_grid_width $window_grid_width - 1 }
 
