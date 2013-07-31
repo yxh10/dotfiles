@@ -5,12 +5,15 @@ $window_grid_width = 4
 
 API.bind('D', mash) { API.open '/Applications/Dictionary.app' }
 
-# API.bind('X', mash) do
-#   list = ['one', 'two', 'three']
-#   API.choose_from list, 'yep' do |idx|
-#     API.alert list[idx]
-#   end
-# end
+API.bind('X', mash) do
+  list = [
+          ['Zephyros', -> { API.open '/Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj' }],
+          ['email', -> { 2.times {|i| API.open "https://mail.google.com/mail/u/#{i}/#inbox" } }],
+         ]
+  API.choose_from list.map(&:first), 'Do Something' do |idx|
+    list[idx][1].call
+  end
+end
 
 class Window
 

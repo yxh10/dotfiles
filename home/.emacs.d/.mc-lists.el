@@ -49,6 +49,8 @@
         paredit-splice-sexp-killing-backward
         paredit-wrap-round
         rebase-mode-fixup
+        ruby-backward-sexp
+        ruby-forward-sexp
         sgml-close-tag
         sgml-slash
         transpose-sexps
