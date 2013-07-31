@@ -20,17 +20,17 @@ class Window
 
 end
 
-def change_grid_width(n)
-  $window_grid_width = n
-  API.alert "grid is now #{n} tiles wide"
+def change_grid_width(by)
+  $window_grid_width += by
+  API.alert "grid is now #{$window_grid_width} tiles wide"
   API.visible_windows.each(&:snap_to_grid)
 end
 
 API.bind(';', mash) { API.focused_window.snap_to_grid }
 API.bind("'", mash) { API.visible_windows.map(&:snap_to_grid) }
 
-API.bind('=', mash) { change_grid_width $window_grid_width + 1 }
-API.bind('-', mash) { change_grid_width $window_grid_width - 1 }
+API.bind('=', mash) { change_grid_width +1 }
+API.bind('-', mash) { change_grid_width -1 }
 
 API.bind('H', mash_shift) { API.focused_window.focus_window_left }
 API.bind('L', mash_shift) { API.focused_window.focus_window_right }
