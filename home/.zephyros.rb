@@ -3,7 +3,7 @@ mash_shift = ["cmd", "alt", "shift"]
 
 $window_grid_width = 4
 
-API.bind('D', mash) { API.open '/Applications/Dictionary.app' }
+API.bind('D', mash) { API.shell '/usr/bin/open', ['-a', 'Dictionary'] }
 
 API.bind('X', mash) do
   actions = {
