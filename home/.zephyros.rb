@@ -43,7 +43,12 @@ API.bind('L', mash_shift) { API.focused_window.focus_window_right }
 API.bind('K', mash_shift) { API.focused_window.focus_window_up }
 API.bind('J', mash_shift) { API.focused_window.focus_window_down }
 
-API.bind('M', mash) { API.focused_window.maximize }
+API.bind 'M', mash do
+  win = API.focused_window
+  f = win.screen.frame_without_dock_or_menu
+  f.inset! $window_grid_margin_x, $window_grid_margin_y
+  win.frame = f
+end
 
 API.bind 'H', mash do
   win = API.focused_window
