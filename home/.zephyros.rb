@@ -5,6 +5,13 @@ $window_grid_width = 4
 
 API.bind('D', mash) { API.open '/Applications/Dictionary.app' }
 
+# API.bind('X', mash) do
+#   list = ['one', 'two', 'three']
+#   API.choose_from list, 'yep' do |idx|
+#     API.alert list[idx]
+#   end
+# end
+
 class Window
 
   def snap_to_grid
