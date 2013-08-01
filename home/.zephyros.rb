@@ -1,20 +1,22 @@
+require '~/projects/zephyros/libs/zephyros.rb'
+
 mash = ["cmd", "alt", "ctrl"]
 mash_shift = ["cmd", "alt", "shift"]
 
 $window_grid_width = 4
 
-API.bind('D', mash) { API.shell '/usr/bin/open', ['-a', 'Dictionary'] }
+API.bind('D', mash) { `open -a Dictionary` }
 
 API.bind('X', mash) do
   actions = {
-    'Zephyros' => -> { API.open '/Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj' },
-    'Zephyros README' => -> { API.shell '/usr/bin/open', ['-a', 'emacs', '/Users/sdegutis/projects/Zephyros/README.md'] },
-    'Open email' => -> { 2.times {|i| API.open "https://mail.google.com/mail/u/#{i}/#inbox" } },
-    'Show clipboard' => -> { API.alert API.clipboard_contents, sec: 3 },
+    'Zephyros' => -> { `open /Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj` },
+    'Zephyros README' => -> { API.shell `open -aemacs /Users/sdegutis/projects/Zephyros/README.md` },
+    'Open email' => -> { 2.times {|i| `open https://mail.google.com/mail/u/#{i}/#inbox` } },
+    'Show clipboard' => -> { API.alert API.clipboard_contents, 3 },
   }
   action_names = actions.keys
 
-  API.choose_from action_names, 'Do Something' do |i|
+  API.choose_from action_names, 'Do Something', 20, 20 do |i|
     actions[action_names[i]].call if i
   end
 end
