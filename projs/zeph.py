@@ -33,8 +33,8 @@ class EchoClient(protocol.Protocol):
             if l >= self.readingSize:
                 msg, self.buf = self.buf[:l], self.buf[l:]
                 obj = json.loads(msg)
-                self.handleMessage(obj)
                 self.readingSize = None
+                self.handleMessage(obj)
                 return True
         else:
             idx = self.buf.find('\n')
