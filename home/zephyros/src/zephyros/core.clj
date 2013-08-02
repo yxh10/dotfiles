@@ -1,9 +1,7 @@
 (ns zephyros.core
   (:require [clojure.data.json :as json]))
 
-(prn "one")
 (use 'lamina.core 'aleph.tcp 'gloss.core)
-(prn "two")
 
 (defn -main []
   (let [s (json/write-str [1, 0, "alert", "hello", 2])
