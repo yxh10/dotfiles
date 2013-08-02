@@ -9,6 +9,7 @@ class ZephClient(protocol.Protocol):
     def connectionMade(self):
         # global zephConn
         # zephConn = self
+        print self
 
         self.buf = ''
         self.readingSize = None
@@ -47,6 +48,14 @@ class ZephClient(protocol.Protocol):
 class ZephClientFactory(protocol.ClientFactory):
     protocol = ZephClient
 
-f = ZephClientFacgtory()
-reactor.connectTCP("localhost", 1235, f)
-reactor.run()
+    def startedConnecting(self, connector):
+        print connector
+
+
+def startDoingStuff(handler):
+    f = ZephClientFactory()
+    reactor.connectTCP("localhost", 1235, f)
+    reactor.run()
+
+
+startDoingStuff(None)
