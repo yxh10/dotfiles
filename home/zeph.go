@@ -61,10 +61,8 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
 
 	resp := <-ch
-	fmt.Println(resp)
+	delete(respChans, msgid)
 	return resp
-
-	return 3
 }
 
 
@@ -74,6 +72,10 @@ var API uint64 = 0
 
 
 func main() {
-	send(API, "clipboard_contents")
+	go func() {
+		contents := send(API, "alert", "hi", 1)
+		send(API, "alert", "there", 1)
+		fmt.Println(contents)
+	}()
 	listenForCallbacks()
 }
