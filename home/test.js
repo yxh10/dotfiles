@@ -1,6 +1,11 @@
 var net = require("net");
 
-var connection = net.connect(1235, "localhost", function() {
-                   console.log("client connected");
-                   connection.write("33\n" + '[0, 0, "alert", "hello world", 2]');
-                 });
+var client = net.connect(1235, function() {
+               var obj = [0, 0, "alert", "hello world", 2];
+               var str = JSON.stringify(obj);
+               client.write(str.length + "\n" + str);
+             });
+
+client.on('data', function(data) {
+  console.log(data.toString());
+});
