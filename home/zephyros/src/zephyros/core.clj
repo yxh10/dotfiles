@@ -22,13 +22,11 @@
 
 (defn conn-handler [conn]
   (while (nil? (:exit @conn))
-    (let [msg (.readLine (:in @conn))]
-      (println msg)
-      (cond
-        (re-find #"^ERROR :Closing Link:" msg)
-        (dosync (alter conn merge {:exit true}))
-        (re-find #"^PING" msg)
-        (write conn (str "PONG "  (re-find #":.*" msg)))))))
+    (let [msg-size (Integer/parseInt (.readLine (:in @conn)))
+          msg (take msg-size (repeatedly #(.read (:in @conn))))
+          msg-str (apply str (map char msg))
+          json (json/read-str msg-str)]
+      (prn json))))
 
 (defn -main []
   (let [s (json/write-str [1, 0, "alert", "hello", 2])
