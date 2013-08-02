@@ -5,8 +5,6 @@ import json
 
 
 
-ONEYEAR = 365 * 24 * 60 * 60
-
 class EchoClient(protocol.Protocol):
     def connectionMade(self):
         # global zephConn
