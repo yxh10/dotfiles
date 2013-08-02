@@ -59,8 +59,12 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 	f1 = f1
 	f2 = f2
 
+	if isf1 || isf2 {
+		args = args[:len(args) - 1]
+	}
 
-	fmt.Println("uhh", isf1, isf2)
+	// fmt.Println("uhh", isf1, isf2)
+	// fmt.Println("args", args)
 
 
 	msgid++
@@ -71,11 +75,25 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 	msg := []interface{}{msgid, recv, method}
 	val, _ := json.Marshal(append(msg, args...))
 	jsonstr := string(val)
+	fmt.Printf("%v\n%v", len(jsonstr), jsonstr)
 	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
 
 	if isf1 || isf2 {
 		go func() {
-			<-ch
+			val := <-ch
+			numTimes := val.(float64)
+			fmt.Println(numTimes)
+
+			for {
+				val := <-ch
+
+				switch {
+				case isf1:
+					f1()
+				case isf2:
+					f2(val.(float64))
+				}
+			}
 		}()
 		fmt.Println("ONE")
 		return nil
@@ -97,9 +115,11 @@ var API uint64 = 0
 
 
 func main() {
-	send(API, "bind", "d", []string{"cmd", "shift"}, func() {
-		fmt.Println("called!")
-	})
+	// go func() {
+		send(API, "bind", "d", []string{"cmd", "shift"}, func() {
+			fmt.Println("called!")
+		})
+	// }()
 
 	// go func() {
 		// contents := send(API, "alert", "hi", 1)
