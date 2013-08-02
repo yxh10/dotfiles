@@ -1,7 +1,8 @@
 (ns zephyros.core
   (:require [clojure.data.json :as json])
-  (:import (java.net Socket)
-           (java.io PrintWriter InputStreamReader BufferedReader)))
+  (:import [java.net Socket]
+           [java.util.concurrent ArrayBlockingQueue]
+           [java.io PrintWriter InputStreamReader BufferedReader]))
 
 (def zephyros-server {:name "localhost" :port 1235})
 
@@ -11,7 +12,7 @@
   (let [socket (Socket. (:name server) (:port server))
         in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
         out (PrintWriter. (.getOutputStream socket))
-        conn (ref {:in in :out out})]
+        conn (ref {:in in :out out :chan (ArrayBlockingQueue. 10)})]
     (doto (Thread. #(conn-handler conn)) (.start))
     conn))
 
@@ -26,10 +27,14 @@
           msg (take msg-size (repeatedly #(.read (:in @conn))))
           msg-str (apply str (map char msg))
           json (json/read-str msg-str)]
-      (prn json))))
+      (.put (:chan @conn) json))))
 
 (defn -main []
-  (let [s (json/write-str [1, 0, "alert", "hello", 2])
+  (let [s (json/write-str [1, 0, "bind", "d", ["cmd" "shift"]])
         size (count s)
         conn (connect zephyros-server)]
-    (write conn (format "%s\n%s", size, s))))
+    (write conn (format "%s\n%s", size, s))
+    (while (nil? (:exit @conn))
+      (prn "its" (.take (:chan @conn)))
+
+      )))
