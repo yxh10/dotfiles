@@ -54,7 +54,7 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 	lastarg := args[len(args)-1]
 
 	f1, isf1 := lastarg.(func())
-	f2, isf2 := lastarg.(func(float64))
+	f2, isf2 := lastarg.(func(interface{}))
 
 	f1 = f1
 	f2 = f2
@@ -92,7 +92,7 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 				case isf1:
 					f1()
 				case isf2:
-					f2(val.(float64))
+					f2(val)
 				}
 			}
 
@@ -124,7 +124,7 @@ func main() {
 		send(API, "bind", "d", []string{"cmd", "shift"}, func() {
 			send(API, "alert", "there", 1)
 
-			send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i float64) {
+			send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i interface{}) {
 				fmt.Println("inner!", i)
 			})
 
