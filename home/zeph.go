@@ -82,9 +82,10 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 		go func() {
 			val := <-ch
 			numTimes := val.(float64)
-			fmt.Println(numTimes)
+			times := int(numTimes)
+			fmt.Println(times)
 
-			for {
+			blk := func() {
 				val := <-ch
 
 				switch {
@@ -94,18 +95,22 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 					f2(val.(float64))
 				}
 			}
+
+			if numTimes > 0 {
+				for i :=0; i<times; i++ { blk() }
+			} else {
+				for { blk() }
+			}
+			fmt.Println("exiting goroutine")
 		}()
 		fmt.Println("ONE")
 		return nil
 	}
 
-
 	fmt.Println("TWO")
 	resp := <-ch
 	delete(respChans, msgid)
 	return resp
-
-
 }
 
 
@@ -117,6 +122,12 @@ var API uint64 = 0
 func main() {
 	// go func() {
 		send(API, "bind", "d", []string{"cmd", "shift"}, func() {
+			send(API, "alert", "there", 1)
+
+			send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i float64) {
+				fmt.Println("inner!", i)
+			})
+
 			fmt.Println("called!")
 		})
 	// }()
