@@ -51,21 +51,21 @@ func listenForCallbacks() {
 
 var msgid uint64 = 0
 func send(recv uint64, method string, args ...interface{}) interface{} {
-	lastarg := args[len(args)-1]
+	hasFn := false
+	var takesArgs bool
+	var f1 func()
+	var f2 func(interface{})
 
-	f1, isf1 := lastarg.(func())
-	f2, isf2 := lastarg.(func(interface{}))
-
-	f1 = f1
-	f2 = f2
-
-	if isf1 || isf2 {
-		args = args[:len(args) - 1]
+	if len(args) > 0 {
+		lastarg := args[len(args)-1]
+		f1, isf1 := lastarg.(func())
+		f2, isf2 := lastarg.(func(interface{}))
+		hasFn = isf1 || isf2
+		if hasFn {
+			args = args[:len(args) - 1]
+			takesArgs := isf2
+		}
 	}
-
-	// fmt.Println("uhh", isf1, isf2)
-	// fmt.Println("args", args)
-
 
 	msgid++
 
@@ -78,7 +78,7 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 	fmt.Printf("%v\n%v", len(jsonstr), jsonstr)
 	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
 
-	if isf1 || isf2 {
+	if hasFn {
 		go func() {
 			val := <-ch
 			numTimes := val.(float64)
@@ -88,11 +88,10 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 			blk := func() {
 				val := <-ch
 
-				switch {
-				case isf1:
-					f1()
-				case isf2:
+				if takesArgs {
 					f2(val)
+				} else {
+					f1()
 				}
 			}
 
@@ -120,22 +119,16 @@ var API uint64 = 0
 
 
 func main() {
-	// go func() {
-		send(API, "bind", "d", []string{"cmd", "shift"}, func() {
-			send(API, "alert", "there", 1)
+	send(API, "bind", "d", []string{"cmd", "shift"}, func() {
+		send(API, "alert", "there", 1)
 
-			send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i interface{}) {
-				fmt.Println("inner!", i)
-			})
+		win := send(API, "focused_window")
+		fmt.Println(win)
 
-			fmt.Println("called!")
-		})
-	// }()
+		// send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i interface{}) {
+		// 	fmt.Println("inner!", i)
+		// })
+	})
 
-	// go func() {
-		// contents := send(API, "alert", "hi", 1)
-		// send(API, "alert", "there", 1)
-		// fmt.Println(contents)
-	// }()
 	listenForCallbacks()
 }
