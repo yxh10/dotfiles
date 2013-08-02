@@ -5,7 +5,7 @@ import json
 
 
 
-class EchoClient(protocol.Protocol):
+class ZephClient(protocol.Protocol):
     def connectionMade(self):
         # global zephConn
         # zephConn = self
@@ -44,9 +44,9 @@ class EchoClient(protocol.Protocol):
 
         return False
 
-class EchoFactory(protocol.ClientFactory):
-    protocol = EchoClient
+class ZephClientFactory(protocol.ClientFactory):
+    protocol = ZephClient
 
-f = EchoFactory()
+f = ZephClientFacgtory()
 reactor.connectTCP("localhost", 1235, f)
 reactor.run()
