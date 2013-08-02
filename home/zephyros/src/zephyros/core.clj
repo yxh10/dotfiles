@@ -8,17 +8,19 @@
 
 (declare conn-handler)
 
+(def chans (ref {}))
+
 (defn connect [server]
   (let [socket (Socket. (:name server) (:port server))
         in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
         out (PrintWriter. (.getOutputStream socket))
-        conn (ref {:in in :out out :chan (ArrayBlockingQueue. 10)})]
+        conn (ref {:in in :out out :socket socket})]
     (doto (Thread. #(conn-handler conn)) (.start))
     conn))
 
 (defn write [conn msg]
   (doto (:out @conn)
-    (.println (str msg "\r"))
+    (.print msg)
     (.flush)))
 
 (defn conn-handler [conn]
@@ -26,15 +28,36 @@
     (let [msg-size (Integer/parseInt (.readLine (:in @conn)))
           msg (take msg-size (repeatedly #(.read (:in @conn))))
           msg-str (apply str (map char msg))
-          json (json/read-str msg-str)]
-      (.put (:chan @conn) json))))
+          json (json/read-str msg-str)
+          msg-id (json 0)
+          chan (get @chans msg-id)]
+      (.put chan json))))
+
+(def conn (connect zephyros-server))
+(def max-msg-id (atom 0))
+
+(def api 0)
+
+(defn send-msg [& args]
+  (let [msg-id (swap! max-msg-id inc)
+        json-str (json/write-str (concat [msg-id] args))
+        json-str-size (count json-str)
+        _ (prn "SENDING" json-str)
+        chan (ArrayBlockingQueue. 10)]
+    (dosync
+     (alter chans assoc msg-id chan))
+    (write conn (format "%s\n%s", json-str-size, json-str))
+    chan))
+
+(defn get-response [chan]
+  (-> (.take chan)
+      (second)))
 
 (defn -main []
-  (let [s (json/write-str [1, 0, "bind", "d", ["cmd" "shift"]])
-        size (count s)
-        conn (connect zephyros-server)]
-    (write conn (format "%s\n%s", size, s))
-    (while (nil? (:exit @conn))
-      (prn "its" (.take (:chan @conn)))
+  (let [chan (send-msg api "bind" "d" ["cmd" "shift"])]
+    (doseq [val (repeatedly #(get-response chan))]
+      (prn "bind callback arg" val)
+      (prn "alert respone " (get-response (send-msg api "alert" "hello world" 1)))
 
-      )))
+      (let [win (get (get-response (send-msg api "focused_window")) "_id")]
+        (prn "win frame " (get-response (send-msg win "frame")))))))
