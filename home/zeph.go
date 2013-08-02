@@ -29,8 +29,6 @@ func convert(obj interface{}) interface{} {
 func listenForCallbacks() {
 	reader := bufio.NewReader(c)
 	for {
-		// fmt.Println("about to read")
-
 		numBytes, _ := reader.ReadString('\n')
 		numBytes = strings.Trim(numBytes, "\n")
 		i, _ := strconv.ParseUint(numBytes, 10, 64)
@@ -78,7 +76,6 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 	msg := []interface{}{msgid, recv, method}
 	val, _ := json.Marshal(append(msg, args...))
 	jsonstr := string(val)
-	fmt.Printf("%v\n%v", len(jsonstr), jsonstr)
 	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
 
 	if hasFn {
@@ -86,7 +83,6 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 			val := <-ch
 			numTimes := val.(float64)
 			times := int(numTimes)
-			fmt.Println(times)
 
 			blk := func() {
 				val := <-ch
@@ -103,13 +99,10 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 			} else {
 				for { blk() }
 			}
-			fmt.Println("exiting goroutine")
 		}()
-		fmt.Println("ONE")
 		return nil
 	}
 
-	fmt.Println("TWO")
 	resp := <-ch
 	delete(respChans, msgid)
 	return resp
