@@ -17,7 +17,14 @@ func connect() net.Conn {
 
 var c net.Conn = connect()
 
-var respChans = make(map[uint64]chan interface{})
+var respChans = make(map[float64]chan interface{})
+
+func convert(obj interface{}) interface{} {
+	if m, ok := obj.(map[string]interface{}); ok {
+		return m["_id"]
+	}
+	return obj
+}
 
 func listenForCallbacks() {
 	reader := bufio.NewReader(c)
@@ -35,12 +42,7 @@ func listenForCallbacks() {
 		json.Unmarshal(buf, &msg)
 
 		id, obj := msg[0], msg[1]
-		id2 := id.(float64)
-
-		fmt.Printf("id = %v\n", id)
-		fmt.Printf("msg = %#v\n", obj)
-
-		respChans[uint64(id2)] <- obj
+		respChans[id.(float64)] <- convert(obj)
 	}
 }
 
@@ -49,8 +51,8 @@ func listenForCallbacks() {
 
 
 
-var msgid uint64 = 0
-func send(recv uint64, method string, args ...interface{}) interface{} {
+var msgid float64 = 0
+func send(recv float64, method string, args ...interface{}) interface{} {
 	hasFn := false
 	var takesArgs bool
 	var f1 func()
@@ -116,7 +118,7 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 
 
 
-var API uint64 = 0
+var API float64 = 0
 
 
 func main() {
@@ -124,7 +126,7 @@ func main() {
 		send(API, "alert", "there", 1)
 
 		win := send(API, "focused_window")
-		fmt.Println(win)
+		fmt.Printf("win = %#v\n", send(win.(float64), "title"))
 
 		// send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i interface{}) {
 		// 	fmt.Println("inner!", i)
