@@ -58,12 +58,13 @@ func send(recv uint64, method string, args ...interface{}) interface{} {
 
 	if len(args) > 0 {
 		lastarg := args[len(args)-1]
-		f1, isf1 := lastarg.(func())
-		f2, isf2 := lastarg.(func(interface{}))
+		var isf1, isf2 bool
+		f1, isf1 = lastarg.(func())
+		f2, isf2 = lastarg.(func(interface{}))
 		hasFn = isf1 || isf2
 		if hasFn {
 			args = args[:len(args) - 1]
-			takesArgs := isf2
+			takesArgs = isf2
 		}
 	}
 
