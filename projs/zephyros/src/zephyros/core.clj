@@ -82,10 +82,11 @@
        (f)))))
 
 (defn -main []
+
   (bind "d" ["cmd" "shift"]
         (fn []
           (alert "foo" 1)))
-  (prn "ok")
+
   (bind "f" ["cmd" "shift"]
         (fn []
           (prn "waiting")
