@@ -37,34 +37,31 @@
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
         json-str-size (count json-str)
-        _ (println "SENDING" json-str)
         chan (ArrayBlockingQueue. 10)]
     (dosync
      (alter chans assoc msg-id chan))
     (write conn (format "%s\n%s", json-str-size, json-str))
-    {:kill-chan #(dosync (alter chans dissoc msg-id))
-     :get-val #(second (.take chan))}))
-
-
-
+    {:kill #(dosync (alter chans dissoc msg-id))
+     :get #(do
+             (second (.take chan)))}))
 
 (defn get-one-value [& args]
   (let [resp (send-msg args)
-        val ((:get-val resp))]
-    ((:kill-chan resp))
+        val ((:get resp))]
+    ((:kill resp))
     val))
 
 (defn do-callback-once [f & args]
   (future
     (let [resp (send-msg args)
-          num-times ((:get-val resp))
-          val ((:get-val resp))]
-      ((:kill-chan resp))
+          num-times ((:get resp))
+          val ((:get resp))]
+      ((:kill resp))
       (f val))))
 
-;; (defn do-callback-indefinitely [f & args]
-;;   (future
-;;     (let [resp (send-msg args)]
-;;       ((:get-val resp))
-;;       (doseq [val (repeatedly (:get-val resp))]
-;;         (f)))))
+(defn do-callback-indefinitely [f & args]
+  (future
+    (let [resp (send-msg args)]
+      ((:get resp))
+      (doseq [val (repeatedly (:get resp))]
+        (f val)))))
