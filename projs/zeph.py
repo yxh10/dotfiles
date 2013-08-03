@@ -3,10 +3,18 @@ import json
 
 setupper = None
 
+class API:
+    def __init__(self, zeph):
+        self.zeph = zeph
+        pass
+
+
+
 class ZephClient(protocol.Protocol):
     def connectionMade(self):
         self.buf = ''
         self.readingSize = None
+        self.api = API(self)
         setupper(self)
 
     def sendMsg(self, msg):
