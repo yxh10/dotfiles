@@ -1,20 +1,13 @@
 from twisted.internet import reactor, protocol
 import json
 
-# zephConn = None
-
-
+setupper = None
 
 class ZephClient(protocol.Protocol):
     def connectionMade(self):
-        # global zephConn
-        # zephConn = self
-        print self
-
         self.buf = ''
         self.readingSize = None
-
-        self.sendMsg([0, 0, 'bind', 'd', ['cmd', 'shift']])
+        setupper(self)
 
     def sendMsg(self, msg):
         msgStr = json.dumps(msg)
@@ -52,10 +45,14 @@ class ZephClientFactory(protocol.ClientFactory):
         print connector
 
 
-def startDoingStuff(handler):
-    f = ZephClientFactory()
-    reactor.connectTCP("localhost", 1235, f)
+def zephyros(f):
+    global setupper
+    setupper = f
+    factory = ZephClientFactory()
+    reactor.connectTCP("localhost", 1235, factory)
     reactor.run()
 
 
-startDoingStuff(None)
+@zephyros
+def stuff(zeph):
+    zeph.sendMsg([0, 0, 'bind', 'd', ['cmd', 'shift']])
