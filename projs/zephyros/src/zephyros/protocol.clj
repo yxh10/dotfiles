@@ -4,12 +4,17 @@
            [java.util.concurrent ArrayBlockingQueue]
            [java.io PrintWriter InputStreamReader BufferedReader]))
 
-
-(def zephyros-server {:name "localhost" :port 1235})
-
-(declare conn-handler)
-
 (def chans (ref {}))
+
+(defn conn-handler [conn]
+  (while (nil? (:exit @conn))
+    (let [msg-size (Integer/parseInt (.readLine (:in @conn)))
+          msg (take msg-size (repeatedly #(.read (:in @conn))))
+          msg-str (apply str (map char msg))
+          json (json/read-str msg-str)
+          msg-id (json 0)
+          chan (get @chans msg-id)]
+      (.put chan json))))
 
 (defn connect [server]
   (let [socket (Socket. (:name server) (:port server))
@@ -24,16 +29,7 @@
     (.print msg)
     (.flush)))
 
-(defn conn-handler [conn]
-  (while (nil? (:exit @conn))
-    (let [msg-size (Integer/parseInt (.readLine (:in @conn)))
-          msg (take msg-size (repeatedly #(.read (:in @conn))))
-          msg-str (apply str (map char msg))
-          json (json/read-str msg-str)
-          msg-id (json 0)
-          chan (get @chans msg-id)]
-      (.put chan json))))
-
+(def zephyros-server {:name "localhost" :port 1235})
 (def conn (connect zephyros-server))
 (def max-msg-id (atom 0))
 

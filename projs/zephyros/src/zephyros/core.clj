@@ -23,6 +23,14 @@
       (doseq [val (repeatedly (:get-val resp))]
         (f)))))
 
+
+
+
+
+
+;; (ns zephyros.core
+;;   (:require [zephyros.api :refer :all]))
+
 (defn -main []
 
   (bind "d" ["cmd" "shift"]
