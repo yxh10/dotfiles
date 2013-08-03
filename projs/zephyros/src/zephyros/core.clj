@@ -59,5 +59,15 @@
       (prn "bind callback arg" val)
       (prn "alert respone " (get-response (send-msg api "alert" "hello world" 1)))
 
-      (let [win (get (get-response (send-msg api "focused_window")) "_id")]
-        (prn "win frame " (get-response (send-msg win "frame")))))))
+      (let [win (get-response (send-msg api "focused_window"))
+            frame (get-response (send-msg win "frame"))
+            _ (prn frame)
+            frame (update-in frame ["x"] + 10)
+            _ (prn frame)
+            ]
+
+        (send-msg win "set_frame" frame)
+
+        ;; (prn win)
+        ;; (prn "win frame " )
+        ))))
