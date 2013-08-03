@@ -6,10 +6,11 @@
   (bind "d" ["cmd" "shift"]
         (fn []
           (let [win (get-focused-window)
-                _ (prn win)
-                title (get-title win)
-                _ (prn title)]
+                frame (-> (get-frame win)
+                          (update-in [:w] - 20))
+                _ (set-frame win frame)]
 
-            (alert title 1))))
+            ;; (alert frame 1)
+            )))
 
   (println "ready"))

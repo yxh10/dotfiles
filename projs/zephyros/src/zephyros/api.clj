@@ -30,3 +30,21 @@
 
 (defn get-title [w]
   (get-one-value w "title"))
+
+(defn get-frame [w]
+  (keywordize (get-one-value w "frame")))
+
+(defn get-size [w]
+  (keywordize (get-one-value w "size")))
+
+(defn get-top-left [w]
+  (keywordize (get-one-value w "top_left")))
+
+(defn set-frame [w f]
+  (keywordize (get-one-value w "set_frame" f)))
+
+(defn set-size [w s]
+  (keywordize (get-one-value w "set_size" s)))
+
+(defn set-top-left [w tl]
+  (keywordize (get-one-value w "set_top_left" tl)))
