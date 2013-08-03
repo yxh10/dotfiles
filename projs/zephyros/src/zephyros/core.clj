@@ -6,9 +6,10 @@
   (bind "d" ["cmd" "shift"]
         (fn []
           (let [win (get-focused-window)]
-            (set-frame win
-                       (-> (get-frame win)
-                           (update-in [:w] - 20)))
+            (maximize win)
+            ;; (set-frame win
+            ;;            (-> (get-frame win)
+            ;;                (update-in [:w] - 20)))
 
             ;; (alert frame 1)
             )))
