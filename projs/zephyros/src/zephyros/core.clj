@@ -5,10 +5,10 @@
 
   (bind "d" ["cmd" "shift"]
         (fn []
-          (let [win (get-focused-window)
-                frame (-> (get-frame win)
-                          (update-in [:w] - 20))
-                _ (set-frame win frame)]
+          (let [win (get-focused-window)]
+            (set-frame win
+                       (-> (get-frame win)
+                           (update-in [:w] - 20)))
 
             ;; (alert frame 1)
             )))
