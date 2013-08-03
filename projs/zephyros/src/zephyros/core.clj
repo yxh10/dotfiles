@@ -10,12 +10,16 @@
 
 (def chans (ref {}))
 
+(defmacro do-in-background [& body]
+  `(doto (Thread. (fn [] ~@body))
+     (.start)))
+
 (defn connect [server]
   (let [socket (Socket. (:name server) (:port server))
         in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
         out (PrintWriter. (.getOutputStream socket))
         conn (ref {:in in :out out :socket socket})]
-    (doto (Thread. #(conn-handler conn)) (.start))
+    (do-in-background (conn-handler conn))
     conn))
 
 (defn write [conn msg]
@@ -36,38 +40,70 @@
 (def conn (connect zephyros-server))
 (def max-msg-id (atom 0))
 
-(def api 0)
 
 (defn send-msg [& args]
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
         json-str-size (count json-str)
-        _ (prn "SENDING" json-str)
+        _ (println "SENDING" json-str)
         chan (ArrayBlockingQueue. 10)]
     (dosync
      (alter chans assoc msg-id chan))
     (write conn (format "%s\n%s", json-str-size, json-str))
-    chan))
+    {:kill-chan #(dosync (alter chans dissoc msg-id))
+     :get-val #(second (.take chan))}))
 
-(defn get-response [chan]
-  (-> (.take chan)
-      (second)))
+
+
+
+
+(def api 0)
+
+(defn alert [msg duration]
+  (let [resp (send-msg api "alert" msg duration)
+        val ((:get-val resp))]
+    ((:kill-chan resp))
+    val))
+
+
+(defn choose-from [list title f]
+  (do-in-background
+   (let [resp (send-msg api "choose_from" list title 20 10)
+         num-times ((:get-val resp))
+         idx ((:get-val resp))]
+     ((:kill-chan resp))
+     (f idx))))
+
+(defn bind [key mods f]
+  (do-in-background
+   (let [resp (send-msg api "bind" key mods)]
+     ((:get-val resp))
+     (doseq [val (repeatedly (:get-val resp))]
+       (f)))))
 
 (defn -main []
-  (let [chan (send-msg api "bind" "d" ["cmd" "shift"])]
-    (doseq [val (repeatedly #(get-response chan))]
-      (prn "bind callback arg" val)
-      (prn "alert respone " (get-response (send-msg api "alert" "hello world" 1)))
+  (bind "d" ["cmd" "shift"]
+        (fn []
+          (alert "foo" 1)))
+  (prn "ok")
+  (bind "f" ["cmd" "shift"]
+        (fn []
+          (prn "waiting")
+          (choose-from ["foo" "bar"] "stuff"
+                       (fn [i]
+                         (prn "it was" i)))))
 
-      (let [win (get-response (send-msg api "focused_window"))
-            frame (get-response (send-msg win "frame"))
-            _ (prn frame)
-            frame (update-in frame ["x"] + 10)
-            _ (prn frame)
-            ]
-
-        (send-msg win "set_frame" frame)
-
-        ;; (prn win)
-        ;; (prn "win frame " )
-        ))))
+  ;; (let []
+  ;;   ;;   ;; (let [win ((:get-val (send-msg api "focused_window")))
+  ;;   ;;   ;;       frame ((:get-val (send-msg win "frame")))
+  ;;   ;;   ;;       _ (prn frame)
+  ;;   ;;   ;;       frame (update-in frame ["x"] + 10)
+  ;;   ;;   ;;       _ (prn frame)
+  ;;   ;;   ;;       ]
+  ;;   ;;   ;;   (send-msg win "set_frame" frame)
+  ;;   ;;   ;;   ;; (prn win)
+  ;;   ;;   ;;   ;; (prn "win frame " )
+  ;;   ;;   ;;   )
+  ;;   ;;   )
+  ;;   )
+  )
