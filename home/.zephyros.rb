@@ -104,3 +104,7 @@ API.bind 'U', mash do
   r.h = 2
   win.set_grid r, nil
 end
+
+
+
+wait_on_callbacks
