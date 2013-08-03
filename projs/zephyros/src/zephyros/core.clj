@@ -5,7 +5,6 @@
 
   (bind "d" ["cmd" "shift"]
         (fn []
-          (/ 1 0)
           (alert "foo" 1)))
 
   (listen "app_launched"

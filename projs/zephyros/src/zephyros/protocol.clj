@@ -4,22 +4,6 @@
            [java.util.concurrent ArrayBlockingQueue]
            [java.io PrintWriter InputStreamReader BufferedReader]))
 
-;; (def handler
-;;   (proxy [Thread$UncaughtExceptionHandler] []
-;;     (uncaughtException [thread exception]
-;;       (println "crap")
-;;       (println thread exception))))
-
-;; (Thread/setDefaultUncaughtExceptionHandler handler)
-
-(Thread/setDefaultUncaughtExceptionHandler
- (reify Thread$UncaughtExceptionHandler
-   (uncaughtException [this thread throwable]
-     (println "foo")
-     (flush)
-     ;; do something with the exception here.. log it, for example.
-     )))
-
 (def chans (ref {}))
 
 (defn conn-handler [conn]
@@ -66,17 +50,26 @@
     ((:kill resp))
     val))
 
+(defmacro safe-callback [& body]
+  `(try
+     ~@body
+     (catch Exception e#
+       (println e#)
+       (.printStackTrace e#))))
+
 (defn do-callback-once [f & args]
   (future
     (let [resp (send-msg args)
           num-times ((:get resp))
           val ((:get resp))]
       ((:kill resp))
-      (f val))))
+      (safe-callback
+       (f val)))))
 
 (defn do-callback-indefinitely [f & args]
   (future
     (let [resp (send-msg args)]
       ((:get resp))
       (doseq [val (repeatedly (:get resp))]
-        (f val)))))
+        (safe-callback
+         (f val))))))
