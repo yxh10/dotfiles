@@ -37,7 +37,6 @@
 (def conn (connect zephyros-server))
 (def max-msg-id (atom 0))
 
-
 (defn send-msg [args]
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
@@ -49,3 +48,27 @@
     (write conn (format "%s\n%s", json-str-size, json-str))
     {:kill-chan #(dosync (alter chans dissoc msg-id))
      :get-val #(second (.take chan))}))
+
+
+
+
+(defn get-one-value [& args]
+  (let [resp (send-msg args)
+        val ((:get-val resp))]
+    ((:kill-chan resp))
+    val))
+
+(defn do-callback-once [f & args]
+  (future
+    (let [resp (send-msg args)
+          num-times ((:get-val resp))
+          val ((:get-val resp))]
+      ((:kill-chan resp))
+      (f val))))
+
+;; (defn do-callback-indefinitely [f & args]
+;;   (future
+;;     (let [resp (send-msg args)]
+;;       ((:get-val resp))
+;;       (doseq [val (repeatedly (:get-val resp))]
+;;         (f)))))

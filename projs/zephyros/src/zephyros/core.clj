@@ -1,35 +1,6 @@
 (ns zephyros.core
   (:require [zephyros.protocol :refer :all]))
 
-
-
-
-
-(defn get-one-value [& args]
-  (let [resp (send-msg args)
-        val ((:get-val resp))]
-    ((:kill-chan resp))
-    val))
-
-(defn do-callback-once [f & args]
-  (future
-    (let [resp (send-msg args)
-          num-times ((:get-val resp))
-          val ((:get-val resp))]
-      ((:kill-chan resp))
-      (f val))))
-
-;; (defn do-callback-indefinitely [f & args]
-;;   (future
-;;     (let [resp (send-msg args)]
-;;       ((:get-val resp))
-;;       (doseq [val (repeatedly (:get-val resp))]
-;;         (f)))))
-
-
-
-
-
 (def api 0)
 
 (defn alert [msg duration]
