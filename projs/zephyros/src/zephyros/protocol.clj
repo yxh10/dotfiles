@@ -6,6 +6,13 @@
 
 (def chans (ref {}))
 
+(defmacro safely-do-in-background [& body]
+  `(future
+     (try
+       ~@body
+       (catch Exception e#
+         (.printStackTrace e#)))))
+
 (defn conn-handler [conn]
   (while (nil? (:exit @conn))
     (let [msg-size (Integer/parseInt (.readLine (:in @conn)))
@@ -21,7 +28,7 @@
         in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
         out (PrintWriter. (.getOutputStream socket))
         conn (ref {:in in :out out :socket socket})]
-    (future (conn-handler conn))
+    (safely-do-in-background (conn-handler conn))
     conn))
 
 (defn write [conn msg]
@@ -50,26 +57,17 @@
     ((:kill resp))
     val))
 
-(defmacro safe-callback [& body]
-  `(try
-     ~@body
-     (catch Exception e#
-       (println e#)
-       (.printStackTrace e#))))
-
 (defn do-callback-once [f & args]
-  (future
+  (safely-do-in-background
     (let [resp (send-msg args)
           num-times ((:get resp))
           val ((:get resp))]
       ((:kill resp))
-      (safe-callback
-       (f val)))))
+      (f val))))
 
 (defn do-callback-indefinitely [f & args]
-  (future
+  (safely-do-in-background
     (let [resp (send-msg args)]
       ((:get resp))
       (doseq [val (repeatedly (:get resp))]
-        (safe-callback
-         (f val))))))
+        (f val)))))
