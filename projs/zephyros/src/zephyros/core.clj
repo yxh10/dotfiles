@@ -10,16 +10,12 @@
 
 (def chans (ref {}))
 
-(defmacro do-in-background [& body]
-  `(doto (Thread. (fn [] ~@body))
-     (.start)))
-
 (defn connect [server]
   (let [socket (Socket. (:name server) (:port server))
         in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
         out (PrintWriter. (.getOutputStream socket))
         conn (ref {:in in :out out :socket socket})]
-    (do-in-background (conn-handler conn))
+    (future (conn-handler conn))
     conn))
 
 (defn write [conn msg]
@@ -67,7 +63,7 @@
 
 
 (defn choose-from [list title f]
-  (do-in-background
+  (future
    (let [resp (send-msg api "choose_from" list title 20 10)
          num-times ((:get-val resp))
          idx ((:get-val resp))]
@@ -75,7 +71,7 @@
      (f idx))))
 
 (defn bind [key mods f]
-  (do-in-background
+  (future
    (let [resp (send-msg api "bind" key mods)]
      ((:get-val resp))
      (doseq [val (repeatedly (:get-val resp))]
