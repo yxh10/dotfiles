@@ -37,7 +37,7 @@
 (def max-msg-id (atom 0))
 
 
-(defn send-msg [& args]
+(defn send-msg [args]
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
         json-str-size (count json-str)
@@ -53,35 +53,62 @@
 
 
 
-(def api 0)
-
-(defn alert [msg duration]
-  (let [resp (send-msg api "alert" msg duration)
+(defn get-one-value [& args]
+  (let [resp (send-msg args)
         val ((:get-val resp))]
     ((:kill-chan resp))
     val))
 
+(defn do-callback-once [f & args]
+  (future
+    (let [resp (send-msg args)
+          num-times ((:get-val resp))
+          val ((:get-val resp))]
+      ((:kill-chan resp))
+      (f val))))
+
+;; (defn do-callback-indefinitely [f & args]
+;;   (future
+;;     (let [resp (send-msg args)]
+;;       ((:get-val resp))
+;;       (doseq [val (repeatedly (:get-val resp))]
+;;         (f)))))
+
+
+
+
+
+(def api 0)
+
+(defn alert [msg duration]
+  (get-one-value api "alert" msg duration))
 
 (defn choose-from [list title f]
-  (future
-   (let [resp (send-msg api "choose_from" list title 20 10)
-         num-times ((:get-val resp))
-         idx ((:get-val resp))]
-     ((:kill-chan resp))
-     (f idx))))
+  (do-callback-once f api "choose_from" list title 20 10))
 
 (defn bind [key mods f]
   (future
-   (let [resp (send-msg api "bind" key mods)]
+   (let [resp (send-msg [api "bind" key mods])]
      ((:get-val resp))
      (doseq [val (repeatedly (:get-val resp))]
        (f)))))
+
+(defn listen [event f]
+  (future
+    (let [resp (send-msg [api "listen" event])]
+      ((:get-val resp))
+      (doseq [val (repeatedly (:get-val resp))]
+        (f)))))
 
 (defn -main []
 
   (bind "d" ["cmd" "shift"]
         (fn []
           (alert "foo" 1)))
+
+  (listen "app_launched"
+        (fn [app]
+          (prn "app launched!" app)))
 
   (bind "f" ["cmd" "shift"]
         (fn []
