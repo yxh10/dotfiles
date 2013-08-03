@@ -38,11 +38,22 @@ func listenForCallbacks() {
 }
 
 
+var msgidChan chan float64 = make(chan float64)
+
+func init() {
+	go func() {
+		var i float64 = 0
+		for {
+			i++
+			msgidChan <- i
+		}
+	}()
+}
 
 
 
 
-var msgid float64 = 0
+
 func send(recv float64, method string, args ...interface{}) interface{} {
 	hasFn := false
 	var takesArgs bool
@@ -61,7 +72,7 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 		}
 	}
 
-	msgid++
+	msgid := <- msgidChan
 
 	ch := make(chan interface{}, 10) // probably enough
 	respChans[msgid] = ch
@@ -92,6 +103,8 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 			} else {
 				for { blk() }
 			}
+
+			delete(respChans, msgid)
 		}()
 		return nil
 	}
@@ -101,30 +114,119 @@ func send(recv float64, method string, args ...interface{}) interface{} {
 	return resp
 }
 
+func sendSync(recv float64, method string, args ...interface{}) interface{} {
+	msgid := <- msgidChan
+
+	ch := make(chan interface{}, 10) // probably enough
+	respChans[msgid] = ch
+
+	msg := []interface{}{msgid, recv, method}
+	val, _ := json.Marshal(append(msg, args...))
+	jsonstr := string(val)
+	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
+
+	resp := <-ch
+	delete(respChans, msgid)
+	return resp
+}
+
+func sendAsync0(recv float64, method string, fn func(), args ...interface{}) interface{} {
+	msgid := <- msgidChan
+
+	ch := make(chan interface{}, 10) // probably enough
+	respChans[msgid] = ch
+
+	msg := []interface{}{msgid, recv, method}
+	val, _ := json.Marshal(append(msg, args...))
+	jsonstr := string(val)
+	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
+
+	go func() {
+		val := <-ch
+		numTimes := val.(float64)
+		times := int(numTimes)
+
+		blk := func() {
+			<-ch
+			fn()
+		}
+
+		if numTimes > 0 {
+			for i :=0; i<times; i++ { blk() }
+		} else {
+			for { blk() }
+		}
+
+		delete(respChans, msgid)
+	}()
+	return nil
+}
+
+func sendAsync1(recv float64, method string, fn func(interface{}), args ...interface{}) interface{} {
+	msgid := <- msgidChan
+
+	ch := make(chan interface{}, 10) // probably enough
+	respChans[msgid] = ch
+
+	msg := []interface{}{msgid, recv, method}
+	val, _ := json.Marshal(append(msg, args...))
+	jsonstr := string(val)
+	fmt.Fprintf(c, "%v\n%v", len(jsonstr), jsonstr)
+
+	go func() {
+		val := <-ch
+		numTimes := val.(float64)
+		times := int(numTimes)
+
+		blk := func() {
+			val := <-ch
+			fn(val)
+		}
+
+		if numTimes > 0 {
+			for i :=0; i<times; i++ { blk() }
+		} else {
+			for { blk() }
+		}
+
+		delete(respChans, msgid)
+	}()
+	return nil
+}
 
 
 
-var API float64 = 0
+type api float64
+
+func (self api) bind(key string, mods []string, fn func()) {
+	send(float64(self), "bind", key, mods, fn)
+}
+
+func (self api) alert(msg string, dur int) {
+	send(float64(self), "alert", msg, dur)
+}
+
+var API api = 0
 
 
 func main() {
-	send(API, "bind", "d", []string{"cmd", "shift"}, func() {
-		send(API, "alert", "there", 1)
+	API.bind("d", []string{"cmd", "shift"}, func() {
+		API.alert("LIKE", 1)
 
-		win := send(API, "visible_windows")
-		title := send(win.([]interface{})[0].(float64), "title")
-		fmt.Println(title)
+		// win := send(API, "visible_windows")
+		// title := send(win.([]interface{})[0].(float64), "title")
+		// fmt.Println(title)
 
-		{
-			win := send(API, "focused_window")
-			frame := send(win.(float64), "frame").(map[string]interface{})
-			w := frame["w"].(float64)
-			w -= 10
-			frame["w"] = w
-			send(win.(float64), "set_frame", frame)
+		// {
+		// 	win := send(API, "focused_window")
+		// 	frame := send(win.(float64), "frame").(map[string]interface{})
+		// 	w := frame["w"].(float64)
+		// 	w -= 10
+		// 	frame["w"] = w
+		// 	send(win.(float64), "set_frame", frame)
 
-			fmt.Println(frame)
-		}
+		// 	fmt.Println(frame)
+		// }
 
 		// send(API, "choose_from", []string{"foo", "bar"}, "title", 20, 20, func(i interface{}) {
 		// 	fmt.Println("inner!", i)
