@@ -19,14 +19,14 @@
           msg (take msg-size (repeatedly #(.read (:in @conn))))
           msg-str (apply str (map char msg))
           json (json/read-str msg-str)
-          _ (println "GOT" json)
+          ;; _ (println "GOT" json)
           msg-id (json 0)
           chan (get @chans msg-id)]
       (.put chan json))))
 
 (defn connect [server]
   (let [socket (Socket. (:name server) (:port server))
-        in (BufferedReader. (InputStreamReader. (.getInputStream socket)))
+        in (BufferedReader. (InputStreamReader. (.getInputStream socket) "UTF-8"))
         out (PrintWriter. (.getOutputStream socket))
         conn (ref {:in in :out out :socket socket})]
     (safely-do-in-background (conn-handler conn))
@@ -44,7 +44,7 @@
 (defn send-msg [args]
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
-        _ (println "SENDING" json-str)
+        ;; _ (println "SENDING" json-str)
         json-str-size (count json-str)
         chan (ArrayBlockingQueue. 10)]
     (dosync
