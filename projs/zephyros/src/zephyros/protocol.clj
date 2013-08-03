@@ -4,6 +4,22 @@
            [java.util.concurrent ArrayBlockingQueue]
            [java.io PrintWriter InputStreamReader BufferedReader]))
 
+;; (def handler
+;;   (proxy [Thread$UncaughtExceptionHandler] []
+;;     (uncaughtException [thread exception]
+;;       (println "crap")
+;;       (println thread exception))))
+
+;; (Thread/setDefaultUncaughtExceptionHandler handler)
+
+(Thread/setDefaultUncaughtExceptionHandler
+ (reify Thread$UncaughtExceptionHandler
+   (uncaughtException [this thread throwable]
+     (println "foo")
+     (flush)
+     ;; do something with the exception here.. log it, for example.
+     )))
+
 (def chans (ref {}))
 
 (defn conn-handler [conn]
@@ -42,8 +58,7 @@
      (alter chans assoc msg-id chan))
     (write conn (format "%s\n%s", json-str-size, json-str))
     {:kill #(dosync (alter chans dissoc msg-id))
-     :get #(do
-             (second (.take chan)))}))
+     :get #(second (.take chan))}))
 
 (defn get-one-value [& args]
   (let [resp (send-msg args)

@@ -10,7 +10,7 @@
   (do-callback-once f api "choose_from" list title 20 10))
 
 (defn bind [key mods f]
-  (do-callback-indefinitely #(f) api "bind" key mods))
+  (do-callback-indefinitely (fn [_] (f)) api "bind" key mods))
 
 (defn listen [event f]
   (do-callback-indefinitely #(f %) api "listen" event))
