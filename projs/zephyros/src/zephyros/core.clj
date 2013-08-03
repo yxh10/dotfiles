@@ -5,17 +5,11 @@
 
   (bind "d" ["cmd" "shift"]
         (fn []
-          (alert "foo" 1)))
+          (let [win (get-focused-window)
+                _ (prn win)
+                title (get-title win)
+                _ (prn title)]
 
-  (listen "app_launched"
-          (fn [app]
-            (prn "app launched!" app)))
-
-  (bind "f" ["cmd" "shift"]
-        (fn []
-          (prn "waiting")
-          (choose-from ["foo" "bar"] "stuff"
-                       (fn [i]
-                         (prn "it was" i)))))
+            (alert title 1))))
 
   (println "ready"))

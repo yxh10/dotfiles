@@ -19,6 +19,7 @@
           msg (take msg-size (repeatedly #(.read (:in @conn))))
           msg-str (apply str (map char msg))
           json (json/read-str msg-str)
+          _ (println "GOT" json)
           msg-id (json 0)
           chan (get @chans msg-id)]
       (.put chan json))))
@@ -43,6 +44,7 @@
 (defn send-msg [args]
   (let [msg-id (swap! max-msg-id inc)
         json-str (json/write-str (concat [msg-id] args))
+        _ (println "SENDING" json-str)
         json-str-size (count json-str)
         chan (ArrayBlockingQueue. 10)]
     (dosync
