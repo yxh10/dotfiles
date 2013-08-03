@@ -19,18 +19,6 @@ var c net.Conn = connect()
 
 var respChans = make(map[float64]chan interface{})
 
-func convert(obj interface{}) interface{} {
-	if m, ok := obj.(map[string]interface{}); ok && m["_type"] != nil {
-		return m["_id"]
-	}
-	if sl, ok := obj.([]interface{}); ok {
-		for i, child := range sl {
-			sl[i] = convert(child)
-		}
-	}
-	return obj
-}
-
 func listenForCallbacks() {
 	reader := bufio.NewReader(c)
 	for {
@@ -45,7 +33,7 @@ func listenForCallbacks() {
 		json.Unmarshal(buf, &msg)
 
 		id, obj := msg[0], msg[1]
-		respChans[id.(float64)] <- convert(obj)
+		respChans[id.(float64)] <- obj
 	}
 }
 
