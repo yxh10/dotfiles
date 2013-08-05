@@ -90,7 +90,7 @@ runInBackground(sendDataFully)
 individualMessageQueues = {}
 
 
-def sendMessage(msg):
+def sendMessage(msg, infinite=True, callback=None):
   msgId = reifiedMsgIdGen.next()
   tempSendQueue = Queue.Queue(10)
   individualMessageQueues[msgId] = tempSendQueue
@@ -99,8 +99,23 @@ def sendMessage(msg):
   msgStr = json.dumps(msg)
   sendDataQueue.put(str(len(msgStr)) + '\n' + msgStr)
 
-  retVal = tempSendQueue.get()
-  return retVal
+  if callback is not None:
+    def tempFn():
+      if infinite:
+        retVal = tempSendQueue.get()
+        while True:
+          obj = tempSendQueue.get()
+          callback(obj)
+      else:
+        for i in xrange(responses):
+          obj = tempSendQueue.get()
+          callback(obj)
+    # tempFn()
+    runInBackground(tempFn)
+    return None
+  else:
+    return tempSendQueue.get()
+
 
 
 def dispatchIndividualMessagesForever():
@@ -111,12 +126,12 @@ def dispatchIndividualMessagesForever():
     thisQueue = individualMessageQueues[msgId]
     thisQueue.put(msg)
 
-    print "got msg:", msg
+    # print "got msg:", msg
 
-    if msgId == 1:
-      def tempFn():
-        print sendMessage([0, 'alert', 'stuff', 1])
-      runInBackground(tempFn)
+    # if msgId == 1:
+    #   def tempFn():
+    #
+    #   runInBackground(tempFn)
 
 
 
@@ -124,12 +139,18 @@ runInBackground(dispatchIndividualMessagesForever)
 
 
 
+def zephyros():
+  def bindFn(obj):
+    print 'alert result:', sendMessage([0, 'alert', 'stuff', 1])
 
-a = sendMessage([0, 'bind', 'd', ['cmd', 'shift']])
-print 'hahaha', a
+  a = sendMessage([0, 'bind', 'd', ['cmd', 'shift']], callback=bindFn)
+  print 'bind result:', a
 
 
 
+# zephyros()
+
+runInBackground(zephyros)
 
 while True:
   pass
