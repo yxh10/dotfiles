@@ -61,18 +61,21 @@ class DataReader:
         self.buf = self.buf[idx+1:]
         self.processData()
 
-  def readForever(self):
-    while True:
-      self.buf += s.recv(4096)
-      self.processData()
 
-
-runInBackground(DataReader().readForever)
+@runInBackground
+def readForever():
+  reader = DataReader()
+  while True:
+    reader.buf += s.recv(4096)
+    reader.processData()
 
 
 
 sendDataQueue = Queue.Queue(10)
 
+
+
+@runInBackground
 def sendDataFully():
   while True:
     data = sendDataQueue.get()
@@ -80,10 +83,6 @@ def sendDataFully():
       numWrote = s.send(data)
       data = data[numWrote:]
 
-
-
-
-runInBackground(sendDataFully)
 
 
 
@@ -101,41 +100,28 @@ def sendMessage(msg, infinite=True, callback=None):
 
   if callback is not None:
     def tempFn():
+      tempSendQueue.get() # ignore first
       if infinite:
-        retVal = tempSendQueue.get()
         while True:
           obj = tempSendQueue.get()
           callback(obj)
       else:
-        for i in xrange(responses):
-          obj = tempSendQueue.get()
-          callback(obj)
-    # tempFn()
+        obj = tempSendQueue.get()
+        callback(obj)
     runInBackground(tempFn)
     return None
   else:
     return tempSendQueue.get()
 
 
-
+@runInBackground
 def dispatchIndividualMessagesForever():
   while True:
     msg = rawMessageQueue.get()
-
     msgId = msg[0]
     thisQueue = individualMessageQueues[msgId]
     thisQueue.put(msg)
 
-    # print "got msg:", msg
-
-    # if msgId == 1:
-    #   def tempFn():
-    #
-    #   runInBackground(tempFn)
-
-
-
-runInBackground(dispatchIndividualMessagesForever)
 
 
 
@@ -143,12 +129,18 @@ def zephyros():
   def bindFn(obj):
     print 'alert result:', sendMessage([0, 'alert', 'stuff', 1])
 
-  a = sendMessage([0, 'bind', 'd', ['cmd', 'shift']], callback=bindFn)
-  print 'bind result:', a
+  def bindFn2(obj):
+    sendMessage([0, 'choose_from', ['foo', 'bar'], 'title here', 20, 20], callback=chooseFn, infinite=False)
+
+  def chooseFn(obj):
+    print 'ok fine', obj
+
+
+  sendMessage([0, 'bind', 'f', ['cmd', 'shift']], callback=bindFn2)
+  sendMessage([0, 'bind', 'd', ['cmd', 'shift']], callback=bindFn)
 
 
 
-# zephyros()
 
 runInBackground(zephyros)
 
