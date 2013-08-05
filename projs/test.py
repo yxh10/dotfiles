@@ -3,6 +3,7 @@ import threading
 import json
 import Queue
 import sys
+import atexit
 
 
 
@@ -104,14 +105,14 @@ def sendMessage(msg, infinite=True, callback=None):
       if infinite:
         while True:
           obj = tempSendQueue.get()
-          callback(obj)
+          callback(obj[1])
       else:
         obj = tempSendQueue.get()
-        callback(obj)
+        callback(obj[1])
     runInBackground(tempFn)
     return None
   else:
-    return tempSendQueue.get()
+    return tempSendQueue.get()[1]
 
 
 @runInBackground
@@ -122,15 +123,25 @@ def dispatchIndividualMessagesForever():
     thisQueue = individualMessageQueues[msgId]
     thisQueue.put(msg)
 
+def zephyros(fn):
+  runInBackground(fn)
+
+  while True:
+    pass
 
 
 
-def zephyros():
+
+
+
+
+@zephyros
+def myscript():
   def bindFn(obj):
-    print 'alert result:', sendMessage([0, 'alert', 'stuff', 1])
+    print 'alert result:', sendMessage([0, 'alert', 'wit OROLD', 1])
 
   def bindFn2(obj):
-    sendMessage([0, 'choose_from', ['foo', 'bar'], 'title here', 20, 20], callback=chooseFn, infinite=False)
+    sendMessage([0, 'choose_from', ['foo', 'basdfar'], 'title here', 20, 20], callback=chooseFn, infinite=False)
 
   def chooseFn(obj):
     print 'ok fine', obj
@@ -138,11 +149,3 @@ def zephyros():
 
   sendMessage([0, 'bind', 'f', ['cmd', 'shift']], callback=bindFn2)
   sendMessage([0, 'bind', 'd', ['cmd', 'shift']], callback=bindFn)
-
-
-
-
-runInBackground(zephyros)
-
-while True:
-  pass
