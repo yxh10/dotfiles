@@ -27,6 +27,12 @@ class Window
     self.set_grid get_grid, nil if normal_window?
   end
 
+  def maximize_with_margins
+    f = self.screen.frame_without_dock_or_menu
+    f.inset! $window_grid_margin_x, $window_grid_margin_y
+    self.frame = f
+  end
+
 end
 
 def change_grid_width(by)
@@ -48,9 +54,7 @@ API.bind('J', mash_shift) { API.focused_window.focus_window_down }
 
 API.bind 'M', mash do
   win = API.focused_window
-  f = win.screen.frame_without_dock_or_menu
-  f.inset! $window_grid_margin_x, $window_grid_margin_y
-  win.frame = f
+  win.maximize_with_margins
 end
 
 API.bind 'H', mash do
@@ -103,6 +107,24 @@ API.bind 'U', mash do
   r.y = 0
   r.h = 2
   win.set_grid r, nil
+end
+
+
+def handle_new_window(win)
+  case win.app.title
+  when 'Google Chrome'
+    win.maximize_with_margins if win.normal_window?
+  when 'Emacs'
+    win.snap_to_grid
+  end
+end
+
+API.listen 'window_created' do |win|
+  handle_new_window win
+end
+
+API.listen 'app_launched' do |app|
+  app.visible_windows.each { |win| handle_new_window win }
 end
 
 
