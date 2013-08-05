@@ -3,7 +3,7 @@
 mash = ["cmd", "alt", "ctrl"]
 mash_shift = ["cmd", "alt", "shift"]
 
-api.settings().alertAnimates = false
+# api.settings().alertAnimates = false
 
 bind "D", mash, -> open('/Applications/Dictionary.app')
 
