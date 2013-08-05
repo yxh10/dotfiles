@@ -2,10 +2,10 @@ import socket
 import threading
 import json
 import Queue
-
-
-
 import sys
+
+
+
 _old_excepthook = sys.excepthook
 def myexcepthook(exctype, value, traceback):
     if exctype == KeyboardInterrupt:
@@ -16,8 +16,6 @@ sys.excepthook = myexcepthook
 
 
 
-
-ONEYEAR = 365 * 24 * 60 * 60
 
 
 
@@ -33,6 +31,13 @@ def msgIdGen():
     yield i
 
 reifiedMsgIdGen = msgIdGen()
+
+
+def runInBackground(fn):
+  t = threading.Thread(target=fn)
+  t.daemon = True
+  t.start()
+
 
 
 class DataReader:
@@ -62,10 +67,7 @@ class DataReader:
       self.processData()
 
 
-dr = DataReader()
-t = threading.Thread(target=dr.readForever)
-t.daemon = True
-t.start()
+runInBackground(DataReader().readForever)
 
 
 
@@ -73,7 +75,7 @@ sendDataQueue = Queue.Queue(10)
 
 def sendDataFully():
   while True:
-    data = sendDataQueue.get(True, ONEYEAR)
+    data = sendDataQueue.get()
     while len(data) > 0:
       numWrote = s.send(data)
       data = data[numWrote:]
@@ -81,41 +83,44 @@ def sendDataFully():
 
 
 
-t = threading.Thread(target=sendDataFully)
-t.daemon = True
-t.start()
+runInBackground(sendDataFully)
 
 
 
-queues = {}
+individualMessageQueues = {}
 
 
 def sendMessage(msg):
   msgId = reifiedMsgIdGen.next()
   tempSendQueue = Queue.Queue(10)
-  queues[msgId] = tempSendQueue
+  individualMessageQueues[msgId] = tempSendQueue
 
   msg.insert(0, msgId)
   msgStr = json.dumps(msg)
   sendDataQueue.put(str(len(msgStr)) + '\n' + msgStr)
 
-  retVal = tempSendQueue.get(True, ONEYEAR)
+  retVal = tempSendQueue.get()
   return retVal
 
 
-def getForeverMaybe():
+def dispatchIndividualMessagesForever():
   while True:
-    msg = rawMessageQueue.get(True, ONEYEAR)
+    msg = rawMessageQueue.get()
 
     msgId = msg[0]
-    thisQueue = queues[msgId]
+    thisQueue = individualMessageQueues[msgId]
     thisQueue.put(msg)
 
     print "got msg:", msg
 
-t = threading.Thread(target=getForeverMaybe)
-t.daemon = True
-t.start()
+    if msgId == 1:
+      def tempFn():
+        print sendMessage([0, 'alert', 'stuff', 1])
+      runInBackground(tempFn)
+
+
+
+runInBackground(dispatchIndividualMessagesForever)
 
 
 
