@@ -119,13 +119,13 @@ def handle_new_window(win)
   end
 end
 
-API.listen 'window_created' do |win|
-  handle_new_window win
-end
+# API.listen 'window_created' do |win|
+#   handle_new_window win
+# end
 
-API.listen 'app_launched' do |app|
-  app.visible_windows.each { |win| handle_new_window win }
-end
+# API.listen 'app_launched' do |app|
+#   app.visible_windows.each { |win| handle_new_window win }
+# end
 
 
 
