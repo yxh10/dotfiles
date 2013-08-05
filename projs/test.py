@@ -20,8 +20,8 @@ sys.excepthook = myexcepthook
 
 
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('127.0.0.1', 1235))
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect(('127.0.0.1', 1235))
 
 rawMessageQueue = Queue.Queue(10)
 
@@ -67,7 +67,7 @@ class DataReader:
 def readForever():
   reader = DataReader()
   while True:
-    reader.buf += s.recv(4096)
+    reader.buf += sock.recv(4096)
     reader.processData()
 
 
@@ -81,7 +81,7 @@ def sendDataFully():
   while True:
     data = sendDataQueue.get()
     while len(data) > 0:
-      numWrote = s.send(data)
+      numWrote = sock.send(data)
       data = data[numWrote:]
 
 
