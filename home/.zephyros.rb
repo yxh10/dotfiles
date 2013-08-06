@@ -16,7 +16,7 @@ API.bind('X', mash) do
   }
   action_names = actions.keys
 
-  API.choose_from action_names, 'Do Something' do |i|
+  API.choose_from action_names, 'Do Something', 5, 20 do |i|
     actions[action_names[i]].call if i
   end
 end
