@@ -84,7 +84,7 @@
 (set-display-table-slot standard-display-table 0 ?~)
 
 
-(electric-indent-mode 1)                                 ;; makes Enter indent stuff intelligently
+;; (electric-indent-mode 1)                                 ;; makes Enter indent stuff intelligently
 (setq-default indent-tabs-mode nil)                      ;; use spaces everywhere, not tabs
 (setq-default truncate-lines t)                          ;; dont line-wrap
 (setq require-final-newline t)                           ;; makes files always end with a newline

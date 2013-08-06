@@ -49,6 +49,7 @@
         paredit-splice-sexp-killing-backward
         paredit-wrap-round
         python-indent-dedent-line-backspace
+        python-indent-electric-colon
         rebase-mode-fixup
         ruby-backward-sexp
         ruby-forward-sexp
