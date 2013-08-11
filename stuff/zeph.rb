@@ -5,14 +5,17 @@ mash_shift = ["cmd", "alt", "shift"]
 
 $window_grid_width = 4
 
+API.update_settings({:alert_should_animate => false,
+                     :alert_default_delay => 0.5})
+
 API.bind('D', mash) { `open -a Dictionary` }
 
 API.bind('X', mash) do
   actions = {
-    'Zephyros' => -> { `open /Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj` },
-    'Zephyros README' => -> { `open -aemacs /Users/sdegutis/projects/Zephyros/README.md` },
-    'Open email' => -> { 2.times {|i| `open https://mail.google.com/mail/u/#{i}/#inbox` } },
-    'Show clipboard' => -> { API.alert API.clipboard_contents, 3 },
+    'Zephyros' => lambda { `open /Users/sdegutis/projects/Zephyros/Zephyros.xcodeproj` },
+    'Zephyros README' => lambda { `open -aemacs /Users/sdegutis/projects/Zephyros/README.md` },
+    'Open email' => lambda { 2.times {|i| `open https://mail.google.com/mail/u/#{i}/#inbox` } },
+    'Show clipboard' => lambda { API.alert API.clipboard_contents, 3 },
   }
   action_names = actions.keys
 
