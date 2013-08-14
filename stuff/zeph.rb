@@ -8,6 +8,10 @@ $window_grid_width = 4
 API.update_settings({:alert_should_animate => false,
                      :alert_default_delay => 0.5})
 
+API.bind 'S', mash do
+  API.alert "Sorry, I can't hear you, my\nmusic is too awesome. Ever\nheard this band? They rock.", 11
+end
+
 API.bind('D', mash) { `open -a Dictionary` }
 
 API.bind('X', mash) do
