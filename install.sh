@@ -3,5 +3,5 @@ set -ex
 
 cd
 mkdir -p Library/KeyBindings/
-cp ~/dotfiles/DefaultKeyBinding.dict Library/KeyBindings/
-find dotfiles/home -mindepth 1 -maxdepth 1 -exec ln -s {} . \;
+cp ~/Dropbox/Steven/dotfiles/DefaultKeyBinding.dict Library/KeyBindings/
+find Dropbox/Steven/dotfiles/home -mindepth 1 -maxdepth 1 -exec ln -s {} . \;
