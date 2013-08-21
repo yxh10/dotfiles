@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -ex
 
-cd
-rm -f ~/Library/KeyBindings/DefaultKeyBinding.dict
-find Dropbox/Steven/dotfiles/home -mindepth 1 -maxdepth 1 -execdir rm -f ~/{} \;
+rm -f $HOME/Library/KeyBindings/DefaultKeyBinding.dict
+find $PWD/home -mindepth 1 -maxdepth 1 -execdir rm -f $HOME/{} \;
