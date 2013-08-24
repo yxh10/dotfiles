@@ -1,4 +1,5 @@
-require '~/projects/zephyros/libs/zephyros.rb'
+require '~/Dropbox/Applications/Zephyros.app/Contents/Resources/libs/zephyros.rb'
+# require '~/projects/zephyros/libs/zephyros.rb'
 
 mash = ["cmd", "alt", "ctrl"]
 mash_shift = ["cmd", "alt", "shift"]
@@ -9,6 +10,14 @@ API.update_settings({:alert_should_animate => false,
                      :alert_default_delay => 0.5})
 
 API.bind('D', mash) { `open -a Dictionary` }
+
+# API.listen('modifiers_changed') do |arg|
+#   API.alert(arg.include?('CTRL').to_s)
+# end
+
+# API.bind('d', ['cmd', 'shift']) do
+#   API.unlisten('mouse_moved')
+# end
 
 API.bind('X', mash) do
   actions = {
