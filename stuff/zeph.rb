@@ -11,12 +11,15 @@ API.update_settings({:alert_should_animate => false,
 
 API.bind('D', mash) { `open -a Dictionary` }
 
-# API.listen('modifiers_changed') do |arg|
-#   API.alert(arg.include?('CTRL').to_s)
+# the_win = nil
+
+# API.bind('f', ['cmd', 'shift']) do
+#   API.alert(the_win.title)
 # end
 
 # API.bind('d', ['cmd', 'shift']) do
-#   API.unlisten('mouse_moved')
+#   the_win = API.focused_window
+#   the_win.retain
 # end
 
 API.bind('X', mash) do
@@ -63,6 +66,16 @@ API.bind('H', mash_shift) { API.focused_window.focus_window_left }
 API.bind('L', mash_shift) { API.focused_window.focus_window_right }
 API.bind('K', mash_shift) { API.focused_window.focus_window_up }
 API.bind('J', mash_shift) { API.focused_window.focus_window_down }
+
+API.bind 'N', mash do
+  win = API.focused_window
+  win.set_grid win.get_grid, win.screen.next_screen
+end
+
+API.bind 'P', mash do
+  win = API.focused_window
+  win.set_grid win.get_grid, win.screen.previous_screen
+end
 
 API.bind 'M', mash do
   win = API.focused_window
