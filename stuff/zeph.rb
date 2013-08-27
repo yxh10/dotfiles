@@ -14,7 +14,11 @@ API.bind('D', mash) { `open -a Dictionary` }
 # the_win = nil
 
 # API.bind('f', ['cmd', 'shift']) do
-#   API.alert(the_win.title)
+#   API.undo
+# end
+
+# API.bind('d', ['cmd', 'shift']) do
+#   API.redo
 # end
 
 # API.bind('d', ['cmd', 'shift']) do
@@ -51,7 +55,7 @@ class Window
 end
 
 def change_grid_width(by)
-  $window_grid_width += by
+  $window_grid_width = [1, $window_grid_width + by].max
   API.alert "grid is now #{$window_grid_width} tiles wide"
   API.visible_windows.each(&:snap_to_grid)
 end
