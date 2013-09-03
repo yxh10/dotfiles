@@ -49,4 +49,4 @@
 
 ;; git
 (depends-on "git-commit-mode")
-(depends-on "magit")
+;; (depends-on "magit")

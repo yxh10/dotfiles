@@ -140,6 +140,7 @@
 
 
 ;; git integration. use Cmd-Shift-G to open it.
+(add-to-list 'load-path "~/.emacs.d/vendor/magit/")
 (require 'magit)
 (keydef "s-G" magit-status)
 (setq git-commit-confirm-commit nil) ;; comment this line out to let
