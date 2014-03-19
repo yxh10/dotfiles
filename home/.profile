@@ -22,8 +22,8 @@ export EDITOR=vim
 # ~/bin
 export PATH="$HOME/bin:$PATH"
 
-# carton
-export PATH="$HOME/dotfiles/carton/bin:$PATH"
+# ~/unix/bin
+export PATH="$HOME/unix/bin:$PATH"
 
 # leiningen
 export PATH="$HOME/.lein/bin:$PATH"
@@ -35,10 +35,5 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-# golang
-export PATH="/usr/local/opt/go/bin/:$PATH"
-
 # bash completion
 source /usr/local/etc/bash_completion
-
-alias pg="postgres -D /usr/local/var/postgres"
