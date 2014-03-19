@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         backward-sexp
+        backward-up-list
         c-electric-delete-forward
         c-electric-paren
         c-electric-semi&comma
@@ -24,13 +25,17 @@
         paredit-backslash
         paredit-backward
         paredit-backward-barf-sexp
+        paredit-backward-down
         paredit-backward-kill-word
         paredit-backward-slurp-sexp
         paredit-backward-up
+        paredit-close-curly
+        paredit-close-round
         paredit-close-square
         paredit-comment-dwim
         paredit-doublequote
         paredit-forward
+        paredit-forward-barf-sexp
         paredit-forward-delete
         paredit-forward-down
         paredit-forward-kill-word
@@ -48,6 +53,7 @@
         paredit-semicolon
         paredit-splice-sexp
         paredit-splice-sexp-killing-backward
+        paredit-split-sexp
         paredit-wrap-round
         python-indent-dedent-line-backspace
         python-indent-electric-colon
@@ -56,7 +62,9 @@
         ruby-forward-sexp
         sgml-close-tag
         sgml-slash
+        tagedit-insert-equal
         transpose-sexps
+        transpose-words
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))
@@ -67,6 +75,7 @@
         helm-M-x
         helm-confirm-and-exit-minibuffer
         magit-status
+        query-replace
         set-rectangular-region-anchor
         smex
         ))
