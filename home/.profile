@@ -28,9 +28,5 @@ export PATH="$HOME/unix/leiningen/bin:$PATH"
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
-# rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # bash completion
 source /usr/local/etc/bash_completion
