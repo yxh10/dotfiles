@@ -25,6 +25,9 @@ export PATH="$HOME/unix/racket/racket/bin:$PATH"
 # leiningen
 export PATH="$HOME/unix/leiningen/bin:$PATH"
 
+# ruby
+export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"
+
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
