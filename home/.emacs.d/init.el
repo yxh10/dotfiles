@@ -200,9 +200,9 @@
 
 ;; when in mac os x
 (when (equal window-system 'ns)
-  (exec-path-from-shell-initialize)      ;; set $PATH properly
-  (keydef "s-p")                         ;; stop asking to print
-  (keydef "C-z")                         ;; stop minimizing
+  (exec-path-from-shell-initialize) ;; set $PATH properly
+  (keydef "s-p")                    ;; stop asking to print
+  (keydef "C-z")                    ;; stop minimizing
   (keydef "s-z" undo-tree-undo)
   (keydef "s-Z" undo-tree-redo)
   (setq locate-command "mdfind")         ;; use spotlight, not locate
@@ -280,11 +280,9 @@
 (add-to-list 'auto-mode-alist '("\\.hiccup\\'" . clojure-mode))
 (define-clojure-indent
   (defroutes 'defun)
-  (before 'defun)
   (routes 'defun)
   (describe 'defun)
-  (before-all 'defun)
-  (after-all 'defun)
+  (at-media 'defun)
   (around 'defun)
   (it 'defun)
   (list 'defun)
