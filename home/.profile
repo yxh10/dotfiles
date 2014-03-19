@@ -19,14 +19,11 @@ export PS1="\n$BOLD$BLUE(\u) \$(sd_retval_cond '$GREEN' '$RED')[\$(sd_retval_con
 export CLICOLOR=1 # lets ls and stuff show colors
 export EDITOR=vim
 
-# ~/bin
-export PATH="$HOME/bin:$PATH"
-
-# ~/unix/bin
-export PATH="$HOME/unix/bin:$PATH"
+# racket
+export PATH="$HOME/unix/racket/racket/bin:$PATH"
 
 # leiningen
-export PATH="$HOME/.lein/bin:$PATH"
+export PATH="$HOME/unix/leiningen/bin:$PATH"
 
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
