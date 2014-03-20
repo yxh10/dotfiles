@@ -19,14 +19,14 @@ export PS1="\n$BOLD$BLUE(\u) \$(sd_retval_cond '$GREEN' '$RED')[\$(sd_retval_con
 export CLICOLOR=1 # lets ls and stuff show colors
 export EDITOR=vim
 
-# racket
-export PATH="$HOME/unix/racket/racket/bin:$PATH"
-
-# leiningen
-export PATH="$HOME/unix/leiningen/bin:$PATH"
+# ~/bin
+export PATH="$HOME/bin:$PATH"
 
 # ruby
 export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"
+
+# rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
