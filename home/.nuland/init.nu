@@ -1,11 +1,12 @@
-(set w ((NSWindow alloc) initWithContentRect: '(1300 1300 500 500)
+(set w ((NSWindow alloc) initWithContentRect: '(8 8 300 200)
                                    styleMask: (| NSTitledWindowMask NSClosableWindowMask NSMiniaturizableWindowMask NSResizableWindowMask)
                                      backing: NSBackingStoreBuffered
                                        defer: 0))
 
+(w center)
 (w makeKeyAndOrderFront: nil)
 
-(set tf ((NSTextField alloc) initWithFrame: '(10 10 100 100)))
+(set tf ((NSTextField alloc) initWithFrame: '(0 100 300 100)))
 
 (class SDButtonHandler is NSObject
     (imethod (void) buttonClicked: (id) sender is
@@ -15,8 +16,8 @@
 
 (set t ((SDButtonHandler alloc) init))
 
-(set b ((NSButton alloc) initWithFrame: '(10 120 100 100)))
-(b set: (title: "foobar" target: t action: "buttonClicked:"))
+(set b ((NSButton alloc) initWithFrame: '(0 0 300 100)))
+(b set: (title: "Run Script" target: t action: "buttonClicked:"))
 
 ((w contentView) addSubview: tf)
 ((w contentView) addSubview: b)
