@@ -132,11 +132,14 @@
   "Turn on pseudo-structural editing of Lisp code."
   t)
 
+(require 'nu)
+
 ;; paredit
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
+(add-hook 'nu-mode-hook               'enable-paredit-mode)
 
 
 ;; git integration. use Cmd-Shift-G to open it.
