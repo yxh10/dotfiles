@@ -8,7 +8,7 @@
  (rear-context-string . "12 Aug 23 20:42 ")
  (position . 360))
 ("init.el"
- (filename . "~/Dropbox/Steven/dotfiles/home/.emacs.d/init.el")
+ (filename . "~/projects/dotfiles/home/.emacs.d/init.el")
  (front-context-string . "(require 'packag")
  (rear-context-string)
  (position . 1))
