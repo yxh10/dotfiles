@@ -1,6 +1,12 @@
 (require 'package)
-(set 'package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
+
+
+
+;; make use of vendor dir
+(add-to-list 'load-path "~/.emacs.d/vendor/")
+
 
 
 
@@ -17,6 +23,9 @@
 (require 'windsize)
 (windsize-default-keybindings)
 
+
+
+(require 'keydef)
 
 
 
@@ -71,10 +80,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 
-;; make use of vendor dir
-(add-to-list 'load-path "~/.emacs.d/vendor/")
-
-
 ;; change file "customize" saves to. you can pretty much ignore this.
 (setq custom-file "~/.emacs.d/my-custom.el")
 (load custom-file)
@@ -124,6 +129,8 @@
 (keydef "C-x f" find-file-in-repository)
 
 
+(require 'rainbow-delimiters)
+
 ;; rainbow parens
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
@@ -132,14 +139,11 @@
   "Turn on pseudo-structural editing of Lisp code."
   t)
 
-(require 'nu)
-
 ;; paredit
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
-(add-hook 'nu-mode-hook               'enable-paredit-mode)
 
 
 ;; git integration. use Cmd-Shift-G to open it.
@@ -171,6 +175,9 @@
 (keydef "s-F" sd/git-grep)
 
 
+(require 'buffer-move)
+
+
 ;; buffer management
 (keydef "s-[" previous-buffer)
 (keydef "s-]" next-buffer)
@@ -183,12 +190,18 @@
 (keydef "<C-s-right>"  buf-move-right)
 
 
+
+(require 'ido-ubiquitous)
+(require 'ido-vertical-mode)
+
 ;; ido-mode
 (ido-mode 1)
 (ido-ubiquitous-mode 1)
 (ido-vertical-mode)
 (setq ido-default-file-method 'selected-window)
 
+
+(require 'smex)
 
 ;; smex
 (smex-initialize)
@@ -197,9 +210,13 @@
 (setq smex-key-advice-ignore-menu-bar t) ;; maybe this speeds smex up?
 
 
+(require 'undo-tree)
+
 ;; undo-tree
 (global-undo-tree-mode)
 
+
+(require 'exec-path-from-shell)
 
 ;; when in mac os x
 (when (equal window-system 'ns)
