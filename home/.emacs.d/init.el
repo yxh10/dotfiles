@@ -9,6 +9,10 @@
 
 
 
+;; start at home
+(setq default-directory (concat (getenv "HOME") "/"))
+
+
 
 ;; disable backup and auto-save
 (setq backup-inhibited t)
