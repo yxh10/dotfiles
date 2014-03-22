@@ -283,7 +283,6 @@
 (setq vc-follow-symlinks t)                         ;; so git doesn't have to ask to follow symlinks
 (setq-default dired-use-ls-dired nil)               ;; mac's ls doesnt support --dired
 (setq bookmark-sort-flag nil)
-(auto-insert-mode) ;; for new .el files mainly
 
 
 
