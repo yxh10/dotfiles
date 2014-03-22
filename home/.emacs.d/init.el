@@ -20,15 +20,22 @@
 (setq make-backup-files nil)
 (auto-save-mode -1)
 (setq create-lockfiles nil)
+;; TODO: there's apparently one more thing missing, because I'm
+;;       constantly seeing some file changed, starting with a
+;;       period. Not sure which file that is, I only saw it via
+;;       Dropbox file-updated notifications, but I don't store my
+;;       dotfiles in Dropbox anymore.
 
 
 
 
+;; I don't really use this ever, should get ridda it. Maybe.
 (require 'windsize)
 (windsize-default-keybindings)
 
 
 
+;; this seems dumb?
 (require 'keydef)
 
 
@@ -62,16 +69,20 @@
 
 
 
-(setq ns-right-command-modifier 'super)
+;; TODO: I know I should be using the right-command button for stuff
+;;       to save my left pinky, but it's a difficult and awkward habit
+;;       to get into.
+
+;; (setq ns-right-command-modifier 'super)
 ;; (setq ns-command-modifier 'control)
 
 
-;; tagedit
-(eval-after-load "sgml-mode"
-  '(progn
-     (require 'tagedit)
-     (tagedit-add-paredit-like-keybindings)
-     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+;; ;; tagedit
+;; (eval-after-load "sgml-mode"
+;;   '(progn
+;;      (require 'tagedit)
+;;      (tagedit-add-paredit-like-keybindings)
+;;      (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
 
 
 ;; make buffer names betterly unique
