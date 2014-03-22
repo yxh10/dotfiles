@@ -315,7 +315,6 @@
 ;; clojure stuff
 (require 'clojure-mode)
 (add-hook 'clojure-mode-hook 'paredit-mode)
-(add-to-list 'auto-mode-alist '("\\.hiccup\\'" . clojure-mode))
 (define-clojure-indent
   (defroutes 'defun)
   (routes 'defun)
