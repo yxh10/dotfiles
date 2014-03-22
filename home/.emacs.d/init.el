@@ -36,9 +36,9 @@
 ;; eshell
 (add-hook 'eshell-mode-hook 'toggle-truncate-lines)
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
-(setq multi-eshell-shell-function '(eshell))
-(setq multi-eshell-name "*eshell*")
-(keydef "s-t" multi-eshell)
+
+;; open new eshell
+(keydef "s-t" (eshell 'ignored-value))
 
 (defun sd/eshell-search-history ()
   (interactive)
@@ -54,6 +54,7 @@
   (interactive)
   (let ((inhibit-read-only t))
     (erase-buffer)))
+
 (add-hook 'eshell-mode-hook
           (lambda ()
             (define-key eshell-mode-map (kbd "s-k") 'sd/clear-eshell-buffer)
