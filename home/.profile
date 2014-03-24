@@ -25,6 +25,7 @@ export PATH="$HOME/bin:$PATH"
 # ruby
 export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"
 source /usr/local/opt/chruby/share/chruby/chruby.sh
+chruby ruby-1.9.3-p545
 
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"

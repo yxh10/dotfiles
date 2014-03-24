@@ -45,6 +45,8 @@
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
 (keydef "s-t" (eshell 'ignored-value))
 
+(require 'chruby)
+
 (defun sd/eshell-search-history ()
   (interactive)
   (insert (ido-completing-read "History: " (delete-dups (ring-elements eshell-history-ring)))))
