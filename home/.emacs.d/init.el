@@ -65,6 +65,9 @@
             (define-key eshell-mode-map (kbd "s-k") 'sd/clear-eshell-buffer)
             (define-key eshell-mode-map (kbd "M-r") 'sd/eshell-search-history)))
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setq pcomplete-cycle-completions nil)))
 
 
 ;; TODO: I know I should be using the right-command button for stuff
