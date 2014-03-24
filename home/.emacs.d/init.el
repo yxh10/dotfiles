@@ -43,8 +43,6 @@
 ;; eshell
 (add-hook 'eshell-mode-hook 'toggle-truncate-lines)
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
-
-;; open new eshell
 (keydef "s-t" (eshell 'ignored-value))
 
 (defun sd/eshell-search-history ()
@@ -77,13 +75,6 @@
 ;; (setq ns-command-modifier 'control)
 
 
-;; ;; tagedit
-;; (eval-after-load "sgml-mode"
-;;   '(progn
-;;      (require 'tagedit)
-;;      (tagedit-add-paredit-like-keybindings)
-;;      (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
-
 
 ;; make buffer names betterly unique
 (require 'uniquify)
@@ -101,17 +92,14 @@
 (load custom-file)
 
 
-;; ok fine
 (set-display-table-slot standard-display-table 0 ?~)
-
-
-(setq-default indent-tabs-mode nil)                      ;; use spaces everywhere, not tabs
-(setq-default truncate-lines t)                          ;; dont line-wrap
-(setq require-final-newline t)                           ;; makes files always end with a newline
-(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; delete trailing whitespace on save
+(setq require-final-newline t)
+(setq-default indent-tabs-mode nil)                         ;; use spaces everywhere, not tabs
+(setq-default truncate-lines t)                             ;; dont line-wrap
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; (global-hl-line-mode 1)                                  ;; highlight current line
-(delete-selection-mode 1)                                ;; makes typing or inserting over selected text delete it first
-(setq inhibit-startup-echo-area-message user-login-name)      ;; put your username here
+(delete-selection-mode 1)                                   ;; makes typing or inserting over selected text delete it first
+(setq inhibit-startup-echo-area-message "sdegutis")
 (setq-default cursor-type 'box)
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode -1)
@@ -144,9 +132,9 @@
 (keydef "C-x f" find-file-in-repository)
 
 
-(require 'rainbow-delimiters)
 
 ;; rainbow parens
+(require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 
@@ -165,10 +153,10 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/magit/")
 (require 'magit)
 (keydef "s-G" magit-status)
-(setq git-commit-confirm-commit nil) ;; comment this line out to let
-                                     ;; emacs warn you that your
-                                     ;; commit message is just awful
+(setq git-commit-confirm-commit nil)
 
+
+;; shortcuts for my convenience
 (keydef "s-C-g" (shell-command "open -agitx ."))
 (keydef "s-T" (shell-command "open -aterminal ."))
 
@@ -190,10 +178,10 @@
 (keydef "s-F" sd/git-grep)
 
 
-(require 'buffer-move)
 
 
 ;; buffer management
+(require 'buffer-move)
 (keydef "s-[" previous-buffer)
 (keydef "s-]" next-buffer)
 (keydef "C-x C-b")
@@ -206,38 +194,38 @@
 
 
 
-(require 'ido-ubiquitous)
 
 ;; ido-mode
+(require 'ido-ubiquitous)
 (ido-mode 1)
 (ido-ubiquitous-mode 1)
 (setq ido-default-file-method 'selected-window)
 
 
+
+;; ido-vertical-mode
 (require 'ido-vertical-mode)
 (ido-vertical-mode)
 
 
 
-(require 'smex)
-
 ;; smex
+(require 'smex)
 (smex-initialize)
 (keydef "M-x" smex)
 (keydef "M-X" smex-major-mode-commands)
 (setq smex-key-advice-ignore-menu-bar t) ;; maybe this speeds smex up?
 
 
-(require 'undo-tree)
 
 ;; undo-tree
+(require 'undo-tree)
 (global-undo-tree-mode)
 
 
-(require 'exec-path-from-shell)
-
 ;; when in mac os x
 (when (equal window-system 'ns)
+  (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize) ;; set $PATH properly
   (keydef "s-p")                    ;; stop asking to print
   (keydef "C-z")                    ;; stop minimizing
