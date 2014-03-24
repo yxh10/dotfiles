@@ -13,6 +13,10 @@
 (setq default-directory (concat (getenv "HOME") "/"))
 
 
+;; auto-indent on <enter>
+(add-hook 'lisp-mode-hook '(lambda ()
+                             (local-set-key (kbd "RET") 'newline-and-indent)))
+
 
 ;; disable backup and auto-save
 (setq backup-inhibited t)
