@@ -24,9 +24,7 @@ export PATH="$HOME/bin:$PATH"
 
 # ruby
 export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"
-
-# rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+source /usr/local/opt/chruby/share/chruby/chruby.sh
 
 # homebrew
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
