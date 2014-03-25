@@ -2,16 +2,44 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-
-
-;; make use of vendor dir
+;; vendor
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 
+;; theme
+(setq custom-safe-themes t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
+;; "customize"
+(setq custom-file "~/.emacs.d/my-custom.el")
+(load custom-file)
+
+;; defaults
+(set-display-table-slot standard-display-table 0 ?~)
+(setq require-final-newline t)
+(setq-default indent-tabs-mode nil)                         ;; use spaces everywhere, not tabs
+(setq-default truncate-lines t)                             ;; dont line-wrap
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (global-hl-line-mode 1)                                     ;; highlight current line
+(delete-selection-mode 1)                                   ;; makes typing or inserting over selected text delete it first
+(setq inhibit-startup-echo-area-message "sdegutis")
+(setq-default cursor-type 'box)
+(fset 'yes-or-no-p 'y-or-n-p)
+(blink-cursor-mode -1)
+(prefer-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+;; disable backup, auto-save, and lock files
+(setq-default backup-inhibited t)
+(setq-default auto-save-default nil)
+(setq create-lockfiles nil)
 
 ;; start at home
 (setq default-directory (concat (getenv "HOME") "/"))
 
+;; auto-indent on <enter>
+(add-hook 'prog-mode-hook '(lambda ()
+                             (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; erc
 (require 'erc)
@@ -19,39 +47,19 @@
 (setq erc-auto-query 'window-noselect)
 (require 'erc-hl-nicks)
 
-
-
-;; auto-indent on <enter>
-(add-hook 'lisp-mode-hook '(lambda ()
-                             (local-set-key (kbd "RET") 'newline-and-indent)))
-
-
-
-;; disable backup, auto-save, and lock files
-(setq-default backup-inhibited t)
-(setq-default auto-save-default nil)
-(setq create-lockfiles nil)
-
-
-
-
-;; I don't really use this ever, should get ridda it. Maybe.
+;; resize buffers
 (require 'windsize)
 (windsize-default-keybindings)
-
-
-
-;; this seems dumb?
-(require 'keydef)
-
-
 
 ;; eshell
 (add-hook 'eshell-mode-hook 'toggle-truncate-lines)
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
-(keydef "s-t" (eshell 'ignored-value))
+(global-set-key (kbd "s-t") 'sd/open-new-eshell)
+(autoload 'chruby "chruby")
 
-(require 'chruby)
+(defun sd/open-new-eshell ()
+  (interactive)
+  (eshell 'ignored-value))
 
 (defun sd/eshell-search-history ()
   (interactive)
@@ -59,7 +67,7 @@
 
 
 ;; remove Cmd-K binding
-(keydef "s-k")
+(global-unset-key (kbd "s-k"))
 
 
 ;; make Cmd-K clear eshell
@@ -93,40 +101,11 @@
 (setq uniquify-strip-common-suffix t)
 
 
-;; load your favorite color theme here
-(setq custom-safe-themes t)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
-
-;; change file "customize" saves to. you can pretty much ignore this.
-(setq custom-file "~/.emacs.d/my-custom.el")
-(load custom-file)
-
-
-(set-display-table-slot standard-display-table 0 ?~)
-(setq require-final-newline t)
-(setq-default indent-tabs-mode nil)                         ;; use spaces everywhere, not tabs
-(setq-default truncate-lines t)                             ;; dont line-wrap
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; (global-hl-line-mode 1)                                  ;; highlight current line
-(delete-selection-mode 1)                                   ;; makes typing or inserting over selected text delete it first
-(setq inhibit-startup-echo-area-message "sdegutis")
-(setq-default cursor-type 'box)
-(fset 'yes-or-no-p 'y-or-n-p)
-(blink-cursor-mode -1)
-
-
-;; utf8
-(prefer-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-
-
 ;; editing multiple lines/things
 (require 'multiple-cursors)
-(keydef "C-<return>" mc/edit-lines)
-(keydef "C-S-<mouse-1>" mc/add-cursor-on-click)
-(keydef "C->" mc/mark-all-like-this-dwim)
+(global-set-key (kbd "C-<return>") 'mc/edit-lines)
+(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
+(global-set-key (kbd "C->") 'mc/mark-all-like-this-dwim)
 
 
 ;; prefer to split windows side by side
@@ -140,7 +119,7 @@
 
 
 ;; like Cmd-T, but only works inside version-controlled repos
-(keydef "C-x f" find-file-in-repository)
+(global-set-key (kbd "C-x f") 'find-file-in-repository)
 
 
 
@@ -163,13 +142,13 @@
 ;; git integration. use Cmd-Shift-G to open it.
 (add-to-list 'load-path "~/.emacs.d/vendor/magit/")
 (require 'magit)
-(keydef "s-G" magit-status)
+(global-set-key (kbd "s-G") 'magit-status)
 (setq git-commit-confirm-commit nil)
 
 
 ;; shortcuts for my convenience
-(keydef "s-C-g" (shell-command "open -agitx ."))
-(keydef "s-T" (shell-command "open -aterminal ."))
+(global-set-key (kbd "s-C-g") '(lambda () (interactive) (shell-command "open -agitx .")))
+(global-set-key (kbd "s-T")   '(lambda () (interactive) (shell-command "open -aterminal .")))
 
 
 ;; git grep
@@ -186,22 +165,22 @@
           (default-directory (magit-get-top-dir default-directory)))
       (add-to-history 'grep-history command)
       (compilation-start command 'grep-mode))))
-(keydef "s-F" sd/git-grep)
+(global-set-key (kbd "s-F") 'sd/git-grep)
 
 
 
 
 ;; buffer management
 (require 'buffer-move)
-(keydef "s-[" previous-buffer)
-(keydef "s-]" next-buffer)
-(keydef "C-x C-b")
-(keydef "s-{" (other-window -1))
-(keydef "s-}" other-window)
-(keydef "<C-s-up>"     buf-move-up)
-(keydef "<C-s-down>"   buf-move-down)
-(keydef "<C-s-left>"   buf-move-left)
-(keydef "<C-s-right>"  buf-move-right)
+(global-set-key (kbd "s-[") 'previous-buffer)
+(global-set-key (kbd "s-]") 'next-buffer)
+(global-unset-key (kbd "C-x C-b"))
+(global-set-key (kbd "s-{") '(lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "s-}") 'other-window)
+(global-set-key (kbd "<C-s-up>")     'buf-move-up)
+(global-set-key (kbd "<C-s-down>")   'buf-move-down)
+(global-set-key (kbd "<C-s-left>")   'buf-move-left)
+(global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
 
 
@@ -223,8 +202,8 @@
 ;; smex
 (require 'smex)
 (smex-initialize)
-(keydef "M-x" smex)
-(keydef "M-X" smex-major-mode-commands)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (setq smex-key-advice-ignore-menu-bar t) ;; maybe this speeds smex up?
 
 
@@ -238,16 +217,16 @@
 (when (equal window-system 'ns)
   (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize) ;; set $PATH properly
-  (keydef "s-p")                    ;; stop asking to print
-  (keydef "C-z")                    ;; stop minimizing
-  (keydef "s-z" undo-tree-undo)
-  (keydef "s-Z" undo-tree-redo)
+  (global-unset-key (kbd "s-p"))    ;; stop asking to print
+  (global-unset-key (kbd "C-z"))    ;; stop minimizing
+  (global-set-key (kbd "s-z") 'undo-tree-undo)
+  (global-set-key (kbd "s-Z") 'undo-tree-redo)
   (setq locate-command "mdfind")         ;; use spotlight, not locate
   (set-face-font 'default "Menlo-12.0")) ;; use nice font
 
 
 ;; kinda like vim's J
-(keydef "M-k" (join-line 1))
+(global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
 
 
 ;; makes Cmd-Shift-N open a new window with a blank buffer
@@ -256,7 +235,7 @@
   (make-frame)
   (switch-to-buffer (generate-new-buffer-name "untitled"))
   (text-mode))
-(keydef "s-N" sd/new-blank-bufer)
+(global-set-key (kbd "s-N") 'sd/new-blank-bufer)
 
 
 ;; enable markdown
@@ -292,8 +271,8 @@
 
 
 ;; ;; M-{, M-} are a bit more awkward on my pinky
-;; (keydef "C-s-[" backward-paragraph)
-;; (keydef "C-s-]" forward-paragraph)
+;; (global-set-key (kbd "C-s-[") backward-paragraph)
+;; (global-set-key (kbd "C-s-]") forward-paragraph)
 
 
 ;; show only useful info in mode line
@@ -332,3 +311,6 @@
   (HEAD 2)
   (ANY 2)
   (context 1))
+
+
+(eshell)
