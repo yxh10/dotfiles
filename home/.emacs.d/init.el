@@ -26,17 +26,11 @@
                              (local-set-key (kbd "RET") 'newline-and-indent)))
 
 
-;; disable backup and auto-save
-(setq backup-inhibited t)
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-(auto-save-mode -1)
+
+;; disable backup, auto-save, and lock files
+(setq-default backup-inhibited t)
+(setq-default auto-save-default nil)
 (setq create-lockfiles nil)
-;; TODO: there's apparently one more thing missing, because I'm
-;;       constantly seeing some file changed, starting with a
-;;       period. Not sure which file that is, I only saw it via
-;;       Dropbox file-updated notifications, but I don't store my
-;;       dotfiles in Dropbox anymore.
 
 
 
