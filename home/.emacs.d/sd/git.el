@@ -1,6 +1,7 @@
 ;; git integration. use Cmd-Shift-G to open it.
 (add-to-list 'load-path "~/.emacs.d/vendor/magit/")
 (autoload 'magit-status "magit" nil t)
+(autoload 'magit-get-top-dir "magit" nil t)
 (global-set-key (kbd "s-G") 'magit-status)
 (setq git-commit-confirm-commit nil)
 
