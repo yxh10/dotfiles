@@ -1,5 +1,8 @@
 ;; buffer management
-(require 'buffer-move)
+(autoload 'buf-move-up "buffer-move" nil t)
+(autoload 'buf-move-down "buffer-move" nil t)
+(autoload 'buf-move-left "buffer-move" nil t)
+(autoload 'buf-move-right "buffer-move" nil t)
 (global-set-key (kbd "s-[") 'previous-buffer)
 (global-set-key (kbd "s-]") 'next-buffer)
 (global-unset-key (kbd "C-x C-b"))

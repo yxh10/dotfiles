@@ -3,7 +3,9 @@
 (global-undo-tree-mode)
 
 ;; editing multiple lines/things
-(require 'multiple-cursors)
+(autoload 'mc/edit-lines "multiple-cursors" nil t)
+(autoload 'mc/add-cursor-on-click "multiple-cursors" nil t)
+(autoload 'mc/mark-all-like-this-dwim "multiple-cursors" nil t)
 (global-set-key (kbd "C-<return>") 'mc/edit-lines)
 (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 (global-set-key (kbd "C->") 'mc/mark-all-like-this-dwim)
@@ -12,7 +14,7 @@
 (global-set-key (kbd "C-x f") 'find-file-in-repository)
 
 ;; rainbow parens
-(require 'rainbow-delimiters)
+(autoload 'rainbow-delimiters-mode "rainbow-delimiters" nil t)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 ;; paredit
