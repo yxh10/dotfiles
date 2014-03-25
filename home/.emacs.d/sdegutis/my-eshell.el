@@ -27,3 +27,11 @@
 (add-hook 'eshell-mode-hook
           (lambda ()
             (setq pcomplete-cycle-completions nil)))
+
+
+(setq eshell-prompt-function (lambda ()
+                               (concat
+                                "\n"
+                                (abbreviate-file-name
+                                 (eshell/pwd))
+                                (if (= (user-uid) 0) " # " " $ "))))
