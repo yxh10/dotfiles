@@ -13,6 +13,14 @@
 (setq default-directory (concat (getenv "HOME") "/"))
 
 
+;; erc
+(require 'erc)
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
+(setq erc-auto-query 'window-noselect)
+(require 'erc-hl-nicks)
+
+
+
 ;; auto-indent on <enter>
 (add-hook 'lisp-mode-hook '(lambda ()
                              (local-set-key (kbd "RET") 'newline-and-indent)))
