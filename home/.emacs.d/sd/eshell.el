@@ -11,8 +11,6 @@
   (interactive)
   (insert (ido-completing-read "History: " (delete-dups (ring-elements eshell-history-ring)))))
 
-
-
 ;; make Cmd-K clear eshell
 (defun sd/clear-eshell-buffer ()
   (interactive)
