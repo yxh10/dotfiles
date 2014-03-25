@@ -39,14 +39,14 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(setq ring-bell-function 'ignore)                   ;; stop beeping at me
-(setq blink-matching-paren nil)                     ;; rainbow-parens makes this useless
-(setq scroll-conservatively 10000)                  ;; makes scrolling smoother
-(setq auto-window-vscroll nil)                      ;; ditto
-;; (setq scroll-margin 7)                           ;; might be useful but i found it slightly buggy
-;; (setq scroll-step 1)                             ;; ditto
-(setq vc-follow-symlinks t)                         ;; so git doesn't have to ask to follow symlinks
-(setq-default dired-use-ls-dired nil)               ;; apple's ls doesnt support --dired
+(setq ring-bell-function 'ignore)      ;; stop beeping at me
+(setq blink-matching-paren nil)        ;; rainbow-parens makes this useless
+(setq scroll-conservatively 10000)     ;; makes scrolling smoother
+(setq auto-window-vscroll nil)         ;; ditto
+;; (setq scroll-margin 7)              ;; might be useful but i found it slightly buggy
+;; (setq scroll-step 1)                ;; ditto
+(setq vc-follow-symlinks t)            ;; so git doesn't have to ask to follow symlinks
+(setq-default dired-use-ls-dired nil)  ;; apple's ls doesnt support --dired
 (setq bookmark-sort-flag nil)
 
 ;; disable backup, auto-save, and lock files
