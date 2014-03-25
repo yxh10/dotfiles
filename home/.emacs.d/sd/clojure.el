@@ -22,3 +22,6 @@
        (HEAD 2)
        (ANY 2)
        (context 1))))
+
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(setq nrepl-hide-special-buffers t)
