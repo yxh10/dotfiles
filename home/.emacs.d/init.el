@@ -13,7 +13,7 @@
 (load "sd/buffers")
 (load "sd/clojure")
 (load "sd/dired")
-(load "sd/erc")
+(load "sd/irc")
 (load "sd/eshell")
 (load "sd/git")
 (load "sd/ido")
