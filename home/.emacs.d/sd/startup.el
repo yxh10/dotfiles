@@ -36,7 +36,6 @@
 (setq auto-window-vscroll nil)         ;; ditto
 (setq scroll-margin 7)                 ;; might be useful but i found it slightly buggy
 (setq scroll-step 1)                   ;; ditto
-(setq bookmark-sort-flag nil)
 
 ;; disable backup, auto-save, and lock files
 (setq-default backup-inhibited t)
@@ -79,3 +78,9 @@
 
 ;; join-line
 (global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
+
+(defun sd/open-projects-dir ()
+  (interactive)
+  (find-file "~/projects"))
+
+(global-set-key (kbd "C-x r b") 'sd/open-projects-dir)

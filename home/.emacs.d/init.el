@@ -20,4 +20,4 @@
 (load "sd/macosx")
 
 ;; start in projects
-(find-file "~/projects")
+(sd/open-projects-dir)
