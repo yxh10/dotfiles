@@ -23,4 +23,8 @@
       (add-to-history 'grep-history command)
       (compilation-start command 'grep-mode))))
 
+;; bind git-grep to Cmd-Shift-F
 (global-set-key (kbd "s-F") 'sd/git-grep)
+
+;; so git doesn't have to ask to follow symlinks
+(setq vc-follow-symlinks t)

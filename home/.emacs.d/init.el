@@ -13,40 +13,36 @@
 (setq custom-file "~/.emacs.d/my-custom.el")
 (load custom-file)
 
+;; startup stuff
+(fringe-mode 0)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(setq initial-scratch-message "")
+(setq inhibit-startup-screen t)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-echo-area-message "sdegutis")
+
 ;; defaults
 (set-display-table-slot standard-display-table 0 ?~)
-(setq require-final-newline t)
-(setq-default indent-tabs-mode nil)                         ;; use spaces everywhere, not tabs
-(setq-default truncate-lines t)                             ;; dont line-wrap
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(global-hl-line-mode 1)                                     ;; highlight current line
-(delete-selection-mode 1)                                   ;; makes typing or inserting over selected text delete it first
-(setq inhibit-startup-echo-area-message "sdegutis")
+(setq require-final-newline t)
+(setq-default indent-tabs-mode nil)
+(setq-default truncate-lines t)
+(global-hl-line-mode 1)
+(delete-selection-mode 1)
 (setq-default cursor-type 'box)
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode -1)
 (prefer-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-
-;; more defaults
-(require 'dired-x) ;; for C-x C-j
-(fringe-mode 0)
-(setq initial-scratch-message "")
-(setq inhibit-startup-screen t)
-(setq inhibit-splash-screen t)
-(setq-default dired-auto-revert-buffer t)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(setq ring-bell-function 'ignore)      ;; stop beeping at me
-(setq blink-matching-paren nil)        ;; rainbow-parens makes this useless
+(setq ring-bell-function 'ignore)
+(setq blink-matching-paren nil)
 (setq scroll-conservatively 10000)     ;; makes scrolling smoother
 (setq auto-window-vscroll nil)         ;; ditto
-;; (setq scroll-margin 7)              ;; might be useful but i found it slightly buggy
-;; (setq scroll-step 1)                ;; ditto
-(setq vc-follow-symlinks t)            ;; so git doesn't have to ask to follow symlinks
-(setq-default dired-use-ls-dired nil)  ;; apple's ls doesnt support --dired
+(setq scroll-margin 7)                 ;; might be useful but i found it slightly buggy
+(setq scroll-step 1)                   ;; ditto
 (setq bookmark-sort-flag nil)
 
 ;; disable backup, auto-save, and lock files
