@@ -2,10 +2,15 @@
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
 (autoload 'chruby "chruby")
 
-(defun sd/open-new-eshell ()
+(defun sd/open-new-eshell-here ()
   (interactive)
   (eshell 'ignored-value))
-(global-set-key (kbd "s-t") 'sd/open-new-eshell)
+
+(defun sd/open-new-eshell-at-project-root ()
+  (interactive)
+  (let ((default-directory (or (magit-get-top-dir default-directory)
+                               default-directory)))
+    (eshell 'ignored-value)))
 
 (defun sd/eshell-search-history ()
   (interactive)
@@ -22,3 +27,6 @@
             (define-key eshell-mode-map (kbd "s-k") 'sd/clear-eshell-buffer)
             (define-key eshell-mode-map (kbd "M-r") 'sd/eshell-search-history)
             (setq pcomplete-cycle-completions nil)))
+
+(global-set-key (kbd "s-y") 'sd/open-new-eshell-here)
+(global-set-key (kbd "s-t") 'sd/open-new-eshell-at-project-root)
