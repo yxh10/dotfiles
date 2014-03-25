@@ -26,3 +26,28 @@
 
 ;; enable markdown
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
+(defun sd/open-projects-dir ()
+  (interactive)
+  (find-file "~/projects"))
+
+(global-set-key (kbd "C-x r b") 'sd/open-projects-dir)
+
+(defun sd/choose-project ()
+  (interactive)
+  (let* ((long-filenames (directory-files "~/projects" t "^[^.]"))
+         (short-filenames (mapcar 'file-name-nondirectory long-filenames))
+         (chosen (ido-completing-read "History: " short-filenames))
+         (full-chosen (concat "~/projects/" chosen)))
+    (find-file full-chosen)))
+
+(defun sd/choose-emacs-config-file ()
+  (interactive)
+  (let* ((long-filenames (directory-files (concat user-emacs-directory "sd") t "^[^.]"))
+         (short-filenames (mapcar 'file-name-nondirectory long-filenames))
+         (chosen (ido-completing-read "History: " short-filenames))
+         (full-chosen (concat user-emacs-directory "sd/" chosen)))
+    (find-file full-chosen)))
+
+(global-set-key (kbd "C-c e") 'sd/choose-emacs-config-file)
+(global-set-key (kbd "C-c p") 'sd/choose-project)
