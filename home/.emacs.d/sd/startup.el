@@ -3,7 +3,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 ;; "customize"
-(setq custom-file "~/.emacs.d/my-custom.el")
+(setq custom-file "~/.emacs.d/sd/custom.el")
 (load custom-file)
 
 ;; startup stuff
