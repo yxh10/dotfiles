@@ -95,7 +95,7 @@
 
 (defun sd/choose-emacs-config-file ()
   (interactive)
-  (let* ((long-filenames (directory-files (concat user-emacs-directory "sd") t))
+  (let* ((long-filenames (directory-files (concat user-emacs-directory "sd") t "^[^.]"))
          (short-filenames (mapcar 'file-name-nondirectory long-filenames))
          (chosen (ido-completing-read "History: " short-filenames))
          (full-chosen (concat user-emacs-directory "sd/" chosen)))
