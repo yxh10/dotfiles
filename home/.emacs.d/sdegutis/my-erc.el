@@ -1,4 +1,7 @@
-(require 'erc)
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
-(setq erc-auto-query 'window-noselect)
-(require 'erc-hl-nicks)
+(setq erc-hide-list '("JOIN" "PART" "QUIT")
+      erc-auto-query 'window-noselect)
+
+(autoload 'erc "erc" nil t)
+(eval-after-load 'erc
+  '(progn
+     (require 'erc-hl-nicks)))
