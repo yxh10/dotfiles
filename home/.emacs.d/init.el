@@ -4,6 +4,7 @@
 
 ;; vendor
 (add-to-list 'load-path "~/.emacs.d/vendor/")
+(add-to-list 'load-path "~/.emacs.d/")
 
 ;; theme
 (setq custom-safe-themes t)
@@ -78,27 +79,25 @@
 (add-hook 'prog-mode-hook '(lambda ()
                              (local-set-key (kbd "RET") 'newline-and-indent)))
 
-;; show only useful info in mode line
+;; mode line
 (setq-default mode-line-format '("%e" (:eval (list " %* " mode-line-buffer-identification
                                                    "  %3l  " (abbreviate-file-name default-directory)
                                                    " " mode-line-modes
                                                    " " mode-line-misc-info))))
 
 ;; load my init files
-(mapc 'load (directory-files (concat user-emacs-directory user-login-name) t "^[^#].*el$"))
-
-;; resize buffers
-(require 'windsize)
-(windsize-default-keybindings)
+(load "sdegutis/my-buffers")
+(load "sdegutis/my-clojure")
+(load "sdegutis/my-dired")
+(load "sdegutis/my-erc")
+(load "sdegutis/my-eshell")
+(load "sdegutis/my-git")
+(load "sdegutis/my-ido")
+(load "sdegutis/my-macosx")
 
 ;; trying to save my left pinky
 (setq ns-right-command-modifier 'control)
 (setq ns-command-modifier 'super)
-
-;; make buffer names betterly unique
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-(setq uniquify-strip-common-suffix t)
 
 ;; editing multiple lines/things
 (require 'multiple-cursors)
@@ -106,7 +105,7 @@
 (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 (global-set-key (kbd "C->") 'mc/mark-all-like-this-dwim)
 
-;; like Cmd-T, but only works inside version-controlled repos
+;; better find-file
 (global-set-key (kbd "C-x f") 'find-file-in-repository)
 
 ;; rainbow parens
@@ -120,7 +119,7 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 
-;; kinda like vim's J
+;; join-line
 (global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
 
 ;; enable markdown
