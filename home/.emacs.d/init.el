@@ -83,17 +83,10 @@
                              (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; show only useful info in mode line
-(setq-default mode-line-format '("%e"
-                                 (:eval
-                                  (list
-                                   " %* "
-                                   mode-line-buffer-identification
-                                   "  %3l  "
-                                   (abbreviate-file-name default-directory)
-                                   " "
-                                   mode-line-modes
-                                   " "
-                                   mode-line-misc-info))))
+(setq-default mode-line-format '("%e" (:eval (list " %* " mode-line-buffer-identification
+                                                   "  %3l  " (abbreviate-file-name default-directory)
+                                                   " " mode-line-modes
+                                                   " " mode-line-misc-info))))
 
 ;; load my init files
 (mapc 'load (directory-files (concat user-emacs-directory user-login-name) t "^[^#].*el$"))
@@ -102,16 +95,14 @@
 (require 'windsize)
 (windsize-default-keybindings)
 
+;; trying to save my left pinky
 (setq ns-right-command-modifier 'control)
-;; (setq ns-command-modifier 'control)
-
-
+(setq ns-command-modifier 'super)
 
 ;; make buffer names betterly unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 (setq uniquify-strip-common-suffix t)
-
 
 ;; editing multiple lines/things
 (require 'multiple-cursors)
@@ -132,32 +123,6 @@
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
-
-;; git integration. use Cmd-Shift-G to open it.
-(add-to-list 'load-path "~/.emacs.d/vendor/magit/")
-(require 'magit)
-(global-set-key (kbd "s-G") 'magit-status)
-(setq git-commit-confirm-commit nil)
-
-;; shortcuts for my convenience
-(global-set-key (kbd "s-C-g") '(lambda () (interactive) (shell-command "open -agitx .")))
-(global-set-key (kbd "s-T")   '(lambda () (interactive) (shell-command "open -aterminal .")))
-
-;; git grep
-(defun sd/git-grep (regexp &optional files)
-  (interactive
-   (progn
-     (grep-compute-defaults)
-     (let* ((regexp (grep-read-regexp))
-            (files (grep-read-files regexp)))
-       (list regexp files))))
-  (when (and (stringp regexp) (> (length regexp) 0))
-    (require 'grep)
-    (let ((command (grep-expand-template "git --no-pager grep --untracked -n -e <R> -- '<F>'" regexp files))
-          (default-directory (magit-get-top-dir default-directory)))
-      (add-to-history 'grep-history command)
-      (compilation-start command 'grep-mode))))
-(global-set-key (kbd "s-F") 'sd/git-grep)
 
 ;; kinda like vim's J
 (global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
