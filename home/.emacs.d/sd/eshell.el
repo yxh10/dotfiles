@@ -30,3 +30,10 @@
 
 (global-set-key (kbd "s-y") 'sd/open-new-eshell-here)
 (global-set-key (kbd "s-t") 'sd/open-new-eshell-at-project-root)
+
+(setq eshell-prompt-function (lambda ()
+                               (concat
+                                "\n"
+                                (abbreviate-file-name
+                                 (eshell/pwd))
+                                (if (= (user-uid) 0) " # " " $ "))))
