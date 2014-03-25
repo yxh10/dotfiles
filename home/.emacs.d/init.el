@@ -19,7 +19,7 @@
 (setq-default indent-tabs-mode nil)                         ;; use spaces everywhere, not tabs
 (setq-default truncate-lines t)                             ;; dont line-wrap
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; (global-hl-line-mode 1)                                     ;; highlight current line
+(global-hl-line-mode 1)                                     ;; highlight current line
 (delete-selection-mode 1)                                   ;; makes typing or inserting over selected text delete it first
 (setq inhibit-startup-echo-area-message "sdegutis")
 (setq-default cursor-type 'box)
