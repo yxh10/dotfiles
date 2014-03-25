@@ -34,8 +34,8 @@
 (setq blink-matching-paren nil)
 (setq scroll-conservatively 10000)     ;; makes scrolling smoother
 (setq auto-window-vscroll nil)         ;; ditto
-(setq scroll-margin 7)                 ;; might be useful but i found it slightly buggy
-(setq scroll-step 1)                   ;; ditto
+;; (setq scroll-margin 7)                 ;; these two lines seem to mess with eshell and probably
+;; (setq scroll-step 1)                   ;; other stuff too. too bad, cuz they're so nice.
 
 ;; disable backup, auto-save, and lock files
 (setq-default backup-inhibited t)
