@@ -1,14 +1,15 @@
-;;; magit-blame.el --- blame support for Magit
+;;; magit-blame.el --- blame support for magit
 
-;; Copyright (C) 2008  Linh Dang
-;; Copyright (C) 2008  Marius Vollmer
-;; Copyright (C) 2009  Tim Moore
-;; Copyright (C) 2010  Alexander Prusov
-;; Copyright (C) 2011  byplayer
 ;; Copyright (C) 2012  Rüdiger Sonderfeld
 ;; Copyright (C) 2012  Yann Hodique
+;; Copyright (C) 2011  byplayer
+;; Copyright (C) 2010  Alexander Prusov
+;; Copyright (C) 2009  Tim Moore
+;; Copyright (C) 2008  Linh Dang
+;; Copyright (C) 2008  Marius Vollmer
 
 ;; Author: Yann Hodique <yann.hodique@gmail.com>
+;; Keywords:
 
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
@@ -25,8 +26,7 @@
 
 ;;; Commentary:
 
-;; Control git-blame from Magit.
-;; This code has been backported from Egg (Magit fork) to Magit.
+;; This code has been backported from Egg (Magit fork) to Magit
 
 ;;; Code:
 
@@ -179,8 +179,8 @@ boundaries from BEG to END, the return value is nil."
 
 The second argument TZ can be used to add the timezone in (-)HHMM
 format to UNIXTIME.  UNIXTIME should be either a number
-containing seconds since epoch or Emacs's (HIGH LOW . IGNORED)
-format."
+containing seconds since epoch or Emacs's (HIGH LOW
+. IGNORED) format."
   (when (numberp tz)
     (unless (numberp unixtime)
       (setq unixtime (float-time unixtime)))

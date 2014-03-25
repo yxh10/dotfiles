@@ -1,8 +1,8 @@
-;;; rebase-mode -- edit git rebase files
+;;; rebase-mode -- edit git rebase files.
 
 ;; Copyright (C) 2010  Phil Jackson
 ;; Copyright (C) 2011  Peter J Weisberg
-
+;;
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -28,7 +28,7 @@
 
 (defgroup rebase-mode nil
   "Customize Rebase Mode"
-  :group 'tools)
+  :group 'faces)
 
 (defface rebase-mode-killed-action-face
   '((((class color))
@@ -120,9 +120,8 @@
                                  (forward-line (* n -1))))
     (define-key map [remap undo] 'rebase-mode-undo)
     map)
-  "Keymap for rebase-mode.
-Note this will be added to by the top-level code which defines
-the edit functions.")
+  "Keymap for rebase-mode.  Note this will be added to by the
+top-level code which defines the edit functions.")
 
 (require 'easymenu)
 (easy-menu-define rebase-mode-menu rebase-mode-map
@@ -183,7 +182,7 @@ that of CHANGE-TO."
   (string-match rebase-mode-exec-line-re (thing-at-point 'line)))
 
 (defun rebase-mode-looking-at-killed-exec ()
-  "Return non-nil if looking at an exec line that has been commented out."
+  "Return non-nil if looking at an exec line that has been commented out"
   (let ((line (thing-at-point 'line)))
     (and (eq (aref line 0) ?#)
          (string-match rebase-mode-exec-line-re line))))
@@ -214,9 +213,8 @@ that of CHANGE-TO."
       (move-to-column col))))
 
 (defun rebase-mode-abort ()
-  "Abort this rebase.
-This is dune by emptying the buffer, saving and closing server
-connection."
+  "Abort this rebase (by emptying the buffer, saving and closing
+server connection)."
   (interactive)
   (when (or (not (buffer-modified-p))
             (y-or-n-p "Abort this rebase? "))
@@ -236,8 +234,8 @@ connection."
     (forward-line)))
 
 (defun rebase-mode-exec (edit)
-  "Prompt the user for a shell command to be executed, and
-add it to the todo list.
+  "Prompt the user for a shell command to be executed, and add it to
+the todo list.
 
 If the cursor is on a commented-out exec line, uncomment the
 current line instead of prompting.
@@ -275,7 +273,8 @@ exec line was commented out, also uncomment it."
   (read-shell-command "Execute: " initial-line))
 
 (defun rebase-mode-undo (&optional arg)
-  "A thin wrapper around `undo', which allows undoing in read-only buffers."
+  "A thin wrapper around `undo', which allows undoing in
+read-only buffers."
   (interactive "P")
   (let ((inhibit-read-only t))
     (undo arg)))
@@ -319,4 +318,5 @@ By default, this is the same except for the \"pick\" command."
              '("git-rebase-todo" . rebase-mode))
 
 (provide 'rebase-mode)
+
 ;;; rebase-mode.el ends here

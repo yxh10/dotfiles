@@ -1,10 +1,8 @@
 ;;; magit-topgit.el --- topgit plug-in for Magit
 
 ;; Copyright (C) 2010  Nathan Weizenbaum
-;; Copyright (C) 2010-2013  Yann Hodique
-
-;; Author: Yann Hodique <yann.hodique@gmail.com>
-
+;; Copyright (C) 2010  Yann Hodique
+;;
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -20,8 +18,7 @@
 
 ;;; Commentary:
 
-;; This plug-in provides topgit functionality as a separate component
-;; of Magit.
+;; This plug-in provides topgit functionality as a separate component of Magit
 
 ;;; Code:
 

@@ -1,16 +1,13 @@
 ;;; magit-svn.el --- git-svn plug-in for Magit
 
 ;; Copyright (C) 2008  Alex Ott
-;; Copyright (C) 2008  Linh Dang
-;; Copyright (C) 2008  Marcin Bachry
-;; Copyright (C) 2008-2009  Marius Vollmer
 ;; Copyright (C) 2009  Alexey Voinov
 ;; Copyright (C) 2009  John Wiegley
+;; Copyright (C) 2008  Linh Dang
+;; Copyright (C) 2008  Marcin Bachry
+;; Copyright (C) 2008, 2009  Marius Vollmer
 ;; Copyright (C) 2010  Yann Hodique
-;; Copyright (C) 2010-2011  Phil Jackson
-
-;; Author: Phil Jackson <phil@shellarchive.co.uk>
-
+;;
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -26,8 +23,7 @@
 
 ;;; Commentary:
 
-;; This plug-in provides git-svn functionality as a separate component
-;; of Magit.
+;; This plug-in provides git-svn functionality as a separate component of Magit
 
 ;;; Code:
 
