@@ -2,6 +2,8 @@
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
 (autoload 'chruby "chruby")
 
+(setq eshell-banner-message "k.\n")
+
 (defun sd/open-new-eshell-here ()
   (interactive)
   (eshell 'ignored-value))
