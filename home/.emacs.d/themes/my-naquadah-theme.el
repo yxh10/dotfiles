@@ -544,6 +544,10 @@
  '(helm-action (:foreground sky-blue-1))
  '(helm-ff-directory (:foreground sky-blue-1 :background nil :underline nil))
  '(helm-ff-file (:inherit link :foreground plum-1 :underline nil))
+
+ ;; flx
+ '(flx-highlight-face (:foreground "orange" :bold t))
+
  )
 
 ;;;###autoload
