@@ -23,5 +23,9 @@
        (ANY 2)
        (context 1))))
 
+(eval-after-load 'clojure-mode
+  '(progn
+     (require 'clojure-test-mode)))
+
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (setq nrepl-hide-special-buffers t)
