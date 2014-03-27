@@ -2,7 +2,7 @@
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
 (autoload 'chruby "chruby")
 
-(setq eshell-banner-message "k.\n")
+(setq eshell-banner-message "ready.\n")
 
 (defun sd/open-new-eshell-here ()
   (interactive)
