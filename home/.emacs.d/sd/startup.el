@@ -78,3 +78,5 @@
 
 ;; join-line
 (global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
+
+(global-set-key (kbd "s-K") '(lambda () (interactive) (kill-buffer)))
