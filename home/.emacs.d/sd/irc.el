@@ -4,7 +4,7 @@
       erc-user-full-name "sdegutis"
       erc-email-userid "sdegutis"
       erc-prompt-for-password nil
-      erc-hide-list '("JOIN" "PART" "QUIT")
+      erc-hide-list '("JOIN" "PART" "QUIT" "NICK")
       erc-auto-query 'window-noselect
       erc-current-nick-highlight-type 'all)
 
