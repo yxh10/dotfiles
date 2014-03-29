@@ -33,4 +33,4 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 # bash completion
 source /usr/local/etc/bash_completion
 
-export PATH="$HOME/Desktop/billow/bin:$PATH"
+export PATH="$HOME/projects/billow/bin:$PATH"
