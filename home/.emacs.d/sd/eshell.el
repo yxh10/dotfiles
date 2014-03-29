@@ -3,6 +3,7 @@
 
 (require 'rbenv)
 (global-rbenv-mode 1)
+(setq rbenv-executable "/usr/local/bin/rbenv")
 
 (setq eshell-banner-message "ready.\n")
 
