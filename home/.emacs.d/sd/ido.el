@@ -16,5 +16,5 @@
 (setq smex-key-advice-ignore-menu-bar t) ;; maybe this speeds smex up?
 
 ;; flx
-(flx-ido-mode 1)
-(setq ido-use-faces nil)
+;; (flx-ido-mode 1)
+;; (setq ido-use-faces nil)
