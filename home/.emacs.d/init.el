@@ -17,6 +17,7 @@
 (load "sd/eshell")
 (load "sd/git")
 (load "sd/ido")
+(load "sd/ruby")
 (load "sd/macosx")
 
 ;; start in projects

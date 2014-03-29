@@ -1,10 +1,6 @@
 (add-hook 'eshell-mode-hook 'toggle-truncate-lines)
 (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply)
 
-(require 'rbenv)
-(global-rbenv-mode 1)
-(setq rbenv-executable "/usr/local/bin/rbenv")
-
 (setq eshell-banner-message "ready.\n")
 
 (defun sd/open-new-eshell-here ()
