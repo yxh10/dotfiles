@@ -1,4 +1,4 @@
-(add-hook 'ruby-mode-hook 'smartparens-mode)
+;; (add-hook 'ruby-mode-hook 'smartparens-mode)
 
 (require 'rbenv)
 (global-rbenv-mode 1)
