@@ -1,0 +1,7 @@
+xterm*renderFont: true
+xterm*faceName: Source Code Pro
+xterm*faceSize: 9
+
+Xft*antialias: true
+Xft*hinting: full
+Xft*dpi: 96

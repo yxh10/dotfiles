@@ -1,0 +1,22 @@
+[user]
+	name = Steven Degutis
+	email = steven@cleancoders.com
+
+[alias]
+	st = status
+	br = branch
+	ci = commit
+	co = checkout
+	lg = log --oneline --graph --all --decorate
+	amen = commit -a --amen -CHEAD
+
+[color]
+	ui = true
+
+[core]
+	excludesfile = ~/.gitignoreglobal
+	quotepath = false
+[branch]
+	autosetuprebase = always
+[push]
+	default = current
