@@ -52,8 +52,8 @@
 (global-set-key (kbd "C-c e") 'sd/choose-emacs-config-file)
 (global-set-key (kbd "C-c p") 'sd/choose-project)
 
-(defun sd/sudo-save ()
+(defun sd/sudo-open ()
   (interactive)
-  (if (not buffer-file-name)
-      (write-file (concat "/sudo:root@localhost:" (ido-read-file-name "File:")))
-    (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
+  (find-file (concat "/sudo::" (ido-read-file-name "Sudo find file:"))))
+
+(global-set-key (kbd "C-c C-f") 'sd/sudo-open)
