@@ -51,3 +51,9 @@
 
 (global-set-key (kbd "C-c e") 'sd/choose-emacs-config-file)
 (global-set-key (kbd "C-c p") 'sd/choose-project)
+
+(defun sd/sudo-save ()
+  (interactive)
+  (if (not buffer-file-name)
+      (write-file (concat "/sudo:root@localhost:" (ido-read-file-name "File:")))
+    (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
