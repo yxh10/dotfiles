@@ -18,7 +18,7 @@
 (load "sd/git")
 (load "sd/ido")
 (load "sd/ruby")
-(load "sd/macosx")
+(load "sd/os")
 
 ;; start in projects
 (sd/open-projects-dir)
