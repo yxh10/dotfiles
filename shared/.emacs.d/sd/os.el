@@ -9,4 +9,4 @@
   (set-face-font 'default "Menlo-12.0")) ;; use nice font
 
 (when (equal window-system 'x)
-  (set-face-font 'default "SourceCodePro-9.0"))
+  (set-face-font 'default "DejaVu Sans Mono-9.0"))
