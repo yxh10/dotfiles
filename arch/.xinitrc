@@ -1,12 +1,10 @@
 xrdb -merge .Xresources
 xset r rate 200 30
 
-# TODO: copy/paste keys
+# TODO: keys for copy/paste
 
-~/.dropbox-dist/dropboxd
-~/.dropbox-dist/dropbox &
+~/.dropbox-dist/dropboxd &
 
 emacs --daemon
 
-#exec dwm
 exec awesome
