@@ -10,3 +10,8 @@
 
 (when (equal window-system 'x)
   (set-face-font 'default "DejaVu Sans Mono-9.0"))
+
+(setq default-frame-alist '((font . "DejaVu Sans Mono-9.0")
+                            (left-fringe . 0)
+                            (right-fringe . 0)
+                            (vertical-scroll-bars)))
