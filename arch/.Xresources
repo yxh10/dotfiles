@@ -1,7 +1,7 @@
 xterm*faceName: Source Code Pro:size=10
 
 URxvt.scrollBar: off
-URxvt.font: xft:Source Code Pro:size=10
+URxvt.font: xft:Dejavu Sans Mono:size=9
 URxvt*termName:screen-256color
 URxvt.letterSpace: -1
 
