@@ -3,6 +3,8 @@ xset r rate 200 30
 
 # TODO: keys for copy/paste
 
+[ ! -s ~/.config/mpd/pid ] && mpd
+
 ~/.dropbox-dist/dropboxd &
 
 emacs --daemon
