@@ -1,7 +1,14 @@
-xterm*renderFont: true
-xterm*faceName: Source Code Pro
-xterm*faceSize: 9
+xterm*faceName: Source Code Pro:size=10
 
-Xft*antialias: true
-Xft*hinting: full
-Xft*dpi: 96
+URxvt.scrollBar: off
+URxvt.font: xft:Source Code Pro:size=10
+URxvt*termName:screen-256color
+URxvt.letterSpace: -1
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    false
+Xft.hinstyle:   hintfull
+Xft.lcdfilter:  lcdlight
+URxvt*xftAntialias: false
