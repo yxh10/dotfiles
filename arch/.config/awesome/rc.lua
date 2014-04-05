@@ -46,11 +46,6 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- {{{ Menu
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
-
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
