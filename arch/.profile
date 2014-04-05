@@ -21,4 +21,6 @@ export PS1="\n$BOLD$BLUE(\u) \$(sd_retval_cond '$GREEN' '$RED')[\$(sd_retval_con
 export CLICOLOR=1 # lets ls and stuff show colors
 export EDITOR=vim
 
+export PATH="$HOME/bin:$PATH"
+
 export PATH="$HOME/projects/billow/bin:$PATH"
