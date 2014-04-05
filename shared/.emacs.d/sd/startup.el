@@ -79,4 +79,9 @@
 ;; join-line
 (global-set-key (kbd "M-k") '(lambda () (interactive) (join-line 1)))
 
+;; ambivalent
 (global-set-key (kbd "s-K") '(lambda () (interactive) (kill-buffer)))
+
+;; from macosx but generally useful
+(global-unset-key (kbd "C-z"))    ;; stop minimizing
+(global-unset-key (kbd "s-p"))    ;; stop asking to print
