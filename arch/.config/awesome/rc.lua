@@ -52,7 +52,6 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
-mypromptbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
@@ -64,20 +63,17 @@ mytaglist.buttons = awful.util.table.join(
                     )
 
 for s = 1, screen.count() do
-    -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mytaglist[s])
-    left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
@@ -88,6 +84,21 @@ for s = 1, screen.count() do
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
     layout:set_right(right_layout)
+
+    local battery_update_fn = function()
+       fh = assert(io.popen("acpi | cut -d, -f 2", "r"))
+       batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
+       fh:close()
+    end
+
+    batterywidget = wibox.widget.textbox()
+    batterywidget:set_text(" | Battery | ")
+    batterywidgettimer = timer({ timeout = 30 })
+    batterywidgettimer:connect_signal("timeout", battery_update_fn)
+    batterywidgettimer:start()
+    right_layout:add(batterywidget)
+
+    battery_update_fn()
 
     mywibox[s]:set_widget(layout)
 end
