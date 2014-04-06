@@ -57,7 +57,15 @@ right_layout:add(batterywidget)
 
 battery_update_fn()
 
+tasklist_buttons = awful.util.table.join(
+   awful.button({ }, 1,
+                function (c)
+                   client.focus = c
+                   c:raise()
+                end))
+
 local layout = wibox.layout.align.horizontal()
+layout:set_middle(awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons))
 layout:set_right(right_layout)
 
 mywibox = awful.wibox({ position = "bottom" })
@@ -218,14 +226,6 @@ awful.rules.rules = {
 }
 
 function manage_window (c, startup)
-   c:connect_signal("mouse::enter", function(c)
-                       if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-                          and awful.client.focus.filter(c) then
-                       client.focus = c
-                       c:raise()
-                       end
-                                    end)
-
    if not startup then
       if not c.size_hints.user_position and not c.size_hints.program_position then
          awful.placement.no_overlap(c)
