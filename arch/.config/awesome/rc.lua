@@ -73,7 +73,7 @@ globalkeys = awful.util.table.join(
 
    awful.key({ altkey }, "Tab",
              function ()
-                awful.client.focus.byidx(-1)
+                awful.client.focus.byidx(1)
                 if client.focus then
                    client.focus:raise()
                 end
@@ -81,7 +81,7 @@ globalkeys = awful.util.table.join(
 
    awful.key({ altkey, "Shift" }, "Tab",
              function ()
-                awful.client.focus.byidx(1)
+                awful.client.focus.byidx(-1)
                 if client.focus then
                    client.focus:raise()
                 end
