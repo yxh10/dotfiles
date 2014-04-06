@@ -9,6 +9,9 @@
   (set-face-font 'default "Menlo-12.0")) ;; use nice font
 
 (when (equal window-system 'x)
+
+  (setq mouse-autoselect-window t)
+
   (setq default-frame-alist '((font . "DejaVu Sans Mono-9.0")
                               (left-fringe . 0)
                               (right-fringe . 0)
