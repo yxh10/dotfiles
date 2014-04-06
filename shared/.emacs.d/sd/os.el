@@ -12,7 +12,7 @@
 
   (setq mouse-autoselect-window t)
 
-  (setq default-frame-alist '((font . "DejaVu Sans Mono-9.0")
+  (setq default-frame-alist '((font . "DejaVu Sans Mono-7.0")
                               (left-fringe . 0)
                               (right-fringe . 0)
                               (vertical-scroll-bars))))
