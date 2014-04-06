@@ -34,6 +34,7 @@ winkey = "Mod4"
 altkey = "Mod1"
 ctrlkey = "Control"
 mash = { winkey, ctrlkey, altkey }
+mash_shift = { winkey, altkey, "Shift" }
 
 awful.tag({1, 2, 3})
 
@@ -90,40 +91,37 @@ layout:set_right(right_layout)
 mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
+function focus_window(dir)
+   awful.client.focus.byidx(dir)
+   if client.focus then
+      client.focus:raise()
+   end
+end
+
 globalkeys = awful.util.table.join(
 
-   awful.key({ altkey }, "Tab",
-             function ()
-                awful.client.focus.byidx(1)
-                if client.focus then
-                   client.focus:raise()
-                end
-             end),
+   awful.key({ winkey          }, "Tab", function () focus_window(1) end),
+   awful.key({ winkey, "Shift" }, "Tab", function () focus_window(-1) end),
 
-   awful.key({}, "XF86AudioPlay",
-             function ()
-                naughty.notify({text = "foo"})
-             end),
+   awful.key(mash_shift, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
+   awful.key(mash_shift, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
+   awful.key(mash_shift, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
+   awful.key(mash_shift, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
-   awful.key({ altkey, "Shift" }, "Tab",
-             function ()
-                awful.client.focus.byidx(-1)
-                if client.focus then
-                   client.focus:raise()
-                end
-             end),
-
-   awful.key({ winkey, altkey, "Shift" }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
-   awful.key({ winkey, altkey, "Shift" }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
-   awful.key({ winkey, altkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
-   awful.key({ winkey, altkey, "Shift" }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
-
-   awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
+   awful.key({ winkey }, "t", function () awful.util.spawn("urxvt") end),
+   awful.key({ winkey }, "w", function () awful.util.spawn("dwb") end),
    awful.key({ winkey }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
 
-   awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ winkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
+   awful.key({ winkey }, "Return", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end)
+
+   -- awful.key({}, "XF86AudioPlay",
+   --           function ()
+   --              naughty.notify({text = "foo"})
+   --           end)
+
+                                  )
 
 for i = 1, 3 do
    globalkeys = awful.util.table.join(
