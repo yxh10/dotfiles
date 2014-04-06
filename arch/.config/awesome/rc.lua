@@ -114,9 +114,11 @@ function changeGridWidth(n)
    naughty.notify({text = "grid is now " .. grid_width})
 end
 
+local mash = { modkey, "Control", "Mod1" }
+
 clientkeys = awful.util.table.join(
 
-   awful.key({ modkey }, "h",
+   awful.key(mash, "h",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -124,7 +126,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "l",
+   awful.key(mash, "l",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -132,7 +134,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "i",
+   awful.key(mash, "i",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -140,7 +142,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "o",
+   awful.key(mash, "o",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -148,7 +150,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "j",
+   awful.key(mash, "j",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -157,7 +159,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "k",
+   awful.key(mash, "k",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -166,7 +168,7 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, "u",
+   awful.key(mash, "u",
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
@@ -175,20 +177,20 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key({ modkey }, ";",
+   awful.key(mash, ";",
              function (c)
                 local w = client.focus
                 set_grid(w, get_grid(w))
              end),
 
-   awful.key({ modkey }, "'",
+   awful.key(mash, "'",
              function (c)
                 for i, w in pairs(client.get()) do
                    set_grid(w, get_grid(w))
                 end
              end),
 
-   awful.key({ modkey }, "m",
+   awful.key(mash, "m",
              function (c)
                 local w = client.focus
                 set_grid(w, {x = 0, y = 0, width = grid_width, height = 2})
