@@ -5,6 +5,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
+local vicious = require("vicious")
 
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
@@ -41,22 +42,6 @@ left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
-right_layout:add(awful.widget.textclock())
-
-local battery_update_fn = function()
-   fh = assert(io.popen("acpi | cut -d, -f 2", "r"))
-   batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
-   fh:close()
-end
-
-batterywidget = wibox.widget.textbox()
-batterywidget:set_text(" | Battery | ")
-batterywidgettimer = timer({ timeout = 30 })
-batterywidgettimer:connect_signal("timeout", battery_update_fn)
-batterywidgettimer:start()
-right_layout:add(batterywidget)
-
-battery_update_fn()
 
 tasklist_buttons = awful.util.table.join(
    awful.button({ }, 1,
@@ -64,6 +49,38 @@ tasklist_buttons = awful.util.table.join(
                    client.focus = c
                    c:raise()
                 end))
+
+-- mpdwidget = wibox.widget.textbox()
+-- vicious.register(mpdwidget, vicious.widgets.mpd,
+--                  function (mpdwidget, args)
+--                     if args["{state}"] == "Stop" then
+--                        return " - "
+--                     else
+--                        return args["{Artist}"]..' - '.. args["{Title}"]
+--                     end
+--                  end, 10)
+-- right_layout:add(mpdwidget)
+
+datewidget = wibox.widget.textbox()
+vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
+right_layout:add(datewidget)
+
+batwidget = awful.widget.progressbar()
+batwidget:set_width(8)
+batwidget:set_height(10)
+batwidget:set_vertical(true)
+batwidget:set_background_color("#494B4F")
+batwidget:set_border_color(nil)
+batwidget:set_color({type = "linear",
+                     from = { 0, 0 },
+                     to = { 0, 10 },
+                     stops = { { 0, "#AECF96" },
+                               { 0.5, "#88A175" },
+                               { 1, "#FF5656" }}})
+vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+right_layout:add(batwidget)
+
+
 
 local layout = wibox.layout.align.horizontal()
 layout:set_left(left_layout)
@@ -81,6 +98,11 @@ globalkeys = awful.util.table.join(
                 if client.focus then
                    client.focus:raise()
                 end
+             end),
+
+   awful.key({}, "XF86AudioPlay",
+             function ()
+                naughty.notify({text = "foo"})
              end),
 
    awful.key({ altkey, "Shift" }, "Tab",
