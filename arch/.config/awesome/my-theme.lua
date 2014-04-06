@@ -42,8 +42,4 @@ theme.menu_width  = 100
 
 theme.wallpaper = "~/.config/awesome/bg1.jpg"
 
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
-
 return theme
