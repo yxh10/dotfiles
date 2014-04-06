@@ -34,7 +34,10 @@ altkey = "Mod1"
 ctrlkey = "Control"
 mash = { winkey, ctrlkey, altkey }
 
-awful.tag({1}) -- apparently this is absolutely needed, for some reason
+awful.tag({1, 2, 3})
+
+local left_layout = wibox.layout.fixed.horizontal()
+left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
@@ -63,6 +66,7 @@ tasklist_buttons = awful.util.table.join(
                 end))
 
 local layout = wibox.layout.align.horizontal()
+layout:set_left(left_layout)
 layout:set_middle(awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons))
 layout:set_right(right_layout)
 
@@ -98,6 +102,31 @@ globalkeys = awful.util.table.join(
 
    awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
    awful.key({ winkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
+
+for i = 1, 3 do
+   globalkeys = awful.util.table.join(
+      globalkeys,
+      -- View tag only.
+      awful.key({ winkey }, "#" .. i + 9,
+                function ()
+                   local screen = mouse.screen
+                   local tag = awful.tag.gettags(screen)[i]
+                   if tag then
+                      awful.tag.viewonly(tag)
+                   end
+                end),
+      -- Move client to tag.
+      awful.key({ winkey, "Shift" }, "#" .. i + 9,
+                function ()
+                   if client.focus then
+                      local tag = awful.tag.gettags(client.focus.screen)[i]
+                      if tag then
+                         awful.client.movetotag(tag)
+                         awful.tag.viewonly(tag)
+                      end
+                   end
+                end))
+end
 
 GRID_WIDTH = 3
 
