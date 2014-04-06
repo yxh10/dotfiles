@@ -28,32 +28,19 @@ do
 end
 
 beautiful.init("~/.config/awesome/my-theme.lua")
-
-terminal = "urxvt"
-editor_cmd = terminal .. " -e emacs"
-
-modkey = "Mod4"
-
 gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
-awful.tag({ 1, 2, 3 })
+terminal = "urxvt"
+modkey = "Mod4"
 
-mytextclock = awful.widget.textclock()
-
-mytaglist = awful.widget.taglist(1, awful.widget.taglist.filter.all)
-
-mywibox = awful.wibox({ position = "bottom" })
+awful.tag({ 1 })
 
 local left_layout = wibox.layout.fixed.horizontal()
-left_layout:add(mytaglist)
+left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
-right_layout:add(mytextclock)
-
-local layout = wibox.layout.align.horizontal()
-layout:set_left(left_layout)
-layout:set_right(right_layout)
+right_layout:add(awful.widget.textclock())
 
 local battery_update_fn = function()
    fh = assert(io.popen("acpi | cut -d, -f 2", "r"))
@@ -70,29 +57,18 @@ right_layout:add(batterywidget)
 
 battery_update_fn()
 
+local layout = wibox.layout.align.horizontal()
+layout:set_left(left_layout)
+layout:set_right(right_layout)
+
+mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
 globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "j",
-        function ()
-            awful.client.focus.byidx( 1)
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ modkey,           }, "k",
-        function ()
-            awful.client.focus.byidx(-1)
-            if client.focus then client.focus:raise() end
-        end),
-
-
-
-    awful.key({ modkey, }, ";", function () naughty.notify({title = "foo", text = screen.count()}) end),
-
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -101,22 +77,15 @@ globalkeys = awful.util.table.join(
             end
         end),
 
-    awful.key({ modkey,           }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
 
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
-    awful.key({ modkey }, "p", function() awful.util.spawn_with_shell("dmenu_run") end)
+    awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+    awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end)
 )
 
 clientkeys = awful.util.table.join(
@@ -129,41 +98,6 @@ clientkeys = awful.util.table.join(
             c.maximized_vertical   = not c.maximized_vertical
         end)
 )
-
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it works on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
-    globalkeys = awful.util.table.join(globalkeys,
-        -- View tag only.
-        awful.key({ modkey }, "#" .. i + 9,
-                  function ()
-                        local screen = mouse.screen
-                        local tag = awful.tag.gettags(screen)[i]
-                        if tag then
-                           awful.tag.viewonly(tag)
-                        end
-                  end),
-        -- Toggle tag.
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = mouse.screen
-                      local tag = awful.tag.gettags(screen)[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end),
-        -- Move client to tag.
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.movetotag(tag)
-                          end
-                     end
-                  end))
-end
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -188,6 +122,7 @@ client.connect_signal("manage", function (c, startup)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
             and awful.client.focus.filter(c) then
             client.focus = c
+            c:raise()
         end
     end)
 
