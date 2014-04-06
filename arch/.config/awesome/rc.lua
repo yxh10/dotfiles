@@ -8,22 +8,23 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+   naughty.notify({ preset = naughty.config.presets.critical,
+                    title = "Oops, there were errors during startup!",
+                    text = awesome.startup_errors })
 end
 
 do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        if in_error then return end
-        in_error = true
+   local in_error = false
+   awesome.connect_signal("debug::error",
+                          function (err)
+                             if in_error then return end
+                             in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = err })
-        in_error = false
-    end)
+                             naughty.notify({ preset = naughty.config.presets.critical,
+                                              title = "Oops, an error happened!",
+                                              text = err })
+                             in_error = false
+                          end)
 end
 
 beautiful.init("~/.config/awesome/my-theme.lua")
@@ -32,10 +33,7 @@ gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 terminal = "urxvt"
 modkey = "Mod4"
 
-awful.tag({ 1 })
-
-local left_layout = wibox.layout.fixed.horizontal()
-left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
+awful.tag({1})
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
@@ -57,7 +55,6 @@ right_layout:add(batterywidget)
 battery_update_fn()
 
 local layout = wibox.layout.align.horizontal()
-layout:set_left(left_layout)
 layout:set_right(right_layout)
 
 mywibox = awful.wibox({ position = "bottom" })
@@ -68,63 +65,58 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
    awful.key({ modkey }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
    awful.key({ modkey }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
-   awful.key({ modkey }, "Tab",
-             function ()
 
-             end),
+   awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
+   awful.key({ modkey }, "r", awesome.restart),
+   awful.key({ modkey, "Shift" }, "q", awesome.quit),
 
-
-    awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey }, "r", awesome.restart),
-    awful.key({ modkey, "Shift" }, "q", awesome.quit),
-
-    awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-    awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end)
-)
+   awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+   awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
 
 clientkeys = awful.util.table.join(
-    awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
-    awful.key({ modkey,           }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end)
-)
+   awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
+   awful.key({ modkey,           }, "m",
+             function (c)
+                c.maximized_horizontal = not c.maximized_horizontal
+                c.maximized_vertical   = not c.maximized_vertical
+             end))
 
 clientbuttons = awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-    awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+   awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+   awful.button({ modkey }, 1, awful.mouse.client.move),
+   awful.button({ modkey }, 3, awful.mouse.client.resize))
 
 root.keys(globalkeys)
 
 awful.rules.rules = {
-    { rule = { },
-      properties = { border_width = 3,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     size_hints_honor = false,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons } },
+   { rule = { },
+     properties = { border_width = 3,
+                    border_color = beautiful.border_normal,
+                    focus = awful.client.focus.filter,
+                    size_hints_honor = false,
+                    raise = true,
+                    keys = clientkeys,
+                    buttons = clientbuttons } },
 }
 
-client.connect_signal("manage", function (c, startup)
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-            c:raise()
-        end
-    end)
+function manage_window (c, startup)
+   c:connect_signal("mouse::enter", function(c)
+                       if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+                          and awful.client.focus.filter(c) then
+                       client.focus = c
+                       c:raise()
+                       end
+                                    end)
 
-    if not startup then
-        if not c.size_hints.user_position and not c.size_hints.program_position then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
-    end
-end)
+   if not startup then
+      if not c.size_hints.user_position and not c.size_hints.program_position then
+         awful.placement.no_overlap(c)
+         awful.placement.no_offscreen(c)
+      end
+   end
+end
+
+client.connect_signal("manage", manage_window)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
