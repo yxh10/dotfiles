@@ -64,33 +64,26 @@ mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
 globalkeys = awful.util.table.join(
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end),
+   awful.key({ modkey }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
+   awful.key({ modkey }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
+   awful.key({ modkey }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
+   awful.key({ modkey }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
+   awful.key({ modkey }, "Tab",
+             function ()
+
+             end),
 
 
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-
-    awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey }, "r", awesome.restart),
+    awful.key({ modkey, "Shift" }, "q", awesome.quit),
 
     awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
     awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end)
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
@@ -126,8 +119,6 @@ client.connect_signal("manage", function (c, startup)
     end)
 
     if not startup then
-        -- awful.client.setslave(c)
-
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
