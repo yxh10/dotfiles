@@ -27,6 +27,7 @@ do
     end)
 end
 
+-- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/my-theme.lua")
 
 terminal = "urxvt"
@@ -36,42 +37,74 @@ modkey = "Mod4"
 
 gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
-awful.tag({ 1, 2, 3 })
+-- {{{ Tags
+-- Define a tag table which hold all screen tags.
+tags = {}
+for s = 1, screen.count() do
+    -- Each screen has its own tag table.
+    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, awful.layout.suit.tile)
+end
+-- }}}
 
+-- {{{ Wibox
+-- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
-mytaglist = awful.widget.taglist(1, awful.widget.taglist.filter.all)
+-- Create a wibox for each screen and add it
+mywibox = {}
+mytaglist = {}
+mytaglist.buttons = awful.util.table.join(
+                    awful.button({ }, 1, awful.tag.viewonly),
+                    awful.button({ modkey }, 1, awful.client.movetotag),
+                    awful.button({ }, 3, awful.tag.viewtoggle),
+                    awful.button({ modkey }, 3, awful.client.toggletag),
+                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
+                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
+                    )
 
-mywibox = awful.wibox({ position = "bottom" })
+for s = 1, screen.count() do
+    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
+    -- We need one layoutbox per screen.
+    -- Create a taglist widget
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
-local left_layout = wibox.layout.fixed.horizontal()
-left_layout:add(mytaglist)
+    -- Create the wibox
+    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
 
-local right_layout = wibox.layout.fixed.horizontal()
-right_layout:add(wibox.widget.systray())
-right_layout:add(mytextclock)
+    -- Widgets that are aligned to the left
+    local left_layout = wibox.layout.fixed.horizontal()
+    left_layout:add(mytaglist[s])
 
-local layout = wibox.layout.align.horizontal()
-layout:set_left(left_layout)
-layout:set_right(right_layout)
+    -- Widgets that are aligned to the right
+    local right_layout = wibox.layout.fixed.horizontal()
+    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(mytextclock)
 
-local battery_update_fn = function()
-   fh = assert(io.popen("acpi | cut -d, -f 2", "r"))
-   batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
-   fh:close()
+    -- Now bring it all together (with the tasklist in the middle)
+    local layout = wibox.layout.align.horizontal()
+    layout:set_left(left_layout)
+    layout:set_right(right_layout)
+
+    local battery_update_fn = function()
+       fh = assert(io.popen("acpi | cut -d, -f 2", "r"))
+       batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
+       fh:close()
+    end
+
+    batterywidget = wibox.widget.textbox()
+    batterywidget:set_text(" | Battery | ")
+    batterywidgettimer = timer({ timeout = 30 })
+    batterywidgettimer:connect_signal("timeout", battery_update_fn)
+    batterywidgettimer:start()
+    right_layout:add(batterywidget)
+
+    battery_update_fn()
+
+    mywibox[s]:set_widget(layout)
 end
+-- }}}
 
-batterywidget = wibox.widget.textbox()
-batterywidget:set_text(" | Battery | ")
-batterywidgettimer = timer({ timeout = 30 })
-batterywidgettimer:connect_signal("timeout", battery_update_fn)
-batterywidgettimer:start()
-right_layout:add(batterywidget)
-
-battery_update_fn()
-
-mywibox:set_widget(layout)
-
+-- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "j",
         function ()
@@ -84,10 +117,7 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
-
-
-    awful.key({ modkey, }, ";", function () naughty.notify({title = "foo", text = screen.count()}) end),
-
+    -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
@@ -103,6 +133,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey,           }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
 
+    -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
@@ -116,6 +147,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
+    -- dmenu
     awful.key({ modkey }, "p", function() awful.util.spawn_with_shell("dmenu_run") end)
 )
 
