@@ -184,6 +184,12 @@ function set_grid(w, grid)
    newFrame.width = newFrame.width - (beautiful.border_width * 2)
    newFrame.height = newFrame.height - (beautiful.border_width * 2)
 
+   local margin = 0
+   newFrame.x = newFrame.x + margin
+   newFrame.y = newFrame.y + margin
+   newFrame.width = newFrame.width - (margin * 2)
+   newFrame.height = newFrame.height - (margin * 2)
+
    w:geometry(newFrame)
 end
 
