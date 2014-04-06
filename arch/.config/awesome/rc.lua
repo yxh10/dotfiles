@@ -109,8 +109,8 @@ function set_grid(w, grid)
       height = grid.height * halfScreenHeight,
    }
 
-   newFrame.width = newFrame.width - 6
-   newFrame.height = newFrame.height - 6
+   newFrame.width = newFrame.width - (beautiful.border_width * 2)
+   newFrame.height = newFrame.height - (beautiful.border_width * 2)
 
    w:geometry(newFrame)
 end
@@ -118,6 +118,10 @@ end
 function changeGridWidth(n)
    grid_width = math.max(1, grid_width + n)
    naughty.notify({text = "grid is now " .. grid_width})
+end
+
+function snap_to_grid(w)
+   set_grid(w, get_grid(w))
 end
 
 clientkeys = awful.util.table.join(
@@ -181,18 +185,8 @@ clientkeys = awful.util.table.join(
                 set_grid(w, f)
              end),
 
-   awful.key(mash, ";",
-             function (c)
-                local w = client.focus
-                set_grid(w, get_grid(w))
-             end),
-
-   awful.key(mash, "'",
-             function (c)
-                for i, w in pairs(client.get()) do
-                   set_grid(w, get_grid(w))
-                end
-             end),
+   awful.key(mash, ";", function (c) snap_to_grid(client.focus) end),
+   awful.key(mash, "'", function (c) for i, w in pairs(client.get()) do snap_to_grid(w) end end),
 
    awful.key(mash, "m",
              function (c)
@@ -214,7 +208,7 @@ root.keys(globalkeys)
 
 awful.rules.rules = {
    { rule = { },
-     properties = { border_width = 3,
+     properties = { border_width = beautiful.border_width,
                     border_color = beautiful.border_normal,
                     focus = awful.client.focus.filter,
                     size_hints_honor = false,
@@ -237,6 +231,8 @@ function manage_window (c, startup)
          awful.placement.no_overlap(c)
          awful.placement.no_offscreen(c)
       end
+
+      snap_to_grid(c)
    end
 end
 
