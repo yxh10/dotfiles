@@ -83,7 +83,7 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
    awful.key({ winkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
 
-grid_width = 3
+GRID_WIDTH = 3
 
 function round (n) return math.floor(n + 0.5) end
 
@@ -91,7 +91,7 @@ function get_grid(w)
    local winFrame = w:geometry(r)
    local screenRect = screen[1].workarea
 
-   local thirdScreenWidth = screenRect.width / grid_width
+   local thirdScreenWidth = screenRect.width / GRID_WIDTH
    local halfScreenHeight = screenRect.height / 2
 
    local g = {
@@ -106,7 +106,7 @@ end
 
 function set_grid(w, grid)
    local screenRect = screen[1].workarea
-   local thirdScreenWidth = screenRect.width / grid_width
+   local thirdScreenWidth = screenRect.width / GRID_WIDTH
    local halfScreenHeight = screenRect.height / 2
 
    local newFrame = {
@@ -123,8 +123,8 @@ function set_grid(w, grid)
 end
 
 function changeGridWidth(n)
-   grid_width = math.max(1, grid_width + n)
-   naughty.notify({text = "grid is now " .. grid_width})
+   GRID_WIDTH = math.max(1, GRID_WIDTH + n)
+   naughty.notify({text = "grid is now " .. GRID_WIDTH})
 end
 
 function snap_to_grid(w)
@@ -145,7 +145,7 @@ clientkeys = awful.util.table.join(
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
-                f.x = math.min(f.x + 1, grid_width - f.width)
+                f.x = math.min(f.x + 1, GRID_WIDTH - f.width)
                 set_grid(w, f)
              end),
 
@@ -161,7 +161,7 @@ clientkeys = awful.util.table.join(
              function (c)
                 local w = client.focus
                 local f = get_grid(w)
-                f.width = math.min(f.width + 1, grid_width)
+                f.width = math.min(f.width + 1, GRID_WIDTH)
                 set_grid(w, f)
              end),
 
@@ -198,7 +198,7 @@ clientkeys = awful.util.table.join(
    awful.key(mash, "m",
              function (c)
                 local w = client.focus
-                set_grid(w, {x = 0, y = 0, width = grid_width, height = 2})
+                set_grid(w, {x = 0, y = 0, width = GRID_WIDTH, height = 2})
              end),
 
    awful.key(mash, "-", function (c) changeGridWidth(-1) end),
