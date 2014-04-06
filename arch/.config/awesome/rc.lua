@@ -5,7 +5,6 @@ require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
-local menubar = require("menubar")
 
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
