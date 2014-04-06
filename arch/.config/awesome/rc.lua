@@ -29,13 +29,12 @@ end
 beautiful.init("~/.config/awesome/my-theme.lua")
 gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
-terminal = "urxvt"
 winkey = "Mod4"
 altkey = "Mod1"
 ctrlkey = "Control"
 mash = { winkey, ctrlkey, altkey }
 
-awful.tag({1})
+awful.tag({1}) -- apparently this is absolutely needed, for some reason
 
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
@@ -76,7 +75,7 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey, altkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
    awful.key({ winkey, altkey, "Shift" }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
-   awful.key({ winkey }, "Return", function () awful.util.spawn(terminal) end),
+   awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
    awful.key({ winkey }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
 
