@@ -61,10 +61,10 @@ mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
 globalkeys = awful.util.table.join(
-   awful.key({ modkey }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
-   awful.key({ modkey }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
-   awful.key({ modkey }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
-   awful.key({ modkey }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
+   awful.key({ modkey, "Shift" }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
+   awful.key({ modkey, "Shift" }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
+   awful.key({ modkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
+   awful.key({ modkey, "Shift" }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
    awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
    awful.key({ modkey }, "r", awesome.restart),
@@ -74,6 +74,19 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
 
 clientkeys = awful.util.table.join(
+
+   awful.key({ modkey }, "i",
+             function (c)
+                r = screen[1].workarea
+                g = c:geometry(r)
+             end),
+
+   awful.key({ modkey }, "m",
+             function (c)
+                r = screen[1].workarea
+                g = c:geometry(r)
+             end),
+
    awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
    awful.key({ modkey,           }, "m",
              function (c)
