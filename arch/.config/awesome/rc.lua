@@ -73,26 +73,131 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
    awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
 
+grid_width = 3
+
+function round (n) return math.floor(n + 0.5) end
+
+function get_grid(w)
+   local winFrame = w:geometry(r)
+   local screenRect = screen[1].workarea
+
+   local thirdScreenWidth = screenRect.width / grid_width
+   local halfScreenHeight = screenRect.height / 2
+
+   local g = {
+      x = round((winFrame.x - screenRect.x) / thirdScreenWidth),
+      y = round((winFrame.y - screenRect.y) / halfScreenHeight),
+      width  = round(math.max(1, winFrame.width / thirdScreenWidth)),
+      height = round(math.max(1, winFrame.height / halfScreenHeight)),
+   }
+
+   return g
+end
+
+function set_grid(w, grid)
+   local screenRect = screen[1].workarea
+   local thirdScreenWidth = screenRect.width / grid_width
+   local halfScreenHeight = screenRect.height / 2
+
+   local newFrame = {
+      x = (grid.x * thirdScreenWidth) + screenRect.x,
+      y = (grid.y * halfScreenHeight) + screenRect.y,
+      width = grid.width * thirdScreenWidth,
+      height = grid.height * halfScreenHeight,
+   }
+
+   w:geometry(newFrame)
+end
+
+function changeGridWidth(n)
+   grid_width = math.max(1, grid_width + n)
+   naughty.notify({text = "grid is now " .. grid_width})
+end
+
 clientkeys = awful.util.table.join(
+
+   awful.key({ modkey }, "h",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.x = math.max(f.x - 1, 0)
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, "l",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.x = math.min(f.x + 1, grid_width - f.width)
+                set_grid(w, f)
+             end),
 
    awful.key({ modkey }, "i",
              function (c)
-                r = screen[1].workarea
-                g = c:geometry(r)
+                local w = client.focus
+                local f = get_grid(w)
+                f.width = math.max(f.width - 1, 1)
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, "o",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.width = math.min(f.width + 1, grid_width)
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, "j",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.y = 1
+                f.height = 1
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, "k",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.y = 0
+                f.height = 1
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, "u",
+             function (c)
+                local w = client.focus
+                local f = get_grid(w)
+                f.y = 0
+                f.height = 2
+                set_grid(w, f)
+             end),
+
+   awful.key({ modkey }, ";",
+             function (c)
+                local w = client.focus
+                set_grid(w, get_grid(w))
+             end),
+
+   awful.key({ modkey }, "'",
+             function (c)
+                for i, w in pairs(client.get()) do
+                   set_grid(w, get_grid(w))
+                end
              end),
 
    awful.key({ modkey }, "m",
              function (c)
-                r = screen[1].workarea
-                g = c:geometry(r)
+                local w = client.focus
+                set_grid(w, {x = 0, y = 0, width = grid_width, height = 2})
              end),
 
-   awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
-   awful.key({ modkey,           }, "m",
-             function (c)
-                c.maximized_horizontal = not c.maximized_horizontal
-                c.maximized_vertical   = not c.maximized_vertical
-             end))
+   awful.key({ modkey }, "-", function (c) changeGridWidth(-1) end),
+   awful.key({ modkey }, "=", function (c) changeGridWidth(1) end),
+
+   awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end))
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
