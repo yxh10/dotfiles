@@ -70,6 +70,23 @@ mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
 globalkeys = awful.util.table.join(
+
+   awful.key({ altkey }, "Tab",
+             function ()
+                awful.client.focus.byidx(-1)
+                if client.focus then
+                   client.focus:raise()
+                end
+             end),
+
+   awful.key({ altkey, "Shift" }, "Tab",
+             function ()
+                awful.client.focus.byidx(1)
+                if client.focus then
+                   client.focus:raise()
+                end
+             end),
+
    awful.key({ winkey, altkey, "Shift" }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
    awful.key({ winkey, altkey, "Shift" }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
    awful.key({ winkey, altkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
@@ -238,3 +255,7 @@ client.connect_signal("manage", manage_window)
 
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus  end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- for i, w in pairs(client.get()) do
+--    snap_to_grid(w)
+-- end
