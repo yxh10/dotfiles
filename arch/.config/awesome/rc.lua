@@ -31,7 +31,10 @@ beautiful.init("~/.config/awesome/my-theme.lua")
 gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
 terminal = "urxvt"
-modkey = "Mod4"
+winkey = "Mod4"
+altkey = "Mod1"
+ctrlkey = "Control"
+mash = { winkey, ctrlkey, altkey }
 
 awful.tag({1})
 
@@ -61,17 +64,17 @@ mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
 
 globalkeys = awful.util.table.join(
-   awful.key({ modkey, "Shift" }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
-   awful.key({ modkey, "Shift" }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
-   awful.key({ modkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
-   awful.key({ modkey, "Shift" }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
+   awful.key({ winkey, altkey, "Shift" }, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
+   awful.key({ winkey, altkey, "Shift" }, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
+   awful.key({ winkey, altkey, "Shift" }, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
+   awful.key({ winkey, altkey, "Shift" }, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
-   awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
-   awful.key({ modkey }, "r", awesome.restart),
-   awful.key({ modkey, "Shift" }, "q", awesome.quit),
+   awful.key({ winkey }, "Return", function () awful.util.spawn(terminal) end),
+   awful.key({ winkey }, "r", awesome.restart),
+   awful.key({ winkey, "Shift" }, "q", awesome.quit),
 
-   awful.key({ modkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ modkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
+   awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+   awful.key({ winkey }, "p", function () awful.util.spawn_with_shell("dmenu_run") end))
 
 grid_width = 3
 
@@ -106,6 +109,9 @@ function set_grid(w, grid)
       height = grid.height * halfScreenHeight,
    }
 
+   newFrame.width = newFrame.width - 6
+   newFrame.height = newFrame.height - 6
+
    w:geometry(newFrame)
 end
 
@@ -113,8 +119,6 @@ function changeGridWidth(n)
    grid_width = math.max(1, grid_width + n)
    naughty.notify({text = "grid is now " .. grid_width})
 end
-
-local mash = { modkey, "Control", "Mod1" }
 
 clientkeys = awful.util.table.join(
 
@@ -196,15 +200,15 @@ clientkeys = awful.util.table.join(
                 set_grid(w, {x = 0, y = 0, width = grid_width, height = 2})
              end),
 
-   awful.key({ modkey }, "-", function (c) changeGridWidth(-1) end),
-   awful.key({ modkey }, "=", function (c) changeGridWidth(1) end),
+   awful.key(mash, "-", function (c) changeGridWidth(-1) end),
+   awful.key(mash, "=", function (c) changeGridWidth(1) end),
 
-   awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end))
+   awful.key({ winkey, "Shift"   }, "c", function (c) c:kill() end))
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-   awful.button({ modkey }, 1, awful.mouse.client.move),
-   awful.button({ modkey }, 3, awful.mouse.client.resize))
+   awful.button({ winkey }, 1, awful.mouse.client.move),
+   awful.button({ winkey }, 3, awful.mouse.client.resize))
 
 root.keys(globalkeys)
 
