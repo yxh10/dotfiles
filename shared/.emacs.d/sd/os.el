@@ -8,11 +8,10 @@
   (setq locate-command "mdfind")         ;; use spotlight, not locate
   (set-face-font 'default "Menlo-12.0")) ;; use nice font
 
-(when (equal window-system 'x)
 
-  (setq mouse-autoselect-window t)
+(setq mouse-autoselect-window t)
 
-  (setq default-frame-alist '((font . "DejaVu Sans Mono-7.0")
-                              (left-fringe . 0)
-                              (right-fringe . 0)
-                              (vertical-scroll-bars))))
+(setq default-frame-alist '((font . "DejaVu Sans Mono-7.0")
+                            (left-fringe . 0)
+                            (right-fringe . 0)
+                            (vertical-scroll-bars)))
