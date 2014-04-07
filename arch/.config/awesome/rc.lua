@@ -109,6 +109,17 @@ vicious.register(datewidget, vicious.widgets.date, "%a  /  %b %e  /  %r")
 right_layout:add(datewidget)
 
 
+-- mpdwidget = wibox.widget.textbox()
+-- vicious.register(mpdwidget, vicious.widgets.mpd,
+--                  function (mpdwidget, args)
+--                     -- naughty.notify({text = args["{state}"]})
+--                     if args["{state}"] == "Stop" then
+--                        return " - "
+--                     else
+--                        return args["{Artist}"]..' - '.. args["{Title}"]
+--                     end
+--                  end, 10)
+-- right_layout:add(mpdwidget)
 
 
 
