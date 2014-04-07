@@ -12,3 +12,5 @@ Xft.hinting:    false
 Xft.hinstyle:   hintfull
 Xft.lcdfilter:  lcdlight
 URxvt*xftAntialias: false
+
+Xcursor.theme: whiteglass
