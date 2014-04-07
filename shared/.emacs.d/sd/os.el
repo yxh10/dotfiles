@@ -9,9 +9,11 @@
   (set-face-font 'default "Menlo-12.0")) ;; use nice font
 
 
-(setq mouse-autoselect-window t)
-
-(setq default-frame-alist '((font . "DejaVu Sans Mono-7.0")
-                            (left-fringe . 0)
-                            (right-fringe . 0)
-                            (vertical-scroll-bars)))
+(when (equal window-system 'x)
+  (setq mouse-autoselect-window t)
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (setq default-frame-alist '((font . "DejaVu Sans Mono-7.0")
+                                          (left-fringe . 0)
+                                          (right-fringe . 0)
+                                          (vertical-scroll-bars))))))
