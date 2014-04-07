@@ -44,29 +44,14 @@ left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
 
+
+
 tasklist_buttons = awful.util.table.join(
    awful.button({ }, 1,
                 function (c)
                    client.focus = c
                    c:raise()
                 end))
-
--- mpdwidget = wibox.widget.textbox()
--- vicious.register(mpdwidget, vicious.widgets.mpd,
---                  function (mpdwidget, args)
---                     if args["{state}"] == "Stop" then
---                        return " - "
---                     else
---                        return args["{Artist}"]..' - '.. args["{Title}"]
---                     end
---                  end, 10)
--- right_layout:add(mpdwidget)
-
-datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
-right_layout:add(datewidget)
-
-
 
 local layout = wibox.layout.align.horizontal()
 layout:set_left(left_layout)
@@ -87,25 +72,41 @@ function make_battery_widget()
    local yellow = "#88A175"
    local green = "#FF5656"
 
+   -- red = "#00ff00"
+   -- yellow = "#ffff00"
+   -- green = "#ff0000"
+
    batwidget = awful.widget.progressbar()
+   batwidget:set_width(8)
+   batwidget:set_height(20)
    batwidget:set_vertical(true)
    batwidget:set_background_color(background_color)
    batwidget:set_border_color(nil)
    batwidget:set_color({type = "linear",
                         from = { 0, 0 },
-                        to = { 0, 10 },
+                        to = { 0, 20 },
                         stops = { { 0,   red },
                                   { 0.5, yellow },
                                   { 1,   green }}})
    vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
-   local sidebar_layout = wibox.layout.flex.vertical()
-   local battery_wibox = awful.wibox({ position = "right", width = 10 })
-   sidebar_layout:add(batwidget)
-   battery_wibox:set_widget(sidebar_layout)
+   local marge = wibox.layout.margin()
+   marge:set_widget(batwidget)
+   marge:set_left(5)
+   marge:set_right(5)
+
+   -- local sidebar_layout = wibox.layout.flex.vertical()
+   -- local battery_wibox = awful.wibox({ position = "right", width = 10 })
+   -- sidebar_layout:add(batwidget)
+   -- battery_wibox:set_widget(sidebar_layout)
+   right_layout:add(marge)
 end
 
 make_battery_widget()
+
+datewidget = wibox.widget.textbox()
+vicious.register(datewidget, vicious.widgets.date, "%b %d, %r")
+right_layout:add(datewidget)
 
 
 
