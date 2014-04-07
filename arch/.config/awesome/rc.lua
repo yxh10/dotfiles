@@ -66,21 +66,6 @@ datewidget = wibox.widget.textbox()
 vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 right_layout:add(datewidget)
 
-batwidget = awful.widget.progressbar()
-batwidget:set_width(8)
-batwidget:set_height(10)
-batwidget:set_vertical(true)
-batwidget:set_background_color("#494B4F")
-batwidget:set_border_color(nil)
-batwidget:set_color({type = "linear",
-                     from = { 0, 0 },
-                     to = { 0, 10 },
-                     stops = { { 0, "#AECF96" },
-                               { 0.5, "#88A175" },
-                               { 1, "#FF5656" }}})
-vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
-right_layout:add(batwidget)
-
 
 
 local layout = wibox.layout.align.horizontal()
@@ -90,6 +75,51 @@ layout:set_right(right_layout)
 
 mywibox = awful.wibox({ position = "bottom" })
 mywibox:set_widget(layout)
+
+
+
+
+
+
+function make_battery_widget()
+   local background_color = "#494B4F" -- "#000000"
+   local red = "#AECF96"
+   local yellow = "#88A175"
+   local green = "#FF5656"
+
+   batwidget = awful.widget.progressbar()
+   batwidget:set_vertical(true)
+   batwidget:set_background_color(background_color)
+   batwidget:set_border_color(nil)
+   batwidget:set_color({type = "linear",
+                        from = { 0, 0 },
+                        to = { 0, 10 },
+                        stops = { { 0,   red },
+                                  { 0.5, yellow },
+                                  { 1,   green }}})
+   vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+
+   local sidebar_layout = wibox.layout.flex.vertical()
+   local battery_wibox = awful.wibox({ position = "right", width = 10 })
+   sidebar_layout:add(batwidget)
+   battery_wibox:set_widget(sidebar_layout)
+end
+
+make_battery_widget()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function focus_window(dir)
    awful.client.focus.byidx(dir)
@@ -148,7 +178,7 @@ for i = 1, 3 do
                 end))
 end
 
-GRID_WIDTH = 3
+GRID_WIDTH = 4
 
 function round (n) return math.floor(n + 0.5) end
 
