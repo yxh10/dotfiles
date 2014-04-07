@@ -145,12 +145,12 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
 
    awful.key({ winkey }, "Return", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end)
+   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
 
-   -- awful.key({}, "XF86AudioPlay",
-   --           function ()
-   --              naughty.notify({text = "foo"})
-   --           end)
+   awful.key({}, "XF86AudioPlay", function () awful.util.spawn_with_shell("mpc toggle") end),
+   awful.key({}, "XF86AudioStop", function () awful.util.spawn_with_shell("mpc pause") end),
+   awful.key({}, "XF86AudioPrev", function () awful.util.spawn_with_shell("mpc prev") end),
+   awful.key({}, "XF86AudioNext", function () awful.util.spawn_with_shell("mpc next") end)
 
                                   )
 
