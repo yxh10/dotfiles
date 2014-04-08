@@ -151,7 +151,7 @@ globalkeys = awful.util.table.join(
    awful.key(mash_shift, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
    awful.key({ winkey }, "t", function () awful.util.spawn("urxvt") end),
-   awful.key({ winkey }, "w", function () awful.util.spawn("dwb") end),
+   awful.key({ winkey }, "w", function () awful.util.spawn("luakit") end),
    awful.key({ winkey, "Shift" }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
 
