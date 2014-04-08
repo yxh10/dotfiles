@@ -150,13 +150,13 @@ globalkeys = awful.util.table.join(
    awful.key(mash_shift, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
    awful.key(mash_shift, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
-   awful.key({ winkey }, "t", function () awful.util.spawn("urxvt") end),
+   awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
+   awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
    awful.key({ winkey }, "w", function () awful.util.spawn("luakit") end),
+
    awful.key({ winkey, "Shift" }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
-
-   awful.key({ winkey }, "Return", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
 
    awful.key({}, "XF86AudioPlay", function () awful.util.spawn_with_shell("mpc toggle") end),
    awful.key({}, "XF86AudioStop", function () awful.util.spawn_with_shell("mpc pause") end),
