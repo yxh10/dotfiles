@@ -244,29 +244,7 @@ function snap_to_grid(w)
    set_grid(w, get_grid(w))
 end
 
-function doitnow(mod, key, event)
-   if event == "release" then return end
-
-   if     key == 'Up'   then awful.client.moveresize(0, 0, 0, 5, c)
-   elseif key == 'Down' then awful.client.moveresize(0, 0, 0, -5, c)
-   elseif key == 'Right' then awful.client.moveresize(0, 0, 5, 0, c)
-   elseif key == 'Left'  then awesome.restart()
-   else
-      awful.keygrabber.stop(doitnow)
-      naughty.notify({text = key})
-   end
-
-end
-
-function resize(c)
-   naughty.notify({text = "starting!"})
-   local grabber = awful.keygrabber.run(doitnow)
-   naughty.notify({text = grabber == doitnow})
-end
-
 clientkeys = awful.util.table.join(
-
-   awful.key(mash, "r", resize),
 
    awful.key(mash, "h",
              function (c)
