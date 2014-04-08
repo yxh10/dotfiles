@@ -5,6 +5,8 @@ xset r rate 200 30
 
 [ ! -s ~/.config/mpd/pid ] && mpd
 
+unclutter &
+
 ~/.dropbox-dist/dropboxd &
 
 emacs --daemon
