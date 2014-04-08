@@ -7,7 +7,6 @@
 (load custom-file)
 
 ;; startup stuff
-(fringe-mode 0)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -16,6 +15,10 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-echo-area-message "sdegutis")
 
+
+(setq default-frame-alist '((left-fringe . 0)
+                            (right-fringe . 0)
+                            (vertical-scroll-bars)))
 ;; defaults
 (set-display-table-slot standard-display-table 0 ?~)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
