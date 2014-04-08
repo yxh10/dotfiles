@@ -15,4 +15,4 @@ URxvt*xftAntialias: false
 
 Xcursor.theme: whiteglass
 
-emacs.font: DejaVu Sans Mono-7
+emacs.font: DejaVu Sans Mono-8
