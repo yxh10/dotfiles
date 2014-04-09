@@ -81,9 +81,6 @@ mywibox:set_widget(layout)
 
 
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
-
 
 
 spanStart = '<span '
@@ -94,9 +91,40 @@ red = 'color="#e54c62"'
 blue = 'color="#00aeff"'
 green = 'color="#1dff00"'
 
+
+
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
+
+
+
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, spanStart .. font .. green .. ">$2%" .. spanEnd, 61, "BAT0")
 right_layout:add(batwidget)
+
+
+
+
+
+
+
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
+
+
+
+-- CPU widget
+iconCPU = wibox.widget.imagebox()
+iconCPU:set_image(beautiful.widget_cpu)
+iconCPU:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
+right_layout:add(iconCPU)
+
+widgetCPU = wibox.widget.textbox()
+vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
+right_layout:add(widgetCPU)
+
+
+
 
 
 
