@@ -40,6 +40,6 @@ theme.menu_width  = 100
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
 
-theme.wallpaper = "~/.config/awesome/bg1.jpg"
+theme.wallpaper = "~/.config/awesome/bg2.jpg"
 
 return theme
