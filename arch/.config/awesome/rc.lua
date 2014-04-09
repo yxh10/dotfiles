@@ -93,6 +93,21 @@ green = 'color="#1dff00"'
 
 
 
+-- TODO: add widgets.wifi,
+--       get missing icons,
+--       add disk-free stats using: df | grep sda | awk '{print $5}'
+--       add widgets.volume
+--       add gmail widget using netrc and the gmail url
+--
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_layout:add(decoSpace)
+--
+-- diskwidget = wibox.widget.textbox()
+-- vicious.register(diskwidget, vicious.contrib.dio, "${total_mb}", 3, "sda")
+-- right_layout:add(diskwidget)
+
+
+
 decoSpace = wibox.widget.textbox('  ')
 right_layout:add(decoSpace)
 
