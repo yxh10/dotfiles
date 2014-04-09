@@ -1,1 +1,0 @@
-/home/sdegutis/projects/dotfiles/arch/.config/awesome/rc.lua.copland
