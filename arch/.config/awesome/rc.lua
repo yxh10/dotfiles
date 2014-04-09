@@ -122,7 +122,7 @@ end
 make_battery_widget()
 
 datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%a  /  %b %e  /  %r")
+vicious.register(datewidget, vicious.widgets.date, "%a / %b %e / %r")
 right_layout:add(datewidget)
 
 
