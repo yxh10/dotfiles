@@ -79,7 +79,7 @@ task_container:set_middle(padding)
 layout:set_middle(task_container)
 layout:set_right(right_layout)
 
-mywibox = awful.wibox({ position = "bottom", height = 18 })
+mywibox = awful.wibox({ position = "top", height = 18 })
 mywibox:set_widget(layout)
 
 
