@@ -88,7 +88,7 @@ right_layout:add(decoSpace)
 
 spanStart = '<span '
 spanEnd = '</span>'
-font = 'font="Terminus 9"'
+font = 'font="DejaVu Sans 8"'
 white = 'color="#b2b2b2"'
 red = 'color="#e54c62"'
 blue = 'color="#00aeff"'
@@ -106,14 +106,17 @@ right_layout:add(decoSpace)
 
 
 
+iconTemp = wibox.widget.imagebox()
+iconTemp:set_image(beautiful.widget_temp)
+right_layout:add(iconTemp)
+
 weatherWidget = wibox.widget.textbox()
 citycode = "4917123"
-vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg} F" .. spanEnd, 60, citycode)
+vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
 right_layout:add(weatherWidget)
 
 
-
-decoSpace = wibox.widget.textbox('  ')
+decoSpace = wibox.widget.textbox(' ')
 right_layout:add(decoSpace)
 
 
