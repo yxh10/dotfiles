@@ -55,7 +55,24 @@ tasklist_buttons = awful.util.table.join(
 
 local layout = wibox.layout.align.horizontal()
 layout:set_left(left_layout)
-layout:set_middle(awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons))
+
+
+
+
+local default_task_widget = wibox.layout.fixed.horizontal()
+-- local default_task_widget_with_margins = wibox.layout.margin()
+-- default_task_widget_with_margins:set_widget(default_task_widget)
+-- default_task_widget_with_margins:set_left(10)
+-- default_task_widget_with_margins:set_right(10)
+
+local padding = wibox.layout.flex.horizontal()
+local tasklistwidget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, nil, nil, default_task_widget)
+
+local task_container = wibox.layout.align.horizontal()
+task_container:set_left(tasklistwidget)
+task_container:set_middle(padding)
+
+layout:set_middle(task_container)
 layout:set_right(right_layout)
 
 mywibox = awful.wibox({ position = "bottom" })
