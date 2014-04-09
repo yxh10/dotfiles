@@ -170,7 +170,7 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
    awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
    awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
-   awful.key({ winkey }, "w", function () awful.util.spawn("luakit") end),
+   awful.key({ winkey }, "w", function () awful.util.spawn("dwb") end),
 
    awful.key({ winkey, "Shift" }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
