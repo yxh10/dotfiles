@@ -8,6 +8,9 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
+local drop      = require("scratchdrop")
+local lain      = require("lain")
+
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
                     title = "Oops, there were errors during startup!",
@@ -76,7 +79,7 @@ task_container:set_middle(padding)
 layout:set_middle(task_container)
 layout:set_right(right_layout)
 
-mywibox = awful.wibox({ position = "bottom" })
+mywibox = awful.wibox({ position = "bottom", height = 18 })
 mywibox:set_widget(layout)
 
 
@@ -113,13 +116,71 @@ right_layout:add(decoSpace)
 
 
 
-iconBattery = wibox.widget.imagebox()
-iconBattery:set_image(beautiful.widget_battery)
-right_layout:add(iconBattery)
 
-batwidget = wibox.widget.textbox()
-vicious.register(batwidget, vicious.widgets.bat, spanStart .. font .. green .. ">$2%" .. spanEnd, 61, "BAT0")
+
+
+
+
+
+
+
+
+
+
+
+-- Battery
+baticon = wibox.widget.imagebox(beautiful.bat)
+batbar = awful.widget.progressbar()
+batbar:set_color(beautiful.fg_normal)
+batbar:set_width(55)
+batbar:set_ticks(true)
+batbar:set_ticks_size(6)
+batbar:set_background_color(beautiful.bg_normal)
+batmargin = wibox.layout.margin(batbar, 2, 7)
+batmargin:set_top(6)
+batmargin:set_bottom(6)
+batupd = lain.widgets.bat({
+    settings = function()
+        if bat_now.perc == "N/A" then
+            bat_perc = 100
+            baticon:set_image(beautiful.ac)
+        else
+            bat_perc = tonumber(bat_now.perc)
+            if bat_perc > 50 then
+                batbar:set_color(beautiful.fg_normal)
+                baticon:set_image(beautiful.bat)
+            elseif bat_perc > 15 then
+                batbar:set_color(beautiful.fg_normal)
+                baticon:set_image(beautiful.bat_low)
+            else
+                batbar:set_color("#EB8F8F")
+                baticon:set_image(beautiful.bat_no)
+
+            end
+
+        end
+        batbar:set_value(bat_perc / 100)
+    end
+})
+batwidget = wibox.widget.background(batmargin)
+batwidget:set_bgimage(beautiful.widget_bg)
+right_layout:add(baticon)
 right_layout:add(batwidget)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -240,6 +301,7 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
    awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
    awful.key({ winkey }, "w", function () awful.util.spawn("dwb") end),
+   awful.key({ winkey }, "z", function () drop("urxvt") end),
 
    awful.key({ winkey, "Shift" }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),

@@ -37,4 +37,10 @@ theme.widget_vol_mute  = icons_dir .. "/vol_mute.png"
 theme.taglist_squares_sel   = icons_dir .. "/square_sel.png"
 theme.taglist_squares_unsel = icons_dir .. "/square_unsel.png"
 
+theme.ac         = icons_dir .. "/ac.png"
+theme.bat        = icons_dir .. "/bat.png"
+theme.bat_low    = icons_dir .. "/bat_low.png"
+theme.bat_no     = icons_dir .. "/bat_no.png"
+theme.widget_bg  = icons_dir .. "/widget_bg.png"
+
 return theme
