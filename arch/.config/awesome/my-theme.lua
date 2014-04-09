@@ -22,7 +22,7 @@ theme.border_marked = "#91231c"
 
 theme.wallpaper = "~/.config/awesome/bg2.jpg"
 
--- theme.widget_battery   = icons_dir .. "/battery.png"
+theme.widget_battery   = icons_dir .. "/bat.png"
 theme.widget_mem       = icons_dir .. "/mem.png"
 theme.widget_cpu       = icons_dir .. "/cpu.png"
 theme.widget_temp      = icons_dir .. "/temp.png"
