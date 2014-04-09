@@ -6,6 +6,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local vicious = require("vicious")
+vicious.contrib = require("vicious.contrib")
 
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
@@ -105,10 +106,22 @@ right_layout:add(decoSpace)
 
 
 
+weatherWidget = wibox.widget.textbox()
+citycode = "4917123"
+vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg} F" .. spanEnd, 60, citycode)
+right_layout:add(weatherWidget)
+
+
+
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
+
+
 
 -- MEM widget
 iconMem = wibox.widget.imagebox()
 iconMem:set_image(beautiful.widget_mem)
+right_layout:add(iconMem)
 
 widgetMem = wibox.widget.textbox()
 vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
