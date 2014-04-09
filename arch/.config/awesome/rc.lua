@@ -113,6 +113,10 @@ right_layout:add(decoSpace)
 
 
 
+-- iconBattery = wibox.widget.imagebox()
+-- iconBattery:set_image(beautiful.widget_battery)
+-- right_layout:add(iconBattery)
+
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, spanStart .. font .. green .. ">$2%" .. spanEnd, 61, "BAT0")
 right_layout:add(batwidget)
