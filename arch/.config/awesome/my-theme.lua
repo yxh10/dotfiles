@@ -1,3 +1,5 @@
+icons_dir = "~/.config/awesome/icons/"
+
 theme = {}
 
 theme.font          = "Terminus 8"
@@ -20,18 +22,18 @@ theme.border_marked = "#91231c"
 
 theme.wallpaper = "~/.config/awesome/bg2.jpg"
 
-theme.widget_mem       = "~/.config/awesome/theme/icons/mem.png"
-theme.widget_cpu       = "~/.config/awesome/theme/icons/cpu.png"
-theme.widget_temp      = "~/.config/awesome/theme/icons/temp.png"
-theme.widget_hdd       = "~/.config/awesome/theme/icons/hdd.png"
-theme.widget_music     = "~/.config/awesome/theme/icons/note.png"
-theme.widget_music_on  = "~/.config/awesome/theme/icons/note_on.png"
-theme.widget_vol       = "~/.config/awesome/theme/icons/vol.png"
-theme.widget_vol_low   = "~/.config/awesome/theme/icons/vol_low.png"
-theme.widget_vol_no    = "~/.config/awesome/theme/icons/vol_no.png"
-theme.widget_vol_mute  = "~/.config/awesome/theme/icons/vol_mute.png"
+theme.widget_mem       = icons_dir .. "/mem.png"
+theme.widget_cpu       = icons_dir .. "/cpu.png"
+theme.widget_temp      = icons_dir .. "/temp.png"
+theme.widget_hdd       = icons_dir .. "/hdd.png"
+theme.widget_music     = icons_dir .. "/note.png"
+theme.widget_music_on  = icons_dir .. "/note_on.png"
+theme.widget_vol       = icons_dir .. "/vol.png"
+theme.widget_vol_low   = icons_dir .. "/vol_low.png"
+theme.widget_vol_no    = icons_dir .. "/vol_no.png"
+theme.widget_vol_mute  = icons_dir .. "/vol_mute.png"
 
-theme.taglist_squares_sel   = "~/.config/awesome/theme/icons/square_sel.png"
-theme.taglist_squares_unsel = "~/.config/awesome/theme/icons/square_unsel.png"
+theme.taglist_squares_sel   = icons_dir .. "/square_sel.png"
+theme.taglist_squares_unsel = icons_dir .. "/square_unsel.png"
 
 return theme

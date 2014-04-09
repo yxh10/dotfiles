@@ -80,50 +80,56 @@ mywibox:set_widget(layout)
 
 
 
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
 
 
 
-function make_battery_widget()
-   local background_color = "#494B4F" -- "#000000"
-   local red = "#AECF96"
-   local yellow = "#88A175"
-   local green = "#FF5656"
+spanStart = '<span '
+spanEnd = '</span>'
+font = 'font="Terminus 9"'
+white = 'color="#b2b2b2"'
+red = 'color="#e54c62"'
+blue = 'color="#00aeff"'
+green = 'color="#1dff00"'
 
-   -- red = "#00ff00"
-   -- yellow = "#ffff00"
-   -- green = "#ff0000"
+batwidget = wibox.widget.textbox()
+vicious.register(batwidget, vicious.widgets.bat, spanStart .. font .. green .. ">$2%" .. spanEnd, 61, "BAT0")
+right_layout:add(batwidget)
 
-   batwidget = awful.widget.progressbar()
-   batwidget:set_width(8)
-   batwidget:set_height(20)
-   batwidget:set_vertical(true)
-   batwidget:set_background_color(background_color)
-   batwidget:set_border_color(nil)
-   batwidget:set_color({type = "linear",
-                        from = { 0, 0 },
-                        to = { 0, 20 },
-                        stops = { { 0,   red },
-                                  { 0.5, yellow },
-                                  { 1,   green }}})
-   vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
-   local marge = wibox.layout.margin()
-   marge:set_widget(batwidget)
-   marge:set_left(5)
-   marge:set_right(5)
 
-   -- local sidebar_layout = wibox.layout.flex.vertical()
-   -- local battery_wibox = awful.wibox({ position = "right", width = 10 })
-   -- sidebar_layout:add(batwidget)
-   -- battery_wibox:set_widget(sidebar_layout)
-   right_layout:add(marge)
-end
 
-make_battery_widget()
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
 
-datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%a / %b %e / %r")
-right_layout:add(datewidget)
+
+
+
+-- MEM widget
+iconMem = wibox.widget.imagebox()
+iconMem:set_image(beautiful.widget_mem)
+
+widgetMem = wibox.widget.textbox()
+vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
+right_layout:add(widgetMem)
+
+
+
+
+-- iconClock = wibox.widget.imagebox()
+-- iconClock:set_image(beautiful.widget_clock)
+-- right_layout:add(iconClock)
+
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
+
+widgetClock = awful.widget.textclock(spanStart .. font .. red .. ">%a %b %d  %I:%M %p" .. spanEnd)
+right_layout:add(widgetClock)
+
+decoSpace = wibox.widget.textbox('  ')
+right_layout:add(decoSpace)
+
 
 
 -- mpdwidget = wibox.widget.textbox()

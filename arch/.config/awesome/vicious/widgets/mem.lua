@@ -24,12 +24,12 @@ local function worker(format)
     -- Get MEM info
     for line in io.lines("/proc/meminfo") do
         for k, v in string.gmatch(line, "([%a]+):[%s]+([%d]+).+") do
-            if     k == "MemTotal"  then _mem.total = math.floor(v/1024)
-            elseif k == "MemFree"   then _mem.buf.f = math.floor(v/1024)
-            elseif k == "Buffers"   then _mem.buf.b = math.floor(v/1024)
-            elseif k == "Cached"    then _mem.buf.c = math.floor(v/1024)
-            elseif k == "SwapTotal" then _mem.swp.t = math.floor(v/1024)
-            elseif k == "SwapFree"  then _mem.swp.f = math.floor(v/1024)
+            if     k == "MemTotal"  then _mem.total = math.floor(v/1024/1024*100)/100
+            elseif k == "MemFree"   then _mem.buf.f = math.floor(v/1024/1024*100)/100
+            elseif k == "Buffers"   then _mem.buf.b = math.floor(v/1024/1024*100)/100
+            elseif k == "Cached"    then _mem.buf.c = math.floor(v/1024/1024*100)/100
+            elseif k == "SwapTotal" then _mem.swp.t = math.floor(v/1024/1024*100)/100
+            elseif k == "SwapFree"  then _mem.swp.f = math.floor(v/1024/1024*100)/100
             end
         end
     end
