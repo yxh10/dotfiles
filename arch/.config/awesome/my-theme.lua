@@ -18,28 +18,20 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#119933"
 theme.border_marked = "#91231c"
 
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
-
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_height = 15
-theme.menu_width  = 100
-
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
-
 theme.wallpaper = "~/.config/awesome/bg2.jpg"
+
+theme.widget_mem       = "~/.config/awesome/theme/icons/mem.png"
+theme.widget_cpu       = "~/.config/awesome/theme/icons/cpu.png"
+theme.widget_temp      = "~/.config/awesome/theme/icons/temp.png"
+theme.widget_hdd       = "~/.config/awesome/theme/icons/hdd.png"
+theme.widget_music     = "~/.config/awesome/theme/icons/note.png"
+theme.widget_music_on  = "~/.config/awesome/theme/icons/note_on.png"
+theme.widget_vol       = "~/.config/awesome/theme/icons/vol.png"
+theme.widget_vol_low   = "~/.config/awesome/theme/icons/vol_low.png"
+theme.widget_vol_no    = "~/.config/awesome/theme/icons/vol_no.png"
+theme.widget_vol_mute  = "~/.config/awesome/theme/icons/vol_mute.png"
+
+theme.taglist_squares_sel   = "~/.config/awesome/theme/icons/square_sel.png"
+theme.taglist_squares_unsel = "~/.config/awesome/theme/icons/square_unsel.png"
 
 return theme
