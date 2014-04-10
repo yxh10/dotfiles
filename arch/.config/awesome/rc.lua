@@ -223,6 +223,7 @@ local systray_widget = wibox.widget.systray()
 local battery = require("sd/battery")
 local simpletimer = require("sd/simpletimer")
 local weather = require("sd/weather")
+local memory = require("sd/memory")
 
 -- Battery
 battery_icon = wibox.widget.imagebox(beautiful.bat)
@@ -249,10 +250,10 @@ local update_battery_widget = function()
       battery_bar:set_color(beautiful.battery_healthy_color)
       battery_icon:set_image(beautiful.bat)
    elseif bat.percent > .15 then
-      battery_bar:set_color(battery_kindaok_color)
+      battery_bar:set_color(beautiful.battery_kindaok_color)
       battery_icon:set_image(beautiful.bat_low)
    else
-      battery_bar:set_color(battery_verylow_color)
+      battery_bar:set_color(beautiful.battery_verylow_color)
       battery_icon:set_image(beautiful.bat_no)
    end
 
@@ -267,6 +268,37 @@ battery_widget = wibox.widget.background(battery_margin)
 battery_widget:set_bgimage(beautiful.widget_bg)
 
 
+
+
+
+-- Memory
+memory_icon = wibox.widget.imagebox(beautiful.widget_mem)
+memory_bar = awful.widget.progressbar()
+memory_bar:set_color(beautiful.fg_normal)
+memory_bar:set_width(55)
+memory_bar:set_ticks(true)
+memory_bar:set_ticks_size(3)
+memory_bar:set_background_color(beautiful.bg_normal)
+memory_margin = wibox.layout.margin(memory_bar, 2, 10, 6, 6)
+
+local update_memory_widget = function()
+   local mem = memory.check()
+
+   memory_bar:set_value(mem.percent_used)
+
+   if mem.percent_used < .10 then
+      memory_bar:set_color(beautiful.memory_healthy_color)
+   elseif mem.percent_used < .70 then
+      memory_bar:set_color(beautiful.memory_kindaok_color)
+   else
+      memory_bar:set_color(beautiful.memory_verylow_color)
+   end
+end
+
+simpletimer.setup(3, update_memory_widget)
+
+memory_widget = wibox.widget.background(memory_margin)
+memory_widget:set_bgimage(beautiful.widget_bg)
 
 
 
@@ -316,6 +348,8 @@ right_side:add(systray_widget)
 right_side:add(battery_icon)
 right_side:add(battery_widget)
 right_side:add(weather_combined)
+right_side:add(memory_icon)
+right_side:add(memory_widget)
 
 
 

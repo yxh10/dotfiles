@@ -47,6 +47,10 @@ theme.battery_healthy_color = "#55bb55"
 theme.battery_kindaok_color = "#bbbb55"
 theme.battery_verylow_color = "#bb5555"
 
+theme.memory_healthy_color = "#55bb55"
+theme.memory_kindaok_color = "#bbbb55"
+theme.memory_verylow_color = "#bb5555"
+
 theme.battery_dead_notice = {
    title = "Battery exhausted",
    text = "Shutdown imminent",
