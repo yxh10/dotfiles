@@ -8,7 +8,8 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
--- needed for the following requires:
+
+-- global vars needed for the following requires :(
 winkey = "Mod4"
 altkey = "Mod1"
 ctrlkey = "Control"
@@ -19,6 +20,7 @@ local globalkeys = require("globalkeys")
 local clientkeys = require("clientkeys")
 local grid = require("grid")
 local bar = require("bar")
+
 
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
@@ -45,23 +47,7 @@ gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
 awful.tag({1, 2, 3})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+bar.setup_bar()
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),

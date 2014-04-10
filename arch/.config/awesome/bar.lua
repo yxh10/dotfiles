@@ -1,3 +1,5 @@
+local awful = require("awful")
+
 local bar = {}
 
 
@@ -38,9 +40,10 @@ local bar = {}
 -- layout:set_middle(task_container)
 -- layout:set_right(right_layout)
 
--- mywibox = awful.wibox({ position = "top", height = 18 })
--- mywibox:set_widget(layout)
-
+function bar.setup_bar()
+   local mywibox = awful.wibox({ position = "top", height = 18 })
+   -- mywibox:set_widget(layout)
+end
 
 
 
