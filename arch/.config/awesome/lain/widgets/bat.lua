@@ -1,10 +1,10 @@
 
 --[[
-                                                  
-     Licensed under GNU General Public License v2 
-      * (c) 2013,      Luke Bonham                
-      * (c) 2010-2012, Peter Hofmann              
-                                                  
+
+     Licensed under GNU General Public License v2
+      * (c) 2013,      Luke Bonham
+      * (c) 2010-2012, Peter Hofmann
+
 --]]
 
 local newtimer     = require("lain.helpers").newtimer
@@ -36,17 +36,25 @@ local function worker(args)
         title = "Battery low",
         text = "Plug the cable!",
         timeout = 15,
+        border_width = 3,
         fg = "#202020",
-        bg = "#CDCDCD"
+        bg = "#CDCDCD",
+        border_color = "#000000"
     }
 
+    local naughty      = require("naughty")
+    local bgcolor = "#660000"
     bat_notification_critical_preset = {
         title = "Battery exhausted",
         text = "Shutdown imminent",
         timeout = 15,
-        fg = "#000000",
-        bg = "#FFFFFF"
+        fg = "#ffffff",
+        bg = bgcolor,
+        border_width = 5,
+        border_color = bgcolor,
+        font = "Terminus 10"
     }
+    naughty.notify(bat_notification_critical_preset)
 
     function update()
         bat_now = {

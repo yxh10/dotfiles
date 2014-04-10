@@ -8,8 +8,6 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
-local lain      = require("lain")
-
 if awesome.startup_errors then
    naughty.notify({ preset = naughty.config.presets.critical,
                     title = "Oops, there were errors during startup!",
@@ -41,77 +39,86 @@ mash_shift = { winkey, altkey, "Shift" }
 
 awful.tag({1, 2, 3})
 
-local left_layout = wibox.layout.fixed.horizontal()
-left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
-
-local right_layout = wibox.layout.fixed.horizontal()
-right_layout:add(wibox.widget.systray())
-
-
-
-tasklist_buttons = awful.util.table.join(
-   awful.button({ }, 1,
-                function (c)
-                   client.focus = c
-                   c:raise()
-                end))
-
-local layout = wibox.layout.align.horizontal()
-layout:set_left(left_layout)
-
-
-
-
-local default_task_widget = wibox.layout.fixed.horizontal()
--- local default_task_widget_with_margins = wibox.layout.margin()
--- default_task_widget_with_margins:set_widget(default_task_widget)
--- default_task_widget_with_margins:set_left(10)
--- default_task_widget_with_margins:set_right(10)
-
-local padding = wibox.layout.flex.horizontal()
-local tasklistwidget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, nil, nil, default_task_widget)
-
-local task_container = wibox.layout.align.horizontal()
-task_container:set_left(tasklistwidget)
-task_container:set_middle(padding)
-
-layout:set_middle(task_container)
-layout:set_right(right_layout)
-
-mywibox = awful.wibox({ position = "top", height = 18 })
-mywibox:set_widget(layout)
 
 
 
 
 
-spanStart = '<span '
-spanEnd = '</span>'
-font = 'font="Terminus 8"'
-white = 'color="#b2b2b2"'
-red = 'color="#e54c62"'
-blue = 'color="#00aeff"'
-green = 'color="#1dff00"'
+
+-- local left_layout = wibox.layout.fixed.horizontal()
+-- left_layout:add(awful.widget.taglist(1, awful.widget.taglist.filter.all))
+
+-- local right_layout = wibox.layout.fixed.horizontal()
+-- right_layout:add(wibox.widget.systray())
 
 
 
--- TODO: add widgets.wifi,
---       get missing icons,
---       add disk-free stats using: df | grep sda | awk '{print $5}'
---       add widgets.volume
---       add gmail widget using netrc and the gmail url
---
+-- tasklist_buttons = awful.util.table.join(
+--    awful.button({ }, 1,
+--                 function (c)
+--                    client.focus = c
+--                    c:raise()
+--                 end))
+
+-- local layout = wibox.layout.align.horizontal()
+-- layout:set_left(left_layout)
+
+
+
+
+-- local default_task_widget = wibox.layout.fixed.horizontal()
+-- -- local default_task_widget_with_margins = wibox.layout.margin()
+-- -- default_task_widget_with_margins:set_widget(default_task_widget)
+-- -- default_task_widget_with_margins:set_left(10)
+-- -- default_task_widget_with_margins:set_right(10)
+
+-- local padding = wibox.layout.flex.horizontal()
+-- local tasklistwidget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, nil, nil, default_task_widget)
+
+-- local task_container = wibox.layout.align.horizontal()
+-- task_container:set_left(tasklistwidget)
+-- task_container:set_middle(padding)
+
+-- layout:set_middle(task_container)
+-- layout:set_right(right_layout)
+
+-- mywibox = awful.wibox({ position = "top", height = 18 })
+-- mywibox:set_widget(layout)
+
+
+
+
+
+-- spanStart = '<span '
+-- spanEnd = '</span>'
+-- font = 'font="Terminus 8"'
+-- white = 'color="#b2b2b2"'
+-- red = 'color="#e54c62"'
+-- blue = 'color="#00aeff"'
+-- green = 'color="#1dff00"'
+
+
+
+-- -- TODO: add widgets.wifi,
+-- --       get missing icons,
+-- --       add disk-free stats using: df | grep sda | awk '{print $5}'
+-- --       add widgets.volume
+-- --       add gmail widget using netrc and the gmail url
+-- --
+-- -- decoSpace = wibox.widget.textbox('  ')
+-- -- right_layout:add(decoSpace)
+-- --
+-- -- diskwidget = wibox.widget.textbox()
+-- -- vicious.register(diskwidget, vicious.contrib.dio, "${total_mb}", 3, "sda")
+-- -- right_layout:add(diskwidget)
+
+
+
 -- decoSpace = wibox.widget.textbox('  ')
 -- right_layout:add(decoSpace)
---
--- diskwidget = wibox.widget.textbox()
--- vicious.register(diskwidget, vicious.contrib.dio, "${total_mb}", 3, "sda")
--- right_layout:add(diskwidget)
 
 
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
 
 
 
@@ -124,52 +131,79 @@ right_layout:add(decoSpace)
 
 
 
+-- -- Battery
+-- baticon = wibox.widget.imagebox(beautiful.bat)
+-- batbar = awful.widget.progressbar()
+-- batbar:set_color(beautiful.fg_normal)
+-- batbar:set_width(55)
+-- batbar:set_ticks(true)
+-- batbar:set_ticks_size(3)
+-- batbar:set_background_color(beautiful.bg_normal)
+-- batmargin = wibox.layout.margin(batbar, 2, 7)
+-- batmargin:set_top(6)
+-- batmargin:set_bottom(6)
+-- -- batupd = lain.widgets.bat({
+-- --     settings = function()
+-- --         if bat_now.perc == "N/A" then
+-- --            batbar:set_color("#55bb55")
+-- --            bat_perc = 100
+-- --            baticon:set_image(beautiful.ac)
+-- --         else
+-- --             bat_perc = tonumber(bat_now.perc)
+-- --             if bat_perc > 50 then
+-- --                 batbar:set_color("#55bb55")
+-- --                 baticon:set_image(beautiful.bat)
+-- --             elseif bat_perc > 15 then
+-- --                 batbar:set_color("#bbbb55")
+-- --                 baticon:set_image(beautiful.bat_low)
+-- --             else
+-- --                 batbar:set_color("#bb5555")
+-- --                 baticon:set_image(beautiful.bat_no)
 
+-- --             end
 
+-- --         end
+-- --         batbar:set_value(bat_perc / 100)
+-- --     end
+-- -- })
+-- batwidget = wibox.widget.background(batmargin)
+-- batwidget:set_bgimage(beautiful.widget_bg)
+-- right_layout:add(baticon)
+-- right_layout:add(batwidget)
 
--- Battery
-baticon = wibox.widget.imagebox(beautiful.bat)
-batbar = awful.widget.progressbar()
-batbar:set_color(beautiful.fg_normal)
-batbar:set_width(55)
-batbar:set_ticks(true)
-batbar:set_ticks_size(3)
-batbar:set_background_color(beautiful.bg_normal)
-batmargin = wibox.layout.margin(batbar, 2, 7)
-batmargin:set_top(6)
-batmargin:set_bottom(6)
-batupd = lain.widgets.bat({
-    settings = function()
-        if bat_now.perc == "N/A" then
-           batbar:set_color("#55bb55")
-           bat_perc = 100
-           baticon:set_image(beautiful.ac)
-        else
-            bat_perc = tonumber(bat_now.perc)
-            if bat_perc > 50 then
-                batbar:set_color("#55bb55")
-                baticon:set_image(beautiful.bat)
-            elseif bat_perc > 15 then
-                batbar:set_color("#bbbb55")
-                baticon:set_image(beautiful.bat_low)
-            else
-                batbar:set_color("#bb5555")
-                baticon:set_image(beautiful.bat_no)
 
-            end
+--    -- awful.key({ winkey }, "p",
+--    --           function()
+--    --              local bat_now = tonumber(io.lines("/sys/class/power_supply/BAT0/energy_now")())
+--    --              local bat_full = tonumber(io.lines("/sys/class/power_supply/BAT0/energy_full")())
+--    --              local bat = bat_now / bat_full
 
-        end
-        batbar:set_value(bat_perc / 100)
-    end
-})
-batwidget = wibox.widget.background(batmargin)
-batwidget:set_bgimage(beautiful.widget_bg)
-right_layout:add(baticon)
-right_layout:add(batwidget)
+--    --              local bat_status = io.lines("/sys/class/power_supply/BAT0/status")()
+--    --              local is_charging = bat_status == 'Charging'
+--    --              local is_discharging = bat_status == 'Discharging'
 
+--    --              if is_discharging then
 
+--    --                 if bat <= 5 then
+--    --                    local naughty = require("naughty")
+--    --                    local bgcolor = "#660000"
+--    --                    bat_notification_critical_preset = {
+--    --                       title = "Battery exhausted",
+--    --                       text = "Shutdown imminent",
+--    --                       timeout = 15,
+--    --                       fg = "#ffffff",
+--    --                       bg = bgcolor,
+--    --                       border_width = 5,
+--    --                       border_color = bgcolor,
+--    --                       font = "Terminus 10"
+--    --                    }
+--    --                    naughty.notify(bat_notification_critical_preset)
+--    --                 end
 
+--    --              end
 
+--    --              -- naughty.notify({text = bat})
+--    --           end),
 
 
 
@@ -188,88 +222,88 @@ right_layout:add(batwidget)
 
 
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
 
 
 
--- CPU widget
-iconCPU = wibox.widget.imagebox()
-iconCPU:set_image(beautiful.widget_cpu)
-iconCPU:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
-right_layout:add(iconCPU)
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_layout:add(decoSpace)
 
-widgetCPU = wibox.widget.textbox()
-vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
-right_layout:add(widgetCPU)
 
 
+-- -- CPU widget
+-- iconCPU = wibox.widget.imagebox()
+-- iconCPU:set_image(beautiful.widget_cpu)
+-- iconCPU:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
+-- right_layout:add(iconCPU)
 
+-- widgetCPU = wibox.widget.textbox()
+-- vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
+-- right_layout:add(widgetCPU)
 
 
 
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
 
 
 
-iconTemp = wibox.widget.imagebox()
-iconTemp:set_image(beautiful.widget_temp)
-right_layout:add(iconTemp)
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_layout:add(decoSpace)
 
-weatherWidget = wibox.widget.textbox()
-citycode = "4917123"
-vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
-right_layout:add(weatherWidget)
 
 
-decoSpace = wibox.widget.textbox(' ')
-right_layout:add(decoSpace)
+-- iconTemp = wibox.widget.imagebox()
+-- iconTemp:set_image(beautiful.widget_temp)
+-- right_layout:add(iconTemp)
 
+-- weatherWidget = wibox.widget.textbox()
+-- citycode = "4917123"
+-- vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
+-- right_layout:add(weatherWidget)
 
 
--- MEM widget
-iconMem = wibox.widget.imagebox()
-iconMem:set_image(beautiful.widget_mem)
-right_layout:add(iconMem)
+-- decoSpace = wibox.widget.textbox(' ')
+-- right_layout:add(decoSpace)
 
-widgetMem = wibox.widget.textbox()
-vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
-right_layout:add(widgetMem)
 
 
+-- -- MEM widget
+-- iconMem = wibox.widget.imagebox()
+-- iconMem:set_image(beautiful.widget_mem)
+-- right_layout:add(iconMem)
 
+-- widgetMem = wibox.widget.textbox()
+-- vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
+-- right_layout:add(widgetMem)
 
--- iconClock = wibox.widget.imagebox()
--- iconClock:set_image(beautiful.widget_clock)
--- right_layout:add(iconClock)
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
 
-widgetClock = awful.widget.textclock(spanStart .. font .. red .. ">%a %b %d  %I:%M %p" .. spanEnd)
-right_layout:add(widgetClock)
 
-decoSpace = wibox.widget.textbox('  ')
-right_layout:add(decoSpace)
+-- -- iconClock = wibox.widget.imagebox()
+-- -- iconClock:set_image(beautiful.widget_clock)
+-- -- right_layout:add(iconClock)
 
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_layout:add(decoSpace)
 
+-- widgetClock = awful.widget.textclock(spanStart .. font .. red .. ">%a %b %d  %I:%M %p" .. spanEnd)
+-- right_layout:add(widgetClock)
 
--- mpdwidget = wibox.widget.textbox()
--- vicious.register(mpdwidget, vicious.widgets.mpd,
---                  function (mpdwidget, args)
---                     -- naughty.notify({text = args["{state}"]})
---                     if args["{state}"] == "Stop" then
---                        return " - "
---                     else
---                        return args["{Artist}"]..' - '.. args["{Title}"]
---                     end
---                  end, 10)
--- right_layout:add(mpdwidget)
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_layout:add(decoSpace)
 
 
 
+-- -- mpdwidget = wibox.widget.textbox()
+-- -- vicious.register(mpdwidget, vicious.widgets.mpd,
+-- --                  function (mpdwidget, args)
+-- --                     -- naughty.notify({text = args["{state}"]})
+-- --                     if args["{state}"] == "Stop" then
+-- --                        return " - "
+-- --                     else
+-- --                        return args["{Artist}"]..' - '.. args["{Title}"]
+-- --                     end
+-- --                  end, 10)
+-- -- right_layout:add(mpdwidget)
 
 
 
@@ -280,191 +314,13 @@ right_layout:add(decoSpace)
 
 
 
-function focus_window(dir)
-   awful.client.focus.byidx(dir)
-   if client.focus then
-      client.focus:raise()
-   end
-end
 
-globalkeys = awful.util.table.join(
 
-   awful.key({ winkey          }, "Tab", function () focus_window(1) end),
-   awful.key({ winkey, "Shift" }, "Tab", function () focus_window(-1) end),
 
-   awful.key(mash_shift, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
-   awful.key(mash_shift, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
-   awful.key(mash_shift, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
-   awful.key(mash_shift, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
+local globalkeys = require("globalkeys")
+local clientkeys = require("clientkeys")
+local grid = require("grid")
 
-   awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
-   awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
-   awful.key({ winkey }, "w", function () awful.util.spawn("conk") end),
-
-   awful.key({ winkey, "Shift" }, "r", awesome.restart),
-   awful.key({ winkey, "Shift" }, "q", awesome.quit),
-
-   awful.key({}, "XF86AudioPlay", function () awful.util.spawn_with_shell("mpc toggle") end),
-   awful.key({}, "XF86AudioStop", function () awful.util.spawn_with_shell("mpc pause") end),
-   awful.key({}, "XF86AudioPrev", function () awful.util.spawn_with_shell("mpc prev") end),
-   awful.key({}, "XF86AudioNext", function () awful.util.spawn_with_shell("mpc next") end)
-
-                                  )
-
-for i = 1, 3 do
-   globalkeys = awful.util.table.join(
-      globalkeys,
-      -- View tag only.
-      awful.key({ winkey }, "#" .. i + 9,
-                function ()
-                   local screen = mouse.screen
-                   local tag = awful.tag.gettags(screen)[i]
-                   if tag then
-                      awful.tag.viewonly(tag)
-                   end
-                end),
-      -- Move client to tag.
-      awful.key({ winkey, "Shift" }, "#" .. i + 9,
-                function ()
-                   if client.focus then
-                      local tag = awful.tag.gettags(client.focus.screen)[i]
-                      if tag then
-                         awful.client.movetotag(tag)
-                         awful.tag.viewonly(tag)
-                      end
-                   end
-                end))
-end
-
-GRID_WIDTH = 4
-
-function round (n) return math.floor(n + 0.5) end
-
-function get_grid(w)
-   local winFrame = w:geometry(r)
-   local screenRect = screen[1].workarea
-
-   local thirdScreenWidth = screenRect.width / GRID_WIDTH
-   local halfScreenHeight = screenRect.height / 2
-
-   local g = {
-      x = round((winFrame.x - screenRect.x) / thirdScreenWidth),
-      y = round((winFrame.y - screenRect.y) / halfScreenHeight),
-      width  = round(math.max(1, winFrame.width / thirdScreenWidth)),
-      height = round(math.max(1, winFrame.height / halfScreenHeight)),
-   }
-
-   return g
-end
-
-function set_grid(w, grid)
-   local screenRect = screen[1].workarea
-   local thirdScreenWidth = screenRect.width / GRID_WIDTH
-   local halfScreenHeight = screenRect.height / 2
-
-   local newFrame = {
-      x = (grid.x * thirdScreenWidth) + screenRect.x,
-      y = (grid.y * halfScreenHeight) + screenRect.y,
-      width = grid.width * thirdScreenWidth,
-      height = grid.height * halfScreenHeight,
-   }
-
-   newFrame.width = newFrame.width - (beautiful.border_width * 2)
-   newFrame.height = newFrame.height - (beautiful.border_width * 2)
-
-   local margin = 0
-   newFrame.x = newFrame.x + margin
-   newFrame.y = newFrame.y + margin
-   newFrame.width = newFrame.width - (margin * 2)
-   newFrame.height = newFrame.height - (margin * 2)
-
-   w:geometry(newFrame)
-end
-
-function changeGridWidth(n)
-   GRID_WIDTH = math.max(1, GRID_WIDTH + n)
-   naughty.notify({text = "grid is now " .. GRID_WIDTH})
-end
-
-function snap_to_grid(w)
-   set_grid(w, get_grid(w))
-end
-
-clientkeys = awful.util.table.join(
-
-   awful.key(mash, "h",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.x = math.max(f.x - 1, 0)
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "l",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.x = math.min(f.x + 1, GRID_WIDTH - f.width)
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "i",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.width = math.max(f.width - 1, 1)
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "o",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.width = math.min(f.width + 1, GRID_WIDTH)
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "j",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.y = 1
-                f.height = 1
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "k",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.y = 0
-                f.height = 1
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, "u",
-             function (c)
-                local w = client.focus
-                local f = get_grid(w)
-                f.y = 0
-                f.height = 2
-                set_grid(w, f)
-             end),
-
-   awful.key(mash, ";", function (c) snap_to_grid(client.focus) end),
-   awful.key(mash, "'", function (c) for i, w in pairs(client.get()) do snap_to_grid(w) end end),
-
-   awful.key(mash, "m",
-             function (c)
-                local w = client.focus
-                set_grid(w, {x = 0, y = 0, width = GRID_WIDTH, height = 2})
-             end),
-
-   awful.key(mash, "-", function (c) changeGridWidth(-1) end),
-   awful.key(mash, "=", function (c) changeGridWidth(1) end),
-
-   awful.key({ winkey, "Shift"   }, "c", function (c) c:kill() end))
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -491,7 +347,7 @@ function manage_window (c, startup)
          awful.placement.no_offscreen(c)
       end
 
-      snap_to_grid(c)
+      grid.snap_to_grid(c)
    end
 end
 
@@ -501,5 +357,5 @@ client.connect_signal("focus",   function(c) c.border_color = beautiful.border_f
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- for i, w in pairs(client.get()) do
---    snap_to_grid(w)
+--    grid.snap_to_grid(w)
 -- end
