@@ -4,8 +4,6 @@ GRID_WIDTH = 4
 
 local grid = {}
 
-function grid.round (n) return math.floor(n + 0.5) end
-
 function grid.get_grid(w)
    local winFrame = w:geometry(r)
    local screenRect = screen[1].workarea
@@ -14,10 +12,10 @@ function grid.get_grid(w)
    local halfScreenHeight = screenRect.height / 2
 
    local g = {
-      x = grid.round((winFrame.x - screenRect.x) / thirdScreenWidth),
-      y = grid.round((winFrame.y - screenRect.y) / halfScreenHeight),
-      width  = grid.round(math.max(1, winFrame.width / thirdScreenWidth)),
-      height = grid.round(math.max(1, winFrame.height / halfScreenHeight)),
+      x = round((winFrame.x - screenRect.x) / thirdScreenWidth),
+      y = round((winFrame.y - screenRect.y) / halfScreenHeight),
+      width  = round(math.max(1, winFrame.width / thirdScreenWidth)),
+      height = round(math.max(1, winFrame.height / halfScreenHeight)),
    }
 
    return g

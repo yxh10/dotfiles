@@ -14,6 +14,8 @@ CTRLKEY = "Control"
 MASH = { WINKEY, CTRLKEY, ALTKEY }
 MASH_SHIFT = { WINKEY, ALTKEY, "Shift" }
 
+function round (n) return math.floor(n + 0.5) end
+
 local globalkeys = require("globalkeys")
 local clientkeys = require("clientkeys")
 local grid = require("grid")
@@ -281,7 +283,7 @@ weather_widget:set_font("Terminus 8")
 local update_weather_widget = function()
    local result = weather.check(42.32, -88.45)
 
-   weather_widget:set_markup("<span color='#00aeff'>" .. result.temp .. "°</span>")
+   weather_widget:set_markup("<span color='#00aeff'>" .. round(tonumber(result.temp)) .. "°</span>")
 
    -- naughty.notify({text = result.temp})
    -- naughty.notify({text = result.low})
