@@ -223,6 +223,8 @@ local systray_widget = wibox.widget.systray()
 
 
 local battery = require("battery")
+local simpletimer = require("simpletimer")
+local weather = require("weather")
 
 -- Battery
 battery_icon = wibox.widget.imagebox(beautiful.bat)
@@ -236,7 +238,10 @@ battery_margin = wibox.layout.margin(battery_bar, 2, 7)
 battery_margin:set_top(6)
 battery_margin:set_bottom(6)
 
-local update_battery_widget = function(bat)
+local update_battery_widget = function()
+   local bat = battery.check()
+   -- naughty.notify({text = bat.percent})
+
    if bat.percent > .50 then
       battery_bar:set_color(beautiful.battery_healthy_color)
       battery_icon:set_image(beautiful.bat)
@@ -256,10 +261,26 @@ local update_battery_widget = function(bat)
    end
 end
 
-battery.setup(29, update_battery_widget)
+simpletimer.setup(29, update_battery_widget)
 
 battery_widget = wibox.widget.background(battery_margin)
 battery_widget:set_bgimage(beautiful.widget_bg)
+
+
+
+
+
+
+local update_weather_widget = function()
+   local result = weather.check(42.32, -88.45)
+   -- naughty.notify({text = result.temp})
+   -- naughty.notify({text = result.low})
+   -- naughty.notify({text = result.high})
+   -- naughty.notify({text = result.humidity})
+   -- naughty.notify({text = result.speed})
+end
+
+simpletimer.setup(31, update_weather_widget)
 
 
 
