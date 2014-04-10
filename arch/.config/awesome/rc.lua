@@ -222,9 +222,9 @@ local systray_widget = wibox.widget.systray()
 
 
 
-local battery = require("battery")
-local simpletimer = require("simpletimer")
-local weather = require("weather")
+local battery = require("sd/battery")
+local simpletimer = require("sd/simpletimer")
+local weather = require("sd/weather")
 
 -- Battery
 battery_icon = wibox.widget.imagebox(beautiful.bat)
