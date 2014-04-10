@@ -93,7 +93,8 @@ local tasklist_buttons = awful.util.table.join(
                    client.focus = c
                    c:raise()
                 end))
-local tasklist_widget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+local tasklist_style = { tasklist_disable_icon = true }
+local tasklist_widget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, tasklist_style)
 
 whole_bar:set_middle(tasklist_widget)
 
@@ -189,15 +190,9 @@ local systray_widget = wibox.widget.systray()
 
 
 
--- -- iconClock = wibox.widget.imagebox()
--- -- iconClock:set_image(beautiful.widget_clock)
--- -- right_side:add(iconClock)
-
--- decoSpace = wibox.widget.textbox('  ')
--- right_side:add(decoSpace)
-
--- widgetClock = awful.widget.textclock(spanStart .. font .. red .. ">%a %b %d  %I:%M %p" .. spanEnd)
--- right_side:add(widgetClock)
+iconClock = wibox.widget.imagebox()
+iconClock:set_image(beautiful.clock)
+widgetClock = awful.widget.textclock("%a %b %d  %I:%M %p")
 
 -- decoSpace = wibox.widget.textbox('  ')
 -- right_side:add(decoSpace)
@@ -302,38 +297,42 @@ memory_widget:set_bgimage(beautiful.widget_bg)
 
 
 
--- spanStart = '<span '
--- spanEnd = '</span>'
--- font = 'font="Terminus 8"'
--- white = 'color="#b2b2b2"'
--- red = 'color="#e54c62"'
--- blue = 'color="#00aeff"'
--- green = 'color="#1dff00"'
 
--- weatherWidget = wibox.widget.textbox()
--- citycode = "4917123"
--- vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
 
+
+
+weather_icon = wibox.widget.imagebox(beautiful.widget_temp)
 weather_widget = wibox.widget.textbox()
 weather_widget:set_font("Terminus 8")
 
+local lat  = 42.32
+local long = -88.45
+
 local update_weather_widget = function()
-   local result = weather.check(42.32, -88.45)
-
+   local result = weather.check(lat, long)
    weather_widget:set_markup("<span color='#00aeff'>" .. round(tonumber(result.temp)) .. "°</span>")
-
-   -- naughty.notify({text = result.temp})
-   -- naughty.notify({text = result.low})
-   -- naughty.notify({text = result.high})
-   -- naughty.notify({text = result.humidity})
-   -- naughty.notify({text = result.speed})
 end
 simpletimer.setup(31, update_weather_widget)
+
+function show_weather(self)
+   local result = weather.check(lat, long)
+
+   naughty.notify({timeout = 30,
+                   font = "Terminus 8",
+                   text =
+                      "      Temp: " .. round(tonumber(result.temp)) .. "°\n" ..
+                      "       Low: " .. round(tonumber(result.low)) .. "°\n" ..
+                      "      High: " .. round(tonumber(result.high)) .. "°\n" ..
+                      "  Humidity: " .. result.humidity .. "%\n" ..
+                      "Wind Speed: " .. result.speed .. " mph"})
+end
+
+weather_widget:connect_signal("mouse::enter", show_weather)
 
 weather_combined = wibox.layout.fixed.horizontal()
 weather_combined:add(weather_widget)
 
-weather_margin = wibox.layout.margin(weather_combined, 20, 20)
+
 
 
 
@@ -345,11 +344,15 @@ weather_margin = wibox.layout.margin(weather_combined, 20, 20)
 
 left_side:add(taglist_widget)
 right_side:add(systray_widget)
+right_side:add(wibox.layout.margin(weather_icon,     10,  nil))
+right_side:add(wibox.layout.margin(weather_combined, nil, 10))
 right_side:add(battery_icon)
 right_side:add(battery_widget)
-right_side:add(weather_combined)
 right_side:add(memory_icon)
 right_side:add(memory_widget)
+
+right_side:add(iconClock)
+right_side:add(widgetClock)
 
 
 
