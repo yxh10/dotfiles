@@ -1,0 +1,5 @@
+curl 'http://api.openweathermap.org/data/2.5/weather?lat=42.32&lon=-88.45&units=imperial'
+
+# latitude, longitude
+# 42.3201485, -88.4583282
+# N42° 19.2089', W088° 27.4997'
