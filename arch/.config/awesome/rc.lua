@@ -1,4 +1,5 @@
 local gears = require("gears")
+local wibox = require("wibox")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
@@ -16,7 +17,6 @@ MASH_SHIFT = { WINKEY, ALTKEY, "Shift" }
 local globalkeys = require("globalkeys")
 local clientkeys = require("clientkeys")
 local grid = require("grid")
-local bar = require("bar")
 
 
 if awesome.startup_errors then
@@ -44,7 +44,255 @@ gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
 awful.tag({1, 2, 3})
 
-bar.setup_bar()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local left_side   = wibox.layout.fixed.horizontal()
+local right_side  = wibox.layout.fixed.horizontal()
+local whole_bar   = wibox.layout.align.horizontal()
+whole_bar:set_left(left_side)
+whole_bar:set_right(right_side)
+
+
+
+
+
+
+local tasklist_buttons = awful.util.table.join(
+   awful.button({ }, 1,
+                function (c)
+                   client.focus = c
+                   c:raise()
+                end))
+local tasklist_widget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+
+whole_bar:set_middle(tasklist_widget)
+
+
+
+
+
+
+
+
+
+local taglist_widget = awful.widget.taglist(1, awful.widget.taglist.filter.all)
+local systray_widget = wibox.widget.systray()
+
+
+
+
+
+
+
+
+-- spanStart = '<span '
+-- spanEnd = '</span>'
+-- font = 'font="Terminus 8"'
+-- white = 'color="#b2b2b2"'
+-- red = 'color="#e54c62"'
+-- blue = 'color="#00aeff"'
+-- green = 'color="#1dff00"'
+
+
+
+-- -- TODO: add widgets.wifi,
+-- --       get missing icons,
+-- --       add disk-free stats using: df | grep sda | awk '{print $5}'
+-- --       add widgets.volume
+-- --       add gmail widget using netrc and the gmail url
+-- --
+-- -- decoSpace = wibox.widget.textbox('  ')
+-- -- right_side:add(decoSpace)
+-- --
+-- -- diskwidget = wibox.widget.textbox()
+-- -- vicious.register(diskwidget, vicious.contrib.dio, "${total_mb}", 3, "sda")
+-- -- right_side:add(diskwidget)
+
+
+
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_side:add(decoSpace)
+
+
+
+-- -- CPU widget
+-- iconCPU = wibox.widget.imagebox()
+-- iconCPU:set_image(beautiful.widget_cpu)
+-- iconCPU:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
+-- right_side:add(iconCPU)
+
+-- widgetCPU = wibox.widget.textbox()
+-- vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
+-- right_side:add(widgetCPU)
+
+
+
+
+
+
+
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_side:add(decoSpace)
+
+
+
+-- iconTemp = wibox.widget.imagebox()
+-- iconTemp:set_image(beautiful.widget_temp)
+-- right_side:add(iconTemp)
+
+-- weatherWidget = wibox.widget.textbox()
+-- citycode = "4917123"
+-- vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
+-- right_side:add(weatherWidget)
+
+
+-- decoSpace = wibox.widget.textbox(' ')
+-- right_side:add(decoSpace)
+
+
+
+-- -- MEM widget
+-- iconMem = wibox.widget.imagebox()
+-- iconMem:set_image(beautiful.widget_mem)
+-- right_side:add(iconMem)
+
+-- widgetMem = wibox.widget.textbox()
+-- vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
+-- right_side:add(widgetMem)
+
+
+
+
+-- -- iconClock = wibox.widget.imagebox()
+-- -- iconClock:set_image(beautiful.widget_clock)
+-- -- right_side:add(iconClock)
+
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_side:add(decoSpace)
+
+-- widgetClock = awful.widget.textclock(spanStart .. font .. red .. ">%a %b %d  %I:%M %p" .. spanEnd)
+-- right_side:add(widgetClock)
+
+-- decoSpace = wibox.widget.textbox('  ')
+-- right_side:add(decoSpace)
+
+
+
+-- -- mpdwidget = wibox.widget.textbox()
+-- -- vicious.register(mpdwidget, vicious.widgets.mpd,
+-- --                  function (mpdwidget, args)
+-- --                     -- naughty.notify({text = args["{state}"]})
+-- --                     if args["{state}"] == "Stop" then
+-- --                        return " - "
+-- --                     else
+-- --                        return args["{Artist}"]..' - '.. args["{Title}"]
+-- --                     end
+-- --                  end, 10)
+-- -- right_side:add(mpdwidget)
+
+
+
+
+
+local battery = require("battery")
+
+-- Battery
+battery_icon = wibox.widget.imagebox(beautiful.bat)
+battery_bar = awful.widget.progressbar()
+battery_bar:set_color(beautiful.fg_normal)
+battery_bar:set_width(55)
+battery_bar:set_ticks(true)
+battery_bar:set_ticks_size(3)
+battery_bar:set_background_color(beautiful.bg_normal)
+battery_margin = wibox.layout.margin(battery_bar, 2, 7)
+battery_margin:set_top(6)
+battery_margin:set_bottom(6)
+
+local update_battery_widget = function(bat)
+   if bat.percent > .50 then
+      battery_bar:set_color(beautiful.battery_healthy_color)
+      battery_icon:set_image(beautiful.bat)
+   elseif bat.percent > .15 then
+      battery_bar:set_color(battery_kindaok_color)
+      battery_icon:set_image(beautiful.bat_low)
+   else
+      battery_bar:set_color(battery_verylow_color)
+      battery_icon:set_image(beautiful.bat_no)
+   end
+   battery_bar:set_value(bat.percent)
+
+   if not bat.is_scharging then
+      if bat.percent <= .5 then
+         naughty.notify(beautiful.battery_dead_notice)
+      end
+   end
+end
+
+battery.setup(29, update_battery_widget)
+
+battery_widget = wibox.widget.background(battery_margin)
+battery_widget:set_bgimage(beautiful.widget_bg)
+
+
+
+
+
+
+
+
+
+left_side:add(taglist_widget)
+right_side:add(systray_widget)
+right_side:add(battery_icon)
+right_side:add(battery_widget)
+
+
+
+
+
+
+
+
+local my_wibox = awful.wibox({ position = "top", height = 18 })
+my_wibox:set_widget(whole_bar)
+
+
+
+
+
+
+
+
+
+
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -79,7 +327,3 @@ client.connect_signal("manage", manage_window)
 
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus  end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
--- for i, w in pairs(client.get()) do
---    grid.snap_to_grid(w)
--- end

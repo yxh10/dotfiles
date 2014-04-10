@@ -43,4 +43,19 @@ theme.bat_low    = icons_dir .. "/bat_low.png"
 theme.bat_no     = icons_dir .. "/bat_no.png"
 theme.widget_bg  = icons_dir .. "/widget_bg.png"
 
+theme.battery_healthy_color = "#55bb55"
+theme.battery_kindaok_color = "#bbbb55"
+theme.battery_verylow_color = "#bb5555"
+
+theme.battery_dead_notice = {
+   title = "Battery exhausted",
+   text = "Shutdown imminent",
+   timeout = 15,
+   fg = "#ffffff",
+   bg = "#660000",
+   border_width = 5,
+   border_color = "#660000",
+   font = "Terminus 10"
+}
+
 return theme
