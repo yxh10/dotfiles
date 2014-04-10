@@ -168,10 +168,6 @@ local systray_widget = wibox.widget.systray()
 -- iconTemp:set_image(beautiful.widget_temp)
 -- right_side:add(iconTemp)
 
--- weatherWidget = wibox.widget.textbox()
--- citycode = "4917123"
--- vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
--- right_side:add(weatherWidget)
 
 
 -- decoSpace = wibox.widget.textbox(' ')
@@ -234,9 +230,7 @@ battery_bar:set_width(55)
 battery_bar:set_ticks(true)
 battery_bar:set_ticks_size(3)
 battery_bar:set_background_color(beautiful.bg_normal)
-battery_margin = wibox.layout.margin(battery_bar, 2, 7)
-battery_margin:set_top(6)
-battery_margin:set_bottom(6)
+battery_margin = wibox.layout.margin(battery_bar, 2, 10, 6, 6)
 
 local update_battery_widget = function()
    local bat = battery.check()
@@ -269,17 +263,38 @@ battery_widget:set_bgimage(beautiful.widget_bg)
 
 
 
+-- spanStart = '<span '
+-- spanEnd = '</span>'
+-- font = 'font="Terminus 8"'
+-- white = 'color="#b2b2b2"'
+-- red = 'color="#e54c62"'
+-- blue = 'color="#00aeff"'
+-- green = 'color="#1dff00"'
+
+-- weatherWidget = wibox.widget.textbox()
+-- citycode = "4917123"
+-- vicious.register(weatherWidget, vicious.contrib.openweather, spanStart .. font .. red .. ">${wind deg}°" .. spanEnd, 60, citycode)
+
+weather_widget = wibox.widget.textbox()
+weather_widget:set_font("Terminus 8")
 
 local update_weather_widget = function()
    local result = weather.check(42.32, -88.45)
+
+   weather_widget:set_markup("<span color='#00aeff'>" .. result.temp .. "°</span>")
+
    -- naughty.notify({text = result.temp})
    -- naughty.notify({text = result.low})
    -- naughty.notify({text = result.high})
    -- naughty.notify({text = result.humidity})
    -- naughty.notify({text = result.speed})
 end
-
 simpletimer.setup(31, update_weather_widget)
+
+weather_combined = wibox.layout.fixed.horizontal()
+weather_combined:add(weather_widget)
+
+weather_margin = wibox.layout.margin(weather_combined, 20, 20)
 
 
 
@@ -293,6 +308,7 @@ left_side:add(taglist_widget)
 right_side:add(systray_widget)
 right_side:add(battery_icon)
 right_side:add(battery_widget)
+right_side:add(weather_combined)
 
 
 
@@ -347,3 +363,21 @@ client.connect_signal("manage", manage_window)
 
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus  end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+
+
+local fix_window_positions = function()
+   if fix_window_positions_timer then
+      fix_window_positions_timer:stop()
+      for i, client in pairs(client.get()) do
+         local g = client:geometry()
+         g.x = g.x - beautiful.border_width
+         g.y = g.y - beautiful.border_width
+         client:geometry(g)
+      end
+      -- local c = client.focus
+      -- client.focus = c
+      -- c:raise()
+   end
+end
+fix_window_positions_timer = simpletimer.setup(0, fix_window_positions)
