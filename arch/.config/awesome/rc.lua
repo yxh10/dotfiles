@@ -240,7 +240,7 @@ local update_battery_widget = function()
 
    battery_bar:set_value(bat.percent)
 
-   if bat.is_scharging then
+   if bat.is_charging or bat.is_full then
       battery_bar:set_color(beautiful.battery_healthy_color)
       battery_icon:set_image(beautiful.ac)
       return

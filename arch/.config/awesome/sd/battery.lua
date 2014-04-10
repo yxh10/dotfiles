@@ -7,6 +7,7 @@ function battery.check()
 
    local result = {
       is_charging = bat_status == 'Charging',
+      is_full = bat_status == 'Full',
       percent = bat_now / bat_full
    }
    return result
