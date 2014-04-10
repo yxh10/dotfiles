@@ -240,7 +240,6 @@ battery_margin:set_bottom(6)
 
 local update_battery_widget = function()
    local bat = battery.check()
-   -- naughty.notify({text = bat.percent})
 
    if bat.percent > .50 then
       battery_bar:set_color(beautiful.battery_healthy_color)
