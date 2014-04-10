@@ -142,18 +142,19 @@ batmargin:set_bottom(6)
 batupd = lain.widgets.bat({
     settings = function()
         if bat_now.perc == "N/A" then
-            bat_perc = 100
-            baticon:set_image(beautiful.ac)
+           batbar:set_color("#55bb55")
+           bat_perc = 100
+           baticon:set_image(beautiful.ac)
         else
             bat_perc = tonumber(bat_now.perc)
             if bat_perc > 50 then
-                batbar:set_color(beautiful.fg_normal)
+                batbar:set_color("#55bb55")
                 baticon:set_image(beautiful.bat)
             elseif bat_perc > 15 then
-                batbar:set_color(beautiful.fg_normal)
+                batbar:set_color("#bbbb55")
                 baticon:set_image(beautiful.bat_low)
             else
-                batbar:set_color("#EB8F8F")
+                batbar:set_color("#bb5555")
                 baticon:set_image(beautiful.bat_no)
 
             end
