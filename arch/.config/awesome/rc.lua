@@ -8,7 +8,6 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
-local drop      = require("scratchdrop")
 local lain      = require("lain")
 
 if awesome.startup_errors then
@@ -301,8 +300,7 @@ globalkeys = awful.util.table.join(
    awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
    awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
    awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
-   awful.key({ winkey }, "w", function () awful.util.spawn("dwb") end),
-   awful.key({ winkey }, "z", function () drop("urxvt") end),
+   awful.key({ winkey }, "w", function () awful.util.spawn("xulrunner /home/sdegutis/projects/conkeror/application.ini") end),
 
    awful.key({ winkey, "Shift" }, "r", awesome.restart),
    awful.key({ winkey, "Shift" }, "q", awesome.quit),
