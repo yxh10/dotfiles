@@ -88,7 +88,7 @@ mywibox:set_widget(layout)
 
 spanStart = '<span '
 spanEnd = '</span>'
-font = 'font="DejaVu Sans 8"'
+font = 'font="Terminus 8"'
 white = 'color="#b2b2b2"'
 red = 'color="#e54c62"'
 blue = 'color="#00aeff"'
