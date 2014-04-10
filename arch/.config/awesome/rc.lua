@@ -7,11 +7,11 @@ local naughty = require("naughty")
 
 
 -- global vars needed for the following requires :(
-winkey = "Mod4"
-altkey = "Mod1"
-ctrlkey = "Control"
-mash = { winkey, ctrlkey, altkey }
-mash_shift = { winkey, altkey, "Shift" }
+WINKEY = "Mod4"
+ALTKEY = "Mod1"
+CTRLKEY = "Control"
+MASH = { WINKEY, CTRLKEY, ALTKEY }
+MASH_SHIFT = { WINKEY, ALTKEY, "Shift" }
 
 local globalkeys = require("globalkeys")
 local clientkeys = require("clientkeys")
@@ -48,8 +48,8 @@ bar.setup_bar()
 
 clientbuttons = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-   awful.button({ winkey }, 1, awful.mouse.client.move),
-   awful.button({ winkey }, 3, awful.mouse.client.resize))
+   awful.button({ WINKEY }, 1, awful.mouse.client.move),
+   awful.button({ WINKEY }, 3, awful.mouse.client.resize))
 
 root.keys(globalkeys)
 

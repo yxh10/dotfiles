@@ -4,7 +4,7 @@ local grid = require("grid")
 
 return awful.util.table.join(
 
-   awful.key(mash, "h",
+   awful.key(MASH, "h",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -12,7 +12,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "l",
+   awful.key(MASH, "l",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -20,7 +20,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "i",
+   awful.key(MASH, "i",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -28,7 +28,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "o",
+   awful.key(MASH, "o",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -36,7 +36,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "j",
+   awful.key(MASH, "j",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -45,7 +45,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "k",
+   awful.key(MASH, "k",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -54,7 +54,7 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, "u",
+   awful.key(MASH, "u",
              function (c)
                 local w = client.focus
                 local f = grid.get_grid(w)
@@ -63,23 +63,23 @@ return awful.util.table.join(
                 grid.set_grid(w, f)
              end),
 
-   awful.key(mash, ";", function (c) grid.snap_to_grid(client.focus) end),
-   awful.key(mash, "'",
+   awful.key(MASH, ";", function (c) grid.snap_to_grid(client.focus) end),
+   awful.key(MASH, "'",
              function (c)
                 for i, w in pairs(client.get()) do
                    grid.snap_to_grid(w)
                 end
              end),
 
-   awful.key(mash, "m",
+   awful.key(MASH, "m",
              function (c)
                 local w = client.focus
                 grid.set_grid(w, {x = 0, y = 0, width = GRID_WIDTH, height = 2})
              end),
 
-   awful.key(mash, "-", function (c) grid.change_grid_width(-1) end),
-   awful.key(mash, "=", function (c) grid.change_grid_width(1) end),
+   awful.key(MASH, "-", function (c) grid.change_grid_width(-1) end),
+   awful.key(MASH, "=", function (c) grid.change_grid_width(1) end),
 
-   awful.key({ winkey, "Shift"   }, "c", function (c) c:kill() end)
+   awful.key({ WINKEY, "Shift"   }, "c", function (c) c:kill() end)
 
                             )

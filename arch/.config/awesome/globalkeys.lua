@@ -9,23 +9,23 @@ end
 
 local globalkeys = awful.util.table.join(
 
-   awful.key({ winkey          }, "Tab", function () cycle_through_windows(1) end),
-   awful.key({ winkey, "Shift" }, "Tab", function () cycle_through_windows(-1) end),
+   awful.key({ WINKEY          }, "Tab", function () cycle_through_windows(1) end),
+   awful.key({ WINKEY, "Shift" }, "Tab", function () cycle_through_windows(-1) end),
 
-   awful.key(mash_shift, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
-   awful.key(mash_shift, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
-   awful.key(mash_shift, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
-   awful.key(mash_shift, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
+   awful.key(MASH_SHIFT, "h", function () awful.client.focus.bydirection("left") ; client.focus:raise() end),
+   awful.key(MASH_SHIFT, "l", function () awful.client.focus.bydirection("right"); client.focus:raise() end),
+   awful.key(MASH_SHIFT, "j", function () awful.client.focus.bydirection("down") ; client.focus:raise() end),
+   awful.key(MASH_SHIFT, "k", function () awful.client.focus.bydirection("up"); client.focus:raise() end),
 
-   awful.key({ winkey }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
-   awful.key({ winkey }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
-   awful.key({ winkey }, "Return", function () awful.util.spawn("urxvt") end),
-   awful.key({ winkey }, "w", function () awful.util.spawn("conk") end),
+   awful.key({ WINKEY }, "e", function () awful.util.spawn_with_shell("emacsclient -nc -a '' ~/projects") end),
+   awful.key({ WINKEY }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
+   awful.key({ WINKEY }, "Return", function () awful.util.spawn("urxvt") end),
+   awful.key({ WINKEY }, "w", function () awful.util.spawn("conk") end),
 
-   awful.key({ winkey, "Shift" }, "r", awesome.restart),
-   awful.key({ winkey, "Shift" }, "q", awesome.quit),
+   awful.key({ WINKEY, "Shift" }, "r", awesome.restart),
+   awful.key({ WINKEY, "Shift" }, "q", awesome.quit),
 
-   awful.key({ winkey }, "r",
+   awful.key({ WINKEY }, "r",
              function()
                 local sel = selection()
                 local result = awful.util.eval(sel)
@@ -43,7 +43,7 @@ for i = 1, 3 do
    globalkeys = awful.util.table.join(
       globalkeys,
       -- View tag only.
-      awful.key({ winkey }, "#" .. i + 9,
+      awful.key({ WINKEY }, "#" .. i + 9,
                 function ()
                    local screen = mouse.screen
                    local tag = awful.tag.gettags(screen)[i]
@@ -52,7 +52,7 @@ for i = 1, 3 do
                    end
                 end),
       -- Move client to tag.
-      awful.key({ winkey, "Shift" }, "#" .. i + 9,
+      awful.key({ WINKEY, "Shift" }, "#" .. i + 9,
                 function ()
                    if client.focus then
                       local tag = awful.tag.gettags(client.focus.screen)[i]
