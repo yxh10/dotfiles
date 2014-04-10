@@ -237,6 +237,14 @@ battery_margin = wibox.layout.margin(battery_bar, 2, 10, 6, 6)
 local update_battery_widget = function()
    local bat = battery.check()
 
+   battery_bar:set_value(bat.percent)
+
+   if bat.is_scharging then
+      battery_bar:set_color(beautiful.battery_healthy_color)
+      battery_icon:set_image(beautiful.ac)
+      return
+   end
+
    if bat.percent > .50 then
       battery_bar:set_color(beautiful.battery_healthy_color)
       battery_icon:set_image(beautiful.bat)
@@ -247,12 +255,9 @@ local update_battery_widget = function()
       battery_bar:set_color(battery_verylow_color)
       battery_icon:set_image(beautiful.bat_no)
    end
-   battery_bar:set_value(bat.percent)
 
-   if not bat.is_scharging then
-      if bat.percent <= .5 then
-         naughty.notify(beautiful.battery_dead_notice)
-      end
+   if bat.percent <= .5 then
+      naughty.notify(beautiful.battery_dead_notice)
    end
 end
 
