@@ -288,7 +288,7 @@ local update_memory_widget = function()
 
    if mem.percent_used < .30 then
       memory_bar:set_color(beautiful.memory_healthy_color)
-   elseif mem.percent_used < .70 then
+   elseif mem.percent_used < .75 then
       memory_bar:set_color(beautiful.memory_kindaok_color)
    else
       memory_bar:set_color(beautiful.memory_verylow_color)
