@@ -16,12 +16,4 @@ function weather.check(lat, long)
    return result
 end
 
-function weather.setup(interval, lat, long, fn)
-   local callback = function() fn(weather.check(lat, long)) end
-   callback()
-   local a_timer = timer({timeout = interval})
-   a_timer:connect_signal("timeout", callback)
-   a_timer:start()
-end
-
 return weather
