@@ -192,7 +192,8 @@ local systray_widget = wibox.widget.systray()
 
 iconClock = wibox.widget.imagebox()
 iconClock:set_image(beautiful.clock)
-widgetClock = awful.widget.textclock("%a %b %d  %I:%M %p")
+widgetClock = awful.widget.textclock("<span color='#cccc44'>%a %b %d  %I:%M %p</span>")
+widgetClock:set_font("Terminus 8")
 
 -- decoSpace = wibox.widget.textbox('  ')
 -- right_side:add(decoSpace)
@@ -352,7 +353,7 @@ right_side:add(memory_icon)
 right_side:add(memory_widget)
 
 right_side:add(iconClock)
-right_side:add(widgetClock)
+right_side:add(wibox.layout.margin(widgetClock, nil, 10))
 
 
 
