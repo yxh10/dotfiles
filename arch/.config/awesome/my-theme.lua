@@ -20,7 +20,7 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#119933"
 theme.border_marked = "#91231c"
 
-theme.wallpaper = "~/.config/awesome/bg2.jpg"
+theme.wallpaper = "~/.config/awesome/wallpapers/bg2.jpg"
 
 theme.widget_battery   = icons_dir .. "/bat.png"
 theme.widget_mem       = icons_dir .. "/mem.png"
