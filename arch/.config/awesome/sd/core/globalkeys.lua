@@ -1,4 +1,5 @@
 local awful = require("awful")
+local naughty = require("naughty")
 local grid = require("sd/util/grid")
 
 local cycle_through_windows = function(dir)
@@ -22,12 +23,13 @@ local globalkeys = awful.util.table.join(
    awful.key({ WINKEY }, " ", function () awful.util.spawn_with_shell("dmenu_run") end),
    awful.key({ WINKEY }, "Return", function () awful.util.spawn("urxvt") end),
    awful.key({ WINKEY }, "w", function () awful.util.spawn("conk") end),
+   awful.key({ WINKEY }, "p", function () awful.util.spawn("play") end),
 
    awful.key({ WINKEY, "Shift" }, "r", awesome.restart),
    awful.key({ WINKEY, "Shift" }, "q", awesome.quit),
 
-   awful.key({ WINKEY }, "Home", function() awful.util.spawn_with_shell("mpc volume +5") end),
-   awful.key({ WINKEY }, "End",  function() awful.util.spawn_with_shell("mpc volume -5") end),
+   awful.key({ WINKEY }, "Home", function() awful.util.spawn_with_shell("mpc volume +2") end),
+   awful.key({ WINKEY }, "End",  function() awful.util.spawn_with_shell("mpc volume -2") end),
 
    awful.key({ WINKEY }, "r",
              function()
@@ -48,11 +50,12 @@ local globalkeys = awful.util.table.join(
                 end
              end)
 
-                                        )
+)
 
 for i = 1, 3 do
    globalkeys = awful.util.table.join(
       globalkeys,
+
       -- View tag only.
       awful.key({ WINKEY }, "#" .. i + 9,
                 function ()
@@ -62,6 +65,7 @@ for i = 1, 3 do
                       awful.tag.viewonly(tag)
                    end
                 end),
+
       -- Move client to tag.
       awful.key({ WINKEY, "Shift" }, "#" .. i + 9,
                 function ()

@@ -75,4 +75,4 @@ return awful.util.table.join(
 
    awful.key({ WINKEY, "Shift"   }, "c", function (c) c:kill() end)
 
-                            )
+)

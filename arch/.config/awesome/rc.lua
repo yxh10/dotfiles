@@ -3,7 +3,6 @@ local wibox = require("wibox")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
-local beautiful = require("beautiful")
 local naughty = require("naughty")
 
 
@@ -41,72 +40,11 @@ do
                           end)
 end
 
-beautiful.init("~/.config/awesome/my-theme.lua")
+
+local beautiful = require("sd/util/pretty")
 gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
 
 awful.tag({1, 2, 3})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-local tasklist_buttons = awful.util.table.join(
-   awful.button({ }, 1,
-                function (c)
-                   client.focus = c
-                   c:raise()
-                end))
-local tasklist_style = { tasklist_disable_icon = true }
-local tasklist_widget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, tasklist_style)
-
-
-
-
-
-
-
-
-
-local taglist_widget = awful.widget.taglist(1, awful.widget.taglist.filter.all)
-local systray_widget = wibox.widget.systray()
-
-
-
-
-
-
-
 
 -- spanStart = '<span '
 -- spanEnd = '</span>'
@@ -145,183 +83,47 @@ local systray_widget = wibox.widget.systray()
 -- vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
 -- right_side:add(widgetCPU)
 
-
-
-
-
-
-
-
-
-
-iconClock = wibox.widget.imagebox()
-iconClock:set_image(beautiful.widget_clock)
-widgetClock = awful.widget.textclock("<span color='#cccc44'>%a %b %d  %I:%M %p</span>")
-widgetClock:set_font("Terminus 8")
-
-
-
-
-
-local battery = require("sd/util/battery")
-local simpletimer = require("sd/util/simpletimer")
-local weather = require("sd/util/weather")
-local memory = require("sd/util/memory")
-
--- Battery
-battery_icon = wibox.widget.imagebox(beautiful.widget_battery)
-battery_bar = awful.widget.progressbar()
-battery_bar:set_color(beautiful.fg_normal)
-battery_bar:set_width(55)
-battery_bar:set_ticks(true)
-battery_bar:set_ticks_size(3)
-battery_bar:set_background_color(beautiful.bg_normal)
-battery_margin = wibox.layout.margin(battery_bar, 2, 10, 6, 6)
-
-local update_battery_widget = function()
-   local bat = battery.check()
-
-   battery_bar:set_value(bat.percent)
-
-   if bat.is_charging or bat.is_full then
-      battery_bar:set_color(beautiful.widget_yay_color)
-      battery_icon:set_image(beautiful.widget_battery_ac)
-      return
-   end
-
-   if bat.percent > .50 then
-      battery_bar:set_color(beautiful.widget_yay_color)
-      battery_icon:set_image(beautiful.widget_battery)
-   elseif bat.percent > .15 then
-      battery_bar:set_color(beautiful.widget_meh_color)
-      battery_icon:set_image(beautiful.widget_battery_low)
-   else
-      battery_bar:set_color(beautiful.widget_aww_color)
-      battery_icon:set_image(beautiful.widget_battery_empty)
-   end
-
-   if bat.percent <= .05 then
-      naughty.notify(beautiful.battery_dead_notice)
-   end
-end
-
-simpletimer.setup(29, update_battery_widget)
-
-battery_widget = wibox.widget.background(battery_margin)
-battery_widget:set_bgimage(beautiful.widget_background)
-
-
-
-
-
--- Memory
-memory_icon = wibox.widget.imagebox(beautiful.widget_memory)
-memory_bar = awful.widget.progressbar()
-memory_bar:set_color(beautiful.fg_normal)
-memory_bar:set_width(55)
-memory_bar:set_ticks(true)
-memory_bar:set_ticks_size(3)
-memory_bar:set_background_color(beautiful.bg_normal)
-memory_margin = wibox.layout.margin(memory_bar, 2, 10, 6, 6)
-
-local update_memory_widget = function()
-   local mem = memory.check()
-
-   memory_bar:set_value(mem.percent_used)
-
-   if mem.percent_used < .30 then
-      memory_bar:set_color(beautiful.widget_yay_color)
-   elseif mem.percent_used < .75 then
-      memory_bar:set_color(beautiful.widget_meh_color)
-   else
-      memory_bar:set_color(beautiful.widget_aww_color)
-   end
-end
-
-simpletimer.setup(3, update_memory_widget)
-
-memory_widget = wibox.widget.background(memory_margin)
-memory_widget:set_bgimage(beautiful.widget_background)
-
-
-
-
-
-
-
-weather_icon = wibox.widget.imagebox(beautiful.widget_temp)
-weather_widget = wibox.widget.textbox()
-weather_widget:set_font("Terminus 8")
-
-local lat  = 42.32
-local long = -88.45
-
-local update_weather_widget = function()
-   local result = weather.check(lat, long)
-   weather_widget:set_markup("<span color='#00aeff'>" .. round(tonumber(result.temp)) .. "°</span>")
-end
-simpletimer.setup(31, update_weather_widget)
-
-function show_weather(self)
-   local result = weather.check(lat, long)
-
-   naughty.notify({timeout = 30,
-                   font = "Terminus 8",
-                   text =
-                      "      Temp: " .. round(tonumber(result.temp)) .. "°\n" ..
-                      "       Low: " .. round(tonumber(result.low)) .. "°\n" ..
-                      "      High: " .. round(tonumber(result.high)) .. "°\n" ..
-                      "  Humidity: " .. result.humidity .. "%\n" ..
-                      "Wind Speed: " .. result.speed .. " mph"})
-end
-
-weather_widget:connect_signal("mouse::enter", show_weather)
-
-weather_combined = wibox.layout.fixed.horizontal()
-weather_combined:add(weather_widget)
-
-
-
-
-
-
-
-
-
-
+local battery = require("sd/widgets/battery")
+local weather = require("sd/widgets/weather")
+local memory  = require("sd/widgets/memory")
+local clock   = require("sd/widgets/clock")
+local misc    = require("sd/widgets/misc")
 
 local left_side   = wibox.layout.fixed.horizontal()
 local right_side  = wibox.layout.fixed.horizontal()
-local whole_bar   = wibox.layout.align.horizontal()
-whole_bar:set_left(left_side)
-whole_bar:set_right(right_side)
+local top_bar     = wibox.layout.align.horizontal()
 
-whole_bar:set_middle(tasklist_widget)
-
+top_bar:set_left(left_side)
+top_bar:set_right(right_side)
 
 
 
-left_side:add(taglist_widget)
-right_side:add(systray_widget)
-right_side:add(wibox.layout.margin(weather_icon,     10,  nil))
-right_side:add(wibox.layout.margin(weather_combined, nil, 10))
-right_side:add(battery_icon)
-right_side:add(battery_widget)
-right_side:add(memory_icon)
-right_side:add(memory_widget)
-
-right_side:add(iconClock)
-right_side:add(wibox.layout.margin(widgetClock, nil, 10))
 
 
+left_side:add(misc.taglist)
+right_side:add(misc.systray)
+right_side:add(wibox.layout.margin(weather.icon,   10,  nil))
+right_side:add(wibox.layout.margin(weather.widget, nil, 10))
+right_side:add(battery.icon)
+right_side:add(battery.widget)
+right_side:add(memory.icon)
+right_side:add(memory.widget)
+
+right_side:add(clock.icon)
+right_side:add(wibox.layout.margin(clock.widget, nil, 10))
 
 
 
 
 
 
-local my_wibox = awful.wibox({ position = "top", height = 18 })
-my_wibox:set_widget(whole_bar)
+
+
+local top_wibox = awful.wibox({ position = "top", height = 18 })
+top_wibox:set_widget(top_bar)
+
+local bottom_wibox = awful.wibox({ position = "bottom", height = 18 })
+bottom_wibox:set_widget(misc.tasklist)
 
 
 
@@ -383,4 +185,5 @@ local fix_window_positions = function()
       -- c:raise()
    end
 end
+local simpletimer = require("sd/util/simpletimer")
 fix_window_positions_timer = simpletimer.setup(0, fix_window_positions)
