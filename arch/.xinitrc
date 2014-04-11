@@ -1,3 +1,5 @@
+xmodmap -e 'keycode 108 = Control_R'
+
 xrdb -merge .Xresources
 xset r rate 200 30
 
