@@ -30,10 +30,10 @@ theme.border_marked = "#91231c"
 theme.taglist_squares_sel   = icons_dir .. "/square_sel.png"
 theme.taglist_squares_unsel = icons_dir .. "/square_unsel.png"
 
--- theme.widget_cpu       = icons_dir .. "/cpu.png"
 -- theme.widget_music     = icons_dir .. "/note.png"
 -- theme.widget_music_on  = icons_dir .. "/note_on.png"
 
+theme.widget_cpu            = icons_dir .. "/cpu.png"
 theme.widget_volume         = icons_dir .. "/volume.png"
 theme.widget_volume_low     = icons_dir .. "/volume_low.png"
 theme.widget_volume_no      = icons_dir .. "/volume_no.png"
