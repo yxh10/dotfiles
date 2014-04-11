@@ -56,16 +56,7 @@ awful.tag({1, 2, 3})
 
 
 
--- -- TODO: add widgets.wifi,
--- --       get missing icons,
--- --       add disk-free stats using:
--- --       add widgets.volume
--- --       add gmail widget using netrc and the gmail url
-
-
-
-
-
+-- TODO: wifi, gmail
 
 local left_side   = wibox.layout.fixed.horizontal()
 local right_side  = wibox.layout.fixed.horizontal()
@@ -79,6 +70,7 @@ local memory  = require("sd/widgets/memory")
 local clock   = require("sd/widgets/clock")
 local misc    = require("sd/widgets/misc")
 local disk    = require("sd/widgets/disk")
+local volume  = require("sd/widgets/volume")
 
 left_side:add(misc.taglist)
 left_side:add(misc.systray)
@@ -90,10 +82,17 @@ right_side:add(memory.icon)
 right_side:add(memory.widget)
 right_side:add(disk.icon)
 right_side:add(disk.widget)
+right_side:add(volume.icon)
+right_side:add(volume.widget)
 
 right_side:add(clock.icon)
 right_side:add(wibox.layout.margin(clock.widget, nil, 10))
 
+
+function change_volume(by)
+   awful.util.spawn_with_shell("mpc volume " .. by)
+   volume.update()
+end
 
 
 

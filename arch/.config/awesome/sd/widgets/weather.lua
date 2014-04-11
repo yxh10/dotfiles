@@ -17,7 +17,7 @@ local update_weather_widget = function()
    local result = weather_util.check(lat, long)
    weather.widget:set_markup("<span color='#00aeff'>" .. round(tonumber(result.temp)) .. "°</span>")
 end
-simpletimer.setup(31, update_weather_widget)
+simpletimer.setup(129, update_weather_widget)
 
 function show_weather(self)
    local result = weather_util.check(lat, long)

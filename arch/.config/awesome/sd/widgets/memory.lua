@@ -8,7 +8,7 @@ local memory = {}
 
 memory.icon = wibox.widget.imagebox(beautiful.widget_memory)
 local memory_bar = awful.widget.progressbar()
-memory_bar:set_color(beautiful.fg_normal)
+memory_bar:set_color(beautiful.widget_memory_color)
 memory_bar:set_width(55)
 memory_bar:set_ticks(true)
 memory_bar:set_ticks_size(3)
@@ -21,7 +21,7 @@ local update_memory_widget = function()
    memory_bar:set_value(mem.percent_used)
 
    if mem.percent_used < .30 then
-      memory_bar:set_color(beautiful.widget_yay_color)
+      memory_bar:set_color(beautiful.widget_memory_color)
    elseif mem.percent_used < .75 then
       memory_bar:set_color(beautiful.widget_meh_color)
    else

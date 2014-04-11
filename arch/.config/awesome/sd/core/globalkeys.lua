@@ -28,8 +28,8 @@ local globalkeys = awful.util.table.join(
    awful.key({ WINKEY, "Shift" }, "r", awesome.restart),
    awful.key({ WINKEY, "Shift" }, "q", awesome.quit),
 
-   awful.key({ WINKEY }, "Home", function() awful.util.spawn_with_shell("mpc volume +2") end),
-   awful.key({ WINKEY }, "End",  function() awful.util.spawn_with_shell("mpc volume -2") end),
+   awful.key({ WINKEY }, "Home", function() change_volume("+2") end),
+   awful.key({ WINKEY }, "End",  function() change_volume("-2") end),
 
    awful.key({ WINKEY }, "r",
              function()

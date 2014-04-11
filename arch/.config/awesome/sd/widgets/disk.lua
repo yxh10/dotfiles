@@ -29,7 +29,7 @@ local update_disk_widget = function()
    end
 end
 
-simpletimer.setup(3, update_disk_widget)
+simpletimer.setup(59, update_disk_widget)
 
 disk.widget = wibox.widget.background(disk_margin)
 disk.widget:set_bgimage(beautiful.widget_background)
