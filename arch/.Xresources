@@ -6,7 +6,7 @@ URxvt*termName:screen-256color
 URxvt.letterSpace: -1
 URxvt*xftAntialias: false
 URxvt.depth: 32
-URxvt.background: [35]#333366
+URxvt.background: #113311
 URxvt.foreground: [75]#ffffff
 
 Xft.dpi:        96
