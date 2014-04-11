@@ -51,8 +51,6 @@ theme.widget_clock          = icons_dir .. "/clock.png"
 theme.widget_yay_color = "#55bb55"
 theme.widget_meh_color = "#bbbb55"
 theme.widget_aww_color = "#bb5555"
-theme.widget_memory_color = "#44aaaa"
-theme.widget_volume_color = "#aa44aa"
 
 theme.battery_dead_notice = {
    title = "Battery exhausted",

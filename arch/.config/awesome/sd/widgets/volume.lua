@@ -8,7 +8,7 @@ local volume = {}
 
 volume.icon = wibox.widget.imagebox(beautiful.widget_volume)
 local volume_bar = awful.widget.progressbar()
-volume_bar:set_color(beautiful.widget_volume_color)
+volume_bar:set_color(beautiful.widget_yay_color)
 volume_bar:set_width(55)
 volume_bar:set_ticks(true)
 volume_bar:set_ticks_size(3)
