@@ -1,4 +1,4 @@
-local json = require("json")
+local json = require("sd/util/json")
 
 local weather = {}
 

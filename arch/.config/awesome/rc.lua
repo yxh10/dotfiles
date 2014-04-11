@@ -16,8 +16,8 @@ MASH_SHIFT = { WINKEY, ALTKEY, "Shift" }
 
 function round (n) return math.floor(n + 0.5) end
 
-local globalkeys = require("globalkeys")
-local clientkeys = require("clientkeys")
+local globalkeys = require("sd/core/globalkeys")
+local clientkeys = require("sd/core/clientkeys")
 local grid = require("sd/util/grid")
 
 
@@ -76,12 +76,6 @@ awful.tag({1, 2, 3})
 
 
 
-local left_side   = wibox.layout.fixed.horizontal()
-local right_side  = wibox.layout.fixed.horizontal()
-local whole_bar   = wibox.layout.align.horizontal()
-whole_bar:set_left(left_side)
-whole_bar:set_right(right_side)
-
 
 
 
@@ -95,8 +89,6 @@ local tasklist_buttons = awful.util.table.join(
                 end))
 local tasklist_style = { tasklist_disable_icon = true }
 local tasklist_widget = awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags, tasklist_buttons, tasklist_style)
-
-whole_bar:set_middle(tasklist_widget)
 
 
 
@@ -294,6 +286,17 @@ weather_combined:add(weather_widget)
 
 
 
+
+
+
+
+local left_side   = wibox.layout.fixed.horizontal()
+local right_side  = wibox.layout.fixed.horizontal()
+local whole_bar   = wibox.layout.align.horizontal()
+whole_bar:set_left(left_side)
+whole_bar:set_right(right_side)
+
+whole_bar:set_middle(tasklist_widget)
 
 
 
