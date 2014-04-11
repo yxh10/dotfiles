@@ -1,4 +1,5 @@
 local beautiful = require("beautiful")
+local naughty = require("naughty")
 
 GRID_WIDTH = 4
 
@@ -54,7 +55,7 @@ end
 
 function grid.change_grid_width(n)
    GRID_WIDTH = math.max(1, GRID_WIDTH + n)
-   naughty.notify({text = "grid is now " .. GRID_WIDTH})
+   naughty.notify({text = "grid.width = " .. GRID_WIDTH})
 end
 
 function grid.snap_to_grid(w)
