@@ -3,7 +3,7 @@ local icons_dir = "~/.config/awesome/icons/"
 local theme = {}
 
 theme.font          = "DejaVu Sans 7"
-theme.wallpaper     = "~/.config/awesome/wallpapers/bg2.jpg"
+theme.wallpaper     = "~/.config/awesome/wallpapers/bg3.jpg"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
