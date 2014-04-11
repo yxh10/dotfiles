@@ -208,7 +208,7 @@ local update_battery_widget = function()
       battery_icon:set_image(beautiful.bat_no)
    end
 
-   if bat.percent <= .5 then
+   if bat.percent <= .05 then
       naughty.notify(beautiful.battery_dead_notice)
    end
 end
