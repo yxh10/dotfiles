@@ -58,56 +58,38 @@ awful.tag({1, 2, 3})
 
 -- -- TODO: add widgets.wifi,
 -- --       get missing icons,
--- --       add disk-free stats using: df --output=pcent /dev/sda1 | tail -n 1
+-- --       add disk-free stats using:
 -- --       add widgets.volume
 -- --       add gmail widget using netrc and the gmail url
--- --
--- -- decoSpace = wibox.widget.textbox('  ')
--- -- right_side:add(decoSpace)
--- --
--- -- diskwidget = wibox.widget.textbox()
--- -- vicious.register(diskwidget, vicious.contrib.dio, "${total_mb}", 3, "sda")
--- -- right_side:add(diskwidget)
 
 
 
 
 
--- -- CPU widget
--- iconCPU = wibox.widget.imagebox()
--- iconCPU:set_image(beautiful.widget_cpu)
--- iconCPU:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
--- right_side:add(iconCPU)
 
--- widgetCPU = wibox.widget.textbox()
--- vicious.register(widgetCPU, vicious.widgets.cpu, spanStart .. font .. blue .. '>1%' .. spanEnd, 3)
--- right_side:add(widgetCPU)
+local left_side   = wibox.layout.fixed.horizontal()
+local right_side  = wibox.layout.fixed.horizontal()
+local top_bar     = wibox.layout.align.horizontal()
+top_bar:set_left(left_side)
+top_bar:set_right(right_side)
 
 local battery = require("sd/widgets/battery")
 local weather = require("sd/widgets/weather")
 local memory  = require("sd/widgets/memory")
 local clock   = require("sd/widgets/clock")
 local misc    = require("sd/widgets/misc")
-
-local left_side   = wibox.layout.fixed.horizontal()
-local right_side  = wibox.layout.fixed.horizontal()
-local top_bar     = wibox.layout.align.horizontal()
-
-top_bar:set_left(left_side)
-top_bar:set_right(right_side)
-
-
-
-
+local disk    = require("sd/widgets/disk")
 
 left_side:add(misc.taglist)
-right_side:add(misc.systray)
+left_side:add(misc.systray)
 right_side:add(wibox.layout.margin(weather.icon,   10,  nil))
 right_side:add(wibox.layout.margin(weather.widget, nil, 10))
 right_side:add(battery.icon)
 right_side:add(battery.widget)
 right_side:add(memory.icon)
 right_side:add(memory.widget)
+right_side:add(disk.icon)
+right_side:add(disk.widget)
 
 right_side:add(clock.icon)
 right_side:add(wibox.layout.margin(clock.widget, nil, 10))
@@ -180,9 +162,6 @@ local fix_window_positions = function()
          g.y = g.y - beautiful.border_width
          client:geometry(g)
       end
-      -- local c = client.focus
-      -- client.focus = c
-      -- c:raise()
    end
 end
 local simpletimer = require("sd/util/simpletimer")
