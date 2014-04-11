@@ -1,8 +1,9 @@
-icons_dir = "~/.config/awesome/icons/"
+local icons_dir = "~/.config/awesome/icons/"
 
-theme = {}
+local theme = {}
 
-theme.font          = "DejaVu Sans 8"
+theme.font          = "DejaVu Sans 7"
+theme.wallpaper     = "~/.config/awesome/wallpapers/bg2.jpg"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -20,12 +21,16 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#119933"
 theme.border_marked = "#91231c"
 
-theme.wallpaper = "~/.config/awesome/wallpapers/bg2.jpg"
+-- taglist_[bg|fg]_[focus|urgent|occupied|empty]
+-- tasklist_[bg|fg]_[focus|urgent]
+-- titlebar_[bg|fg]_[normal|focus]
+-- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
+-- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 
-theme.widget_battery   = icons_dir .. "/bat.png"
-theme.widget_mem       = icons_dir .. "/mem.png"
+theme.taglist_squares_sel   = icons_dir .. "/square_sel.png"
+theme.taglist_squares_unsel = icons_dir .. "/square_unsel.png"
+
 theme.widget_cpu       = icons_dir .. "/cpu.png"
-theme.widget_temp      = icons_dir .. "/temp.png"
 theme.widget_hdd       = icons_dir .. "/hdd.png"
 theme.widget_music     = icons_dir .. "/note.png"
 theme.widget_music_on  = icons_dir .. "/note_on.png"
@@ -34,23 +39,18 @@ theme.widget_vol_low   = icons_dir .. "/vol_low.png"
 theme.widget_vol_no    = icons_dir .. "/vol_no.png"
 theme.widget_vol_mute  = icons_dir .. "/vol_mute.png"
 
-theme.taglist_squares_sel   = icons_dir .. "/square_sel.png"
-theme.taglist_squares_unsel = icons_dir .. "/square_unsel.png"
+theme.widget_temp           = icons_dir .. "/temp.png"
+theme.widget_memory         = icons_dir .. "/memory.png"
+theme.widget_battery        = icons_dir .. "/battery.png"
+theme.widget_battery_ac     = icons_dir .. "/battery_ac.png"
+theme.widget_battery_low    = icons_dir .. "/battery_low.png"
+theme.widget_battery_empty  = icons_dir .. "/battery_empty.png"
+theme.widget_background     = icons_dir .. "/bar_background.png"
+theme.widget_clock          = icons_dir .. "/clock.png"
 
-theme.ac         = icons_dir .. "/ac.png"
-theme.bat        = icons_dir .. "/battery.png"
-theme.bat_low    = icons_dir .. "/battery_low.png"
-theme.bat_no     = icons_dir .. "/battery_empty.png"
-theme.widget_bg  = icons_dir .. "/widget_bg.png"
-theme.clock      = icons_dir .. "/clock.png"
-
-theme.battery_healthy_color = "#55bb55"
-theme.battery_kindaok_color = "#bbbb55"
-theme.battery_verylow_color = "#bb5555"
-
-theme.memory_healthy_color = "#55bb55"
-theme.memory_kindaok_color = "#bbbb55"
-theme.memory_verylow_color = "#bb5555"
+theme.widget_yay_color = "#55bb55"
+theme.widget_meh_color = "#bbbb55"
+theme.widget_aww_color = "#bb5555"
 
 theme.battery_dead_notice = {
    title = "Battery exhausted",

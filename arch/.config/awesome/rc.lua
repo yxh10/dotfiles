@@ -163,7 +163,7 @@ local systray_widget = wibox.widget.systray()
 
 
 iconClock = wibox.widget.imagebox()
-iconClock:set_image(beautiful.clock)
+iconClock:set_image(beautiful.widget_clock)
 widgetClock = awful.widget.textclock("<span color='#cccc44'>%a %b %d  %I:%M %p</span>")
 widgetClock:set_font("Terminus 8")
 
@@ -177,7 +177,7 @@ local weather = require("sd/weather")
 local memory = require("sd/memory")
 
 -- Battery
-battery_icon = wibox.widget.imagebox(beautiful.bat)
+battery_icon = wibox.widget.imagebox(beautiful.widget_battery)
 battery_bar = awful.widget.progressbar()
 battery_bar:set_color(beautiful.fg_normal)
 battery_bar:set_width(55)
@@ -192,20 +192,20 @@ local update_battery_widget = function()
    battery_bar:set_value(bat.percent)
 
    if bat.is_charging or bat.is_full then
-      battery_bar:set_color(beautiful.battery_healthy_color)
-      battery_icon:set_image(beautiful.ac)
+      battery_bar:set_color(beautiful.widget_yay_color)
+      battery_icon:set_image(beautiful.widget_battery_ac)
       return
    end
 
    if bat.percent > .50 then
-      battery_bar:set_color(beautiful.battery_healthy_color)
-      battery_icon:set_image(beautiful.bat)
+      battery_bar:set_color(beautiful.widget_yay_color)
+      battery_icon:set_image(beautiful.widget_battery)
    elseif bat.percent > .15 then
-      battery_bar:set_color(beautiful.battery_kindaok_color)
-      battery_icon:set_image(beautiful.bat_low)
+      battery_bar:set_color(beautiful.widget_meh_color)
+      battery_icon:set_image(beautiful.widget_battery_low)
    else
-      battery_bar:set_color(beautiful.battery_verylow_color)
-      battery_icon:set_image(beautiful.bat_no)
+      battery_bar:set_color(beautiful.widget_aww_color)
+      battery_icon:set_image(beautiful.widget_battery_empty)
    end
 
    if bat.percent <= .05 then
@@ -216,14 +216,14 @@ end
 simpletimer.setup(29, update_battery_widget)
 
 battery_widget = wibox.widget.background(battery_margin)
-battery_widget:set_bgimage(beautiful.widget_bg)
+battery_widget:set_bgimage(beautiful.widget_background)
 
 
 
 
 
 -- Memory
-memory_icon = wibox.widget.imagebox(beautiful.widget_mem)
+memory_icon = wibox.widget.imagebox(beautiful.widget_memory)
 memory_bar = awful.widget.progressbar()
 memory_bar:set_color(beautiful.fg_normal)
 memory_bar:set_width(55)
@@ -238,18 +238,18 @@ local update_memory_widget = function()
    memory_bar:set_value(mem.percent_used)
 
    if mem.percent_used < .30 then
-      memory_bar:set_color(beautiful.memory_healthy_color)
+      memory_bar:set_color(beautiful.widget_yay_color)
    elseif mem.percent_used < .75 then
-      memory_bar:set_color(beautiful.memory_kindaok_color)
+      memory_bar:set_color(beautiful.widget_meh_color)
    else
-      memory_bar:set_color(beautiful.memory_verylow_color)
+      memory_bar:set_color(beautiful.widget_aww_color)
    end
 end
 
 simpletimer.setup(3, update_memory_widget)
 
 memory_widget = wibox.widget.background(memory_margin)
-memory_widget:set_bgimage(beautiful.widget_bg)
+memory_widget:set_bgimage(beautiful.widget_background)
 
 
 
