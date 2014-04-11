@@ -1,4 +1,5 @@
 local awful = require("awful")
+local grid = require("sd/util/grid")
 
 local cycle_through_windows = function(dir)
    awful.client.focus.byidx(dir)
@@ -38,7 +39,14 @@ local globalkeys = awful.util.table.join(
    awful.key({}, "XF86AudioPlay", function () awful.util.spawn_with_shell("mpc toggle") end),
    awful.key({}, "XF86AudioStop", function () awful.util.spawn_with_shell("mpc pause") end),
    awful.key({}, "XF86AudioPrev", function () awful.util.spawn_with_shell("mpc prev") end),
-   awful.key({}, "XF86AudioNext", function () awful.util.spawn_with_shell("mpc next") end)
+   awful.key({}, "XF86AudioNext", function () awful.util.spawn_with_shell("mpc next") end),
+
+   awful.key(MASH, "'",
+             function (c)
+                for i, w in pairs(client.get()) do
+                   grid.snap_to_grid(w)
+                end
+             end)
 
                                         )
 

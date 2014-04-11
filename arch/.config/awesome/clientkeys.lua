@@ -1,5 +1,5 @@
 local awful = require("awful")
-local grid = require("grid")
+local grid = require("sd/util/grid")
 
 return awful.util.table.join(
 
@@ -63,12 +63,6 @@ return awful.util.table.join(
              end),
 
    awful.key(MASH, ";", function (c) grid.snap_to_grid(client.focus) end),
-   awful.key(MASH, "'",
-             function (c)
-                for i, w in pairs(client.get()) do
-                   grid.snap_to_grid(w)
-                end
-             end),
 
    awful.key(MASH, "m",
              function (c)

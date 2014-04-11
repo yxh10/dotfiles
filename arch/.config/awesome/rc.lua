@@ -18,7 +18,7 @@ function round (n) return math.floor(n + 0.5) end
 
 local globalkeys = require("globalkeys")
 local clientkeys = require("clientkeys")
-local grid = require("grid")
+local grid = require("sd/util/grid")
 
 
 if awesome.startup_errors then
@@ -171,10 +171,10 @@ widgetClock:set_font("Terminus 8")
 
 
 
-local battery = require("sd/battery")
-local simpletimer = require("sd/simpletimer")
-local weather = require("sd/weather")
-local memory = require("sd/memory")
+local battery = require("sd/util/battery")
+local simpletimer = require("sd/util/simpletimer")
+local weather = require("sd/util/weather")
+local memory = require("sd/util/memory")
 
 -- Battery
 battery_icon = wibox.widget.imagebox(beautiful.widget_battery)
