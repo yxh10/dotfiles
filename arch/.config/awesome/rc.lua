@@ -128,7 +128,7 @@ local systray_widget = wibox.widget.systray()
 
 -- -- TODO: add widgets.wifi,
 -- --       get missing icons,
--- --       add disk-free stats using: df | grep sda | awk '{print $5}'
+-- --       add disk-free stats using: df --output=pcent /dev/sda1 | tail -n 1
 -- --       add widgets.volume
 -- --       add gmail widget using netrc and the gmail url
 -- --
@@ -140,9 +140,6 @@ local systray_widget = wibox.widget.systray()
 -- -- right_side:add(diskwidget)
 
 
-
--- decoSpace = wibox.widget.textbox('  ')
--- right_side:add(decoSpace)
 
 
 
@@ -162,31 +159,6 @@ local systray_widget = wibox.widget.systray()
 
 
 
--- decoSpace = wibox.widget.textbox('  ')
--- right_side:add(decoSpace)
-
-
-
--- iconTemp = wibox.widget.imagebox()
--- iconTemp:set_image(beautiful.widget_temp)
--- right_side:add(iconTemp)
-
-
-
--- decoSpace = wibox.widget.textbox(' ')
--- right_side:add(decoSpace)
-
-
-
--- -- MEM widget
--- iconMem = wibox.widget.imagebox()
--- iconMem:set_image(beautiful.widget_mem)
--- right_side:add(iconMem)
-
--- widgetMem = wibox.widget.textbox()
--- vicious.register(widgetMem, vicious.widgets.mem, spanStart .. font .. blue .. '>$1% ($2gb)' .. spanEnd, 13)
--- right_side:add(widgetMem)
-
 
 
 
@@ -194,23 +166,6 @@ iconClock = wibox.widget.imagebox()
 iconClock:set_image(beautiful.clock)
 widgetClock = awful.widget.textclock("<span color='#cccc44'>%a %b %d  %I:%M %p</span>")
 widgetClock:set_font("Terminus 8")
-
--- decoSpace = wibox.widget.textbox('  ')
--- right_side:add(decoSpace)
-
-
-
--- -- mpdwidget = wibox.widget.textbox()
--- -- vicious.register(mpdwidget, vicious.widgets.mpd,
--- --                  function (mpdwidget, args)
--- --                     -- naughty.notify({text = args["{state}"]})
--- --                     if args["{state}"] == "Stop" then
--- --                        return " - "
--- --                     else
--- --                        return args["{Artist}"]..' - '.. args["{Title}"]
--- --                     end
--- --                  end, 10)
--- -- right_side:add(mpdwidget)
 
 
 
