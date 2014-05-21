@@ -40,3 +40,15 @@
   ;; (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
   (global-set-key (kbd "C-c g") 'magit-status))
+
+
+
+
+
+
+
+
+
+(defun sd/align-keyboard-layer (p1 p2)
+  (interactive "r")
+  (align-regexp p1 p2 ",\\( \\)" 1 1 t))
