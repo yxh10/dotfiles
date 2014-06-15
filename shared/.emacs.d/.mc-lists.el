@@ -7,6 +7,7 @@
         backward-up-list
         c-electric-delete-forward
         c-electric-paren
+        c-electric-pound
         c-electric-semi&comma
         coffee-dedent-line-backspace
         comment-dwim
@@ -65,6 +66,7 @@
         tagedit-insert-equal
         transpose-sexps
         transpose-words
+        upcase-region
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))
@@ -75,6 +77,7 @@
         helm-M-x
         helm-confirm-and-exit-minibuffer
         magit-status
+        other-frame
         query-replace
         set-rectangular-region-anchor
         smex
