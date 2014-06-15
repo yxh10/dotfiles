@@ -19,6 +19,7 @@
 (load "sd/ido")
 (load "sd/ruby")
 (load "sd/os")
+(load "sd/lua")
 
 ;; start in projects
 (sd/open-projects-dir)
