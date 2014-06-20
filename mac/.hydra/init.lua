@@ -1,5 +1,15 @@
 api.alert("Hi! Wanna manage some windows?")
 
+local function menufn()
+  return {
+    {title = "About Hydra", fn = api.showabout},
+    {title = "-"},
+    {title = "Quit", fn = os.exit},
+  }
+end
+
+api.menu.show(menufn)
+
 local mash = {"cmd", "alt", "ctrl"}
 local mashshift = {"cmd", "alt", "shift"}
 
