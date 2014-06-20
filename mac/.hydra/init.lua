@@ -1,5 +1,7 @@
 api.alert("Hi! Wanna manage some windows?")
 
+api.autolaunch.set(true)
+
 local function menufn()
   return {
     {title = "About Hydra", fn = api.showabout},
