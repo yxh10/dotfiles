@@ -20,6 +20,7 @@
         kill-region
         kill-sexp
         lisp-eval-last-sexp
+        lua-electric-match
         mark-sexp
         markdown-cycle
         markdown-exdent-or-delete
