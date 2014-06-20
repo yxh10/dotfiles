@@ -57,3 +57,10 @@
   (find-file (concat "/sudo::" (ido-read-file-name "Sudo find file:"))))
 
 (global-set-key (kbd "C-c C-f") 'sd/sudo-open)
+
+
+(eval-after-load "sgml-mode"
+  '(progn
+     (require 'tagedit)
+     (tagedit-add-paredit-like-keybindings)
+     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
