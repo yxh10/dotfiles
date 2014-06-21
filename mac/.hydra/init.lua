@@ -1,5 +1,14 @@
 api.alert("Hi! Wanna manage some windows?")
 
+local function setup_reloader()
+  api.pathwatcher(os.getenv("HOME") .. "/.hydra/", api.reload):start()
+  return true
+end
+
+reloader = reloader or setup_reloader()
+
+
+
 api.autolaunch.set(true)
 
 local function menufn()
