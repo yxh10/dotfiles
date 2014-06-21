@@ -88,7 +88,7 @@ end
 api.hotkey.bind(mash, 'D', opendictionary)
 
 api.hotkey.bind(mash, ';', function() snaptogrid(api.window.focusedwindow()) end)
-api.hotkey.bind(mash, "'", function() api.fn.map(api.window.focusedwindow(), snaptogrid) end)
+api.hotkey.bind(mash, "'", function() api.fn.map(api.window.visiblewindows(), snaptogrid) end)
 
 api.hotkey.bind(mash, '=', function() adjustgridwidth( 1) end)
 api.hotkey.bind(mash, '-', function() adjustgridwidth(-1) end)
