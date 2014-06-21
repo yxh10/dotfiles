@@ -1,6 +1,6 @@
 api.alert("Hi! Wanna manage some windows?")
 
-api.timer.once(function()
+api.timer.runonce(function()
     api.pathwatcher(os.getenv("HOME") .. "/.hydra/", api.reload):start()
 end)
 
@@ -154,3 +154,8 @@ api.hotkey.bind(mash, 'I', resizewindow_thinner)
 api.hotkey.bind(mash, 'J', pushwindow_down)
 api.hotkey.bind(mash, 'K', pushwindow_up)
 api.hotkey.bind(mash, 'U', resizewindow_taller)
+
+local repl
+api.hotkey.bind(mash, "R", function()
+                  repl = api.repl.open()
+end)
