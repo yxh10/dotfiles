@@ -1,9 +1,6 @@
 api.alert("Hi! Wanna manage some windows?")
 
-api.timer.runonce(function()
-    api.pathwatcher(os.getenv("HOME") .. "/.hydra/", api.reload):start()
-end)
-
+api.pathwatcher(os.getenv("HOME") .. "/.hydra/", api.reload):start()
 
 api.autolaunch.set(true)
 
