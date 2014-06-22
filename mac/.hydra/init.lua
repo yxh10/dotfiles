@@ -159,3 +159,19 @@ local repl
 api.hotkey.bind(mash, "R", function()
                   repl = api.repl.open()
 end)
+
+function swap_only_two_windows()
+  local windows = api.window.visiblewindows()
+  local win1 = windows[1]
+  local win2 = windows[2]
+
+  local rect1 = win1:frame()
+  local rect2 = win2:frame()
+
+  win1:setframe(rect2)
+  win2:setframe(rect1)
+
+  api.alert("SWAPPED!")
+end
+
+api.hotkey.bind(mash, 'X', swap_only_two_windows)
