@@ -1,6 +1,6 @@
 api.alert("Hi! Wanna manage some windows?")
 
-api.pathwatcher(os.getenv("HOME") .. "/.hydra/", api.reload):start()
+api.pathwatcher.new(os.getenv("HOME") .. "/.hydra/", api.reload):start()
 
 api.autolaunch.set(true)
 
@@ -169,3 +169,5 @@ end
 -- api.hotkey.bind(mash, 'X', swap_only_two_windows)
 api.hotkey.bind(mash, 'X', api.log.show)
 api.hotkey.bind(mash, "R", api.repl.open)
+
+-- api.generatedocs(os.getenv("HOME") .. "/Desktop/hydra.md")
