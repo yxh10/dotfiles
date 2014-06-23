@@ -152,11 +152,6 @@ api.hotkey.bind(mash, 'J', pushwindow_down)
 api.hotkey.bind(mash, 'K', pushwindow_up)
 api.hotkey.bind(mash, 'U', resizewindow_taller)
 
-local repl
-api.hotkey.bind(mash, "R", function()
-                  repl = api.repl.open()
-end)
-
 function swap_only_two_windows()
   local windows = api.window.visiblewindows()
   local win1 = windows[1]
@@ -171,4 +166,6 @@ function swap_only_two_windows()
   api.alert("SWAPPED!")
 end
 
-api.hotkey.bind(mash, 'X', swap_only_two_windows)
+-- api.hotkey.bind(mash, 'X', swap_only_two_windows)
+api.hotkey.bind(mash, 'X', api.log.show)
+api.hotkey.bind(mash, "R", api.repl.open)
