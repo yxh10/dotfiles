@@ -171,3 +171,5 @@ api.hotkey.bind(mash, 'X', api.log.show)
 api.hotkey.bind(mash, "R", api.repl.open)
 
 -- api.generatedocs(os.getenv("HOME") .. "/Desktop/hydra.md")
+
+api.updates.check()
