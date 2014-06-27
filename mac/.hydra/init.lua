@@ -35,19 +35,33 @@ api.hotkey.bind(mashshift, 'K', function() api.window.focusedwindow():focuswindo
 api.hotkey.bind(mashshift, 'J', function() api.window.focusedwindow():focuswindow_south() end)
 
 api.hotkey.bind(mash, 'M', api.ext.grid.maximize_window)
+
 api.hotkey.bind(mash, 'N', api.ext.grid.pushwindow_nextscreen)
 api.hotkey.bind(mash, 'P', api.ext.grid.pushwindow_prevscreen)
 
-api.hotkey.bind(mash, 'H', api.ext.grid.pushwindow_left)
-api.hotkey.bind(mash, 'L', api.ext.grid.pushwindow_right)
-api.hotkey.bind(mash, 'O', api.ext.grid.resizewindow_wider)
-api.hotkey.bind(mash, 'I', api.ext.grid.resizewindow_thinner)
-
 api.hotkey.bind(mash, 'J', api.ext.grid.pushwindow_down)
 api.hotkey.bind(mash, 'K', api.ext.grid.pushwindow_up)
+api.hotkey.bind(mash, 'H', api.ext.grid.pushwindow_left)
+api.hotkey.bind(mash, 'L', api.ext.grid.pushwindow_right)
+
 api.hotkey.bind(mash, 'U', api.ext.grid.resizewindow_taller)
+api.hotkey.bind(mash, 'O', api.ext.grid.resizewindow_wider)
+api.hotkey.bind(mash, 'I', api.ext.grid.resizewindow_thinner)
 
 api.hotkey.bind(mash, 'X', api.log.show)
 api.hotkey.bind(mash, "R", api.repl.open)
 
 api.updates.check()
+
+-- api.log.rawprint(api.jsondocs())
+
+-- s = "dog!🐶"
+-- api.alert(s)
+
+-- for i, v in ipairs(api.utf8.chars(s)) do
+--   api.alert(v, 5)
+-- end
+
+-- s2 = table.concat(api.utf8.chars(s))
+-- api.alert(s2)
+-- api.alert(api.utf8.count(s2))
