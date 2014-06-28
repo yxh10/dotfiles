@@ -52,16 +52,3 @@ api.hotkey.bind(mash, 'X', api.log.show)
 api.hotkey.bind(mash, "R", api.repl.open)
 
 api.updates.check()
-
--- api.log.rawprint(api.jsondocs())
-
--- s = "dog!🐶"
--- api.alert(s)
-
--- for i, v in ipairs(api.utf8.chars(s)) do
---   api.alert(v, 5)
--- end
-
--- s2 = table.concat(api.utf8.chars(s))
--- api.alert(s2)
--- api.alert(api.utf8.count(s2))
