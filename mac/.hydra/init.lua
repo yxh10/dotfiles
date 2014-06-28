@@ -1,6 +1,6 @@
-require("grid")
+require "grid"
 
-api.alert("Hydra, at your service.")
+api.alert "Hydra, at your service."
 
 api.pathwatcher.new(os.getenv("HOME") .. "/.hydra/", api.reload):start()
 api.autolaunch.set(true)
