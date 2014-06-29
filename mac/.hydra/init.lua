@@ -18,13 +18,13 @@ local mashshift = {"cmd", "alt", "shift"}
 
 local function opendictionary()
   api.alert("Lexicon, at your service.", 0.75)
-  api.app.launchorfocus("Dictionary")
+  api.application.launchorfocus("Dictionary")
 end
 
 api.hotkey.bind(mash, 'D', opendictionary)
 
 api.hotkey.bind(mash, ';', function() api.ext.grid.snap(api.window.focusedwindow()) end)
-api.hotkey.bind(mash, "'", function() api.fn.map(api.window.visiblewindows(), api.ext.grid.snap) end)
+api.hotkey.bind(mash, "'", function() api.fnutils.map(api.window.visiblewindows(), api.ext.grid.snap) end)
 
 api.hotkey.bind(mash, '=', function() api.ext.grid.adjustwidth( 1) end)
 api.hotkey.bind(mash, '-', function() api.ext.grid.adjustwidth(-1) end)
@@ -48,7 +48,7 @@ api.hotkey.bind(mash, 'U', api.ext.grid.resizewindow_taller)
 api.hotkey.bind(mash, 'O', api.ext.grid.resizewindow_wider)
 api.hotkey.bind(mash, 'I', api.ext.grid.resizewindow_thinner)
 
-api.hotkey.bind(mash, 'X', api.log.show)
-api.hotkey.bind(mash, "R", api.repl.open)
+api.hotkey.bind(mash, 'X', api.logger.show)
+api.hotkey.bind(mash, "R", api.repl)
 
 api.updates.check()
