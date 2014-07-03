@@ -49,6 +49,6 @@ hotkey.bind(mash, 'O', ext.grid.resizewindow_wider)
 hotkey.bind(mash, 'I', ext.grid.resizewindow_thinner)
 
 hotkey.bind(mash, 'X', logger.show)
-hotkey.bind(mash, "R", hydra.repl)
+hotkey.bind(mash, "R", repl.open)
 
 updates.check()
