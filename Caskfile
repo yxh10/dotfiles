@@ -1,0 +1,38 @@
+# Install Cask
+install caskroom/cask/brew-cask
+
+# Common apps
+cask install hydra
+cask install google-chrome
+cask install bahamut
+cask install dropbox
+cask install gitx-rowanj
+cask install limechat
+cask install skype
+
+# Less common apps
+cask install dosbox
+cask install transmission
+cask install vmware-fusion
+cask install intellij-idea
+cask install acorn
+cask install firefox
+cask install github
+cask install love
+cask install #minecraft
+cask install paintcode
+cask install steam
+cask install sublime-text
+cask install vienna
+
+
+# not in cask:
+
+# appgrid
+# crayon physics deluxe
+# desklabels
+# mail ping
+# micropolisj
+# ommwriter
+# omnigraffle pro
+# wondershare ultimate
