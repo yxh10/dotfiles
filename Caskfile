@@ -19,7 +19,7 @@ cask install acorn
 cask install firefox
 cask install github
 cask install love
-cask install #minecraft
+#cask install minecraft
 cask install paintcode
 cask install steam
 cask install sublime-text
