@@ -1,5 +1,5 @@
 -- refers to grid.lua in this directory, taken from the Hydra wiki: https://github.com/sdegutis/hydra/wiki/Useful-Hydra-libraries
-require "grid"
+dofile(package.searchpath("grid", package.path))
 
 hydra.alert "Hydra, at your service."
 
