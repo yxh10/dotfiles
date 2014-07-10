@@ -52,4 +52,8 @@ hotkey.bind(mash, 'I', ext.grid.resizewindow_thinner)
 hotkey.bind(mash, 'X', logger.show)
 hotkey.bind(mash, "R", repl.open)
 
-updates.check()
+updates.check(function(is)
+    if is then
+      notify.show("Hydra update available", "", "Go download it!", "")
+    end
+end)
