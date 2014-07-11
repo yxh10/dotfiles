@@ -52,8 +52,16 @@ hotkey.bind(mash, 'I', ext.grid.resizewindow_thinner)
 hotkey.bind(mash, 'X', logger.show)
 hotkey.bind(mash, "R", repl.open)
 
-updates.check(function(is)
-    if is then
-      notify.show("Hydra update available", "", "Go download it!", "")
-    end
-end)
+function checkforupdates()
+  -- I'm fine with making this a global; then I can call it in the REPL if I want.
+  updates.check(function(hasone)
+      if hasone then
+        notify.show("Hydra update available", "Go download it!", "Click here to see the release notes.", "hasupdate")
+      end
+  end)
+end
+notify.register("hasupdate", function() os.execute("open " .. updates.changelogurl) end)
+
+checkforupdates()
+
+timer.new(timer.days(1), checkforupdates):start()
